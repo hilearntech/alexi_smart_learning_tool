@@ -176,7 +176,7 @@ class SpeechManager:
     def _worker(self):
         """The ONE thread that ever calls engine.runAndWait()."""
         engine = pyttsx3.init()
-        engine.setProperty('rate', 145)
+        engine.setProperty('rate', 100)
         engine.setProperty('volume', 1.0)
         voices = engine.getProperty('voices')
         engine.setProperty('voice', voices[0].id)
@@ -195,13 +195,12 @@ class SpeechManager:
                     logger.info(f"SPEAKING: {text}")
                     engine.say(text)
                     engine.runAndWait()
-                    time.sleep(3)
                     logger.info("DONE SPEAKING")
                 except Exception as e:
                     logger.error(f"TTS engine error: {e}")
                     try:
                         engine = pyttsx3.init()
-                        engine.setProperty('rate', 145)
+                        engine.setProperty('rate', 100)
                         engine.setProperty('volume', 1.0)
                     except Exception:
                         pass
@@ -209,7 +208,7 @@ class SpeechManager:
                     
                     if done_event:
                         done_event.set()  
-                    time.sleep(2) # unblock speak_and_wait() caller
+                    # unblock speak_and_wait() caller
 
     def speak_and_wait(self, text):
         """Queue text and block the calling thread until it is fully spoken."""
@@ -379,3 +378,39 @@ class FaceRecognitionSystem:
 
     # ── Wake word ────────────────────────────────────────────────────────────────
  
+
+    def run(self):
+        import cv2
+        cap = cv2.VideoCapture(0)
+        logger.info('Camera started')
+        while True:
+            ret, frame = cap.read()
+            if not ret:
+                break
+            rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+            locations = face_recognition.face_locations(rgb)
+            encodings = face_recognition.face_encodings(rgb, locations)
+            for enc, loc in zip(encodings, locations):
+                distances = face_recognition.face_distance(self.known_encodings, enc)
+                if len(distances) and min(distances) < FACE_DISTANCE_THRESHOLD:
+                    name = self.known_names[int(np.argmin(distances))]
+                    if name not in self.fully_handled_this_session:
+                        self.fully_handled_this_session.add(name)
+                        self.current_person = name
+                        self.current_action = 'talking'
+                        self.speech.speak_and_wait(f'Hi {name}! How are you today?')
+                        mood_text = self.mic.listen(timeout=8)
+                        mood = self.mood_engine.analyze(mood_text)
+                        self.current_mood = mood
+                        self.attendance.mark(name, mood)
+                        self.speech.speak_and_wait(f'Great! Attendance marked. Have a wonderful day {name}!')
+                        self.current_action = 'idle'
+                        cap.release()
+                        cv2.destroyAllWindows()
+                        return
+            cv2.imshow('Alexi', frame)
+            if cv2.waitKey(1) & 0xFF == ord('q'):
+                break
+        cap.release()
+        cv2.destroyAllWindows()
+

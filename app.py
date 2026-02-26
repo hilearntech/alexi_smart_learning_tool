@@ -19,12 +19,16 @@ mimi_system = MimiLLMSession()
 @app.route('/start-classroom', methods=['GET'])
 def start_classroom():
     try:
-        thread = threading.Thread(target=system.run)
-        thread.daemon = True  # Program band hote hi thread bhi band ho jaye
+        def run_integrated():
+            system.run()
+            mimi_system.run()
+
+        thread = threading.Thread(target=run_integrated)
+        thread.daemon = True
         thread.start()
-        
+
         return jsonify({
-            "status": "success", 
+            "status": "success",
             "message": "Mimi is now active and looking for faces!",
             "character_state": "waving"
         })

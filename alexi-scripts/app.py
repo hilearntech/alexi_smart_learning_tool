@@ -15,12 +15,17 @@ CORS(app)
 # System initialize karein
 system = FaceRecognitionSystem()
 mimi_system = MimiLLMSession()
+mimi_system.speech = system.speech
 
 @app.route('/start-classroom', methods=['GET'])
 def start_classroom():
     try:
-        thread = threading.Thread(target=system.run)
-        thread.daemon = True  # Program band hote hi thread bhi band ho jaye
+        def run_integrated():
+            system.run()
+            mimi_system.start()
+
+        thread = threading.Thread(target=run_integrated)
+        thread.daemon = True
         thread.start()
         
         return jsonify({

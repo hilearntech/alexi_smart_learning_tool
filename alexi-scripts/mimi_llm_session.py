@@ -169,6 +169,7 @@ class MimiLLMSession:
                             logger.info('Heard (wake loop): %s', heard)
                             if 'alexi' in heard or 'hey alexi' in heard:
                                 logger.info('Wake word detected — starting interactive session')
+                                time.sleep(0.5)
                                 self._interactive_loop()
                                 # After interactive loop ends, continue waiting for next session
                         except Exception:
