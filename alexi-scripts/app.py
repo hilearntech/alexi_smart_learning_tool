@@ -1,6 +1,15 @@
-from flask import Flask, jsonify
+from flask import Flask, request, jsonify
+from flask_bcrypt import Bcrypt
 from flask_cors import CORS
 import threading
+from pymongo import MongoClient  # MongoDB ke liye import
+from datetime import datetime
+from bson import ObjectId
+from bson.json_util import dumps
+from routes.auth_routes import auth_bp
+from routes.admin_routes import admin_bp
+import jwt
+
 try:
     # Prefer the face_detection module inside the face_detection/ folder
     from face_detection.face_detection import FaceRecognitionSystem
@@ -12,9 +21,35 @@ from mimi_llm_session import MimiLLMSession
 app = Flask(__name__)
 CORS(app) 
 
+bcrypt = Bcrypt(app)
+SECRET = "alexi_secret"
+
+
+# ==========================================
+# MONGODB CONNECTION SETUP
+# ==========================================
+# 'AlexiDB' database name and 'attendance' is collection name
+
+client = MongoClient("mongodb://localhost:27017/")
+db = client["AlexiDB"]
+users = db["users"]
+attendance_collection = db["attendance"]
+
 # System initialize karein
 system = FaceRecognitionSystem()
 mimi_system = MimiLLMSession()
+
+@app.route('/get-attendance-logs', methods=['GET'])
+def get_attendance_logs():
+    try:
+        # MongoDB se saara data nikalna (latest records pehle)
+        logs = list(attendance_collection.find({}, {"_id": 0}).sort("date", -1))
+        return jsonify({
+            "status": "success",
+            "data": logs
+        })
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 500
 
 @app.route('/start-classroom', methods=['GET'])
 def start_classroom():
@@ -91,6 +126,10 @@ def mimi_get():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+
+app.register_blueprint(auth_bp)
+app.register_blueprint(admin_bp)
+    
 if __name__ == "__main__":
     # debug=False rakhein threading ke waqt, warna camera do baar khul sakta hai
     app.run(debug=False, port=5000, host='0.0.0.0')

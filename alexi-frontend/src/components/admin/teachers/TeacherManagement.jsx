@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, Button, Input, Modal, Avatar } from '../../../components/shared';
 import { Search, Plus, CheckCircle, XCircle, Eye, Mail, Phone, Building2, User } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -9,79 +9,61 @@ const TeacherManagement = () => {
   const [showAddModal, setShowAddModal] = useState(false);
   const [showApprovalModal, setShowApprovalModal] = useState(false);
   const [selectedTeacher, setSelectedTeacher] = useState(null);
+  const [teachers, setTeachers] = useState([]);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [editData, setEditData] = useState(null);
 
-  const [teachers, setTeachers] = useState([
-    {
-      id: 1,
-      name: 'Mrs. Priya Singh',
-      email: 'priya.singh@school.com',
-      phone: '9876543210',
-      school: 'Sunshine International School',
-      class: 'Junior KG-A',
-      students: 18,
-      status: 'active',
-      joinedDate: '2025-01-15',
-      lastActive: '2 hours ago'
-    },
-    {
-      id: 2,
-      name: 'Mr. Rajesh Kumar',
-      email: 'rajesh.kumar@school.com',
-      phone: '9876543211',
-      school: 'Sunshine International School',
-      class: 'Junior KG-B',
-      students: 16,
-      status: 'active',
-      joinedDate: '2025-01-20',
-      lastActive: '5 hours ago'
-    },
-    {
-      id: 3,
-      name: 'Ms. Anjali Mehta',
-      email: 'anjali.mehta@school.com',
-      phone: '9876543212',
-      school: 'Bright Future School',
-      class: 'Junior KG-C',
-      students: 15,
-      status: 'active',
-      joinedDate: '2025-02-01',
-      lastActive: '1 day ago'
-    },
-    {
-      id: 4,
-      name: 'Mr. Rahul Verma',
-      email: 'rahul.verma@school.com',
-      phone: '9876543213',
-      school: 'Little Stars Academy',
-      class: 'Junior KG-A',
-      students: 0,
-      status: 'pending',
-      joinedDate: '2026-02-15',
-      lastActive: 'Never'
-    },
-  ]);
+  useEffect(() => {
+    fetch("http://localhost:5000/api/admin/all-users")
+      .then(res => res.json())
+      .then(data => {
+        const formatted = data
+          .filter(user => user.role === "teacher") // only teachers
+          .map(user => ({
+            id: user._id,
+            name: user.name,
+            email: user.email,
+            phone: user.phone,
+            school: user.school || "N/A",
+            class: user.class || "N/A",
+            students: 0,
+            status: user.status === "approved" ? "active" : "pending",
+            joinedDate: user.created_at
+              ? new Date(user.created_at).toLocaleDateString()
+              : "N/A",
+            lastActive: "Recently"
+          }));
+
+        setTeachers(formatted);
+      });
+  }, []);
 
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
     school: '',
-    class: ''
+    class: '',
+    password: ''
   });
 
   const filteredTeachers = teachers.filter(teacher => {
     const matchesSearch = teacher.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         teacher.email.toLowerCase().includes(searchQuery.toLowerCase());
+      teacher.email.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesStatus = statusFilter === 'all' || teacher.status === statusFilter;
     return matchesSearch && matchesStatus;
   });
 
-  const handleApprove = (teacher) => {
-    setTeachers(teachers.map(t => 
-      t.id === teacher.id ? { ...t, status: 'active' } : t
-    ));
-    setShowApprovalModal(false);
-    alert(`${teacher.name} has been approved!`);
+  const handleApprove = async (teacher) => {
+    await fetch(`http://localhost:5000/api/admin/approve/${teacher.id}`, {
+      method: "PUT"
+    });
+
+    setTeachers(prev =>
+      prev.map(t => t.id === teacher.id ? { ...t, status: "active" } : t)
+    );
+
+    alert(`${teacher.name} approved successfully`);
   };
 
   const handleReject = (teacher) => {
@@ -93,25 +75,72 @@ const TeacherManagement = () => {
 
   const handleDeactivate = (teacher) => {
     if (window.confirm(`Are you sure you want to deactivate ${teacher.name}?`)) {
-      setTeachers(teachers.map(t => 
+      setTeachers(teachers.map(t =>
         t.id === teacher.id ? { ...t, status: 'inactive' } : t
       ));
     }
   };
 
-  const handleAddTeacher = () => {
-    const newTeacher = {
-      id: teachers.length + 1,
-      ...formData,
-      students: 0,
-      status: 'active',
-      joinedDate: new Date().toISOString().split('T')[0],
-      lastActive: 'Just now'
-    };
-    setTeachers([...teachers, newTeacher]);
-    setShowAddModal(false);
-    setFormData({ name: '', email: '', phone: '', school: '', class: '' });
-    alert('Teacher added successfully!');
+  const handleAddTeacher = async () => {
+    try {
+      const res = await fetch("http://localhost:5000/api/admin/add-teacher", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(formData)
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        alert(data.msg);
+        return;
+      }
+
+      alert("Teacher added successfully");
+
+      // reload teachers list
+      window.location.reload();
+
+    } catch (err) {
+      console.error(err);
+      alert("Error adding teacher");
+    }
+  };
+
+  const handleUpdateTeacher = async () => {
+    try {
+      const res = await fetch(
+        `http://localhost:5000/api/admin/edit-teacher/${editData.id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(editData)
+        }
+      );
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        alert(data.msg);
+        return;
+      }
+
+      alert("Teacher updated successfully");
+
+      setTeachers(prev =>
+        prev.map(t => t.id === editData.id ? editData : t)
+      );
+
+      setShowEditModal(false);
+
+    } catch (err) {
+      console.error(err);
+      alert("Error updating teacher");
+    }
   };
 
   const stats = {
@@ -233,7 +262,7 @@ const TeacherManagement = () => {
                       px-3 py-1 rounded-full text-sm font-semibold inline-flex items-center gap-1
                       ${teacher.status === 'active' ? 'bg-green-100 text-green-700' :
                         teacher.status === 'pending' ? 'bg-yellow-100 text-yellow-700' :
-                        'bg-gray-100 text-gray-700'}
+                          'bg-gray-100 text-gray-700'}
                     `}>
                       {teacher.status === 'active' && <CheckCircle size={14} />}
                       {teacher.status.charAt(0).toUpperCase() + teacher.status.slice(1)}
@@ -251,6 +280,16 @@ const TeacherManagement = () => {
                       >
                         <Eye size={18} className="text-blue-600" />
                       </button>
+                      <button
+                        onClick={() => {
+                          setEditData(teacher);
+                          setShowEditModal(true);
+                        }}
+                        className="p-2 hover:bg-indigo-50 rounded-lg transition-colors"
+                        title="Edit"
+                      >
+                        ✏️
+                      </button>
                       {teacher.status === 'pending' && (
                         <>
                           <button
@@ -267,6 +306,7 @@ const TeacherManagement = () => {
                           >
                             <XCircle size={18} className="text-red-600" />
                           </button>
+                          
                         </>
                       )}
                       {teacher.status === 'active' && (
@@ -331,6 +371,13 @@ const TeacherManagement = () => {
             value={formData.class}
             onChange={(e) => setFormData({ ...formData, class: e.target.value })}
           />
+          <Input
+            label="Password"
+            type="password"
+            placeholder="Enter password"
+            value={formData.password}
+            onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+          />
           <div className="flex gap-3 mt-6">
             <Button variant="primary" onClick={handleAddTeacher} className="flex-1">
               Add Teacher
@@ -342,6 +389,69 @@ const TeacherManagement = () => {
         </div>
       </Modal>
 
+      {editData && (
+        <Modal
+          isOpen={showEditModal}
+          onClose={() => setShowEditModal(false)}
+          title="Edit Teacher"
+          size="md"
+        >
+          <div className="space-y-4">
+            <Input
+              label="Full Name"
+              value={editData.name}
+              onChange={(e) =>
+                setEditData({ ...editData, name: e.target.value })
+              }
+            />
+
+            <Input
+              label="Email"
+              value={editData.email}
+              onChange={(e) =>
+                setEditData({ ...editData, email: e.target.value })
+              }
+            />
+
+            <Input
+              label="Phone"
+              value={editData.phone}
+              onChange={(e) =>
+                setEditData({ ...editData, phone: e.target.value })
+              }
+            />
+
+            <Input
+              label="School"
+              value={editData.school}
+              onChange={(e) =>
+                setEditData({ ...editData, school: e.target.value })
+              }
+            />
+
+            <Input
+              label="Class"
+              value={editData.class}
+              onChange={(e) =>
+                setEditData({ ...editData, class: e.target.value })
+              }
+            />
+
+            <div className="flex gap-3 mt-6">
+              <Button variant="primary" onClick={handleUpdateTeacher} className="flex-1">
+                Save Changes
+              </Button>
+              <Button
+                variant="outline"
+                onClick={() => setShowEditModal(false)}
+                className="flex-1"
+              >
+                Cancel
+              </Button>
+            </div>
+          </div>
+        </Modal>
+      )}
       {/* View/Approval Modal */}
       {selectedTeacher && (
         <Modal
@@ -359,7 +469,7 @@ const TeacherManagement = () => {
                   inline-block px-3 py-1 rounded-full text-sm font-semibold mt-1
                   ${selectedTeacher.status === 'active' ? 'bg-green-100 text-green-700' :
                     selectedTeacher.status === 'pending' ? 'bg-yellow-100 text-yellow-700' :
-                    'bg-gray-100 text-gray-700'}
+                      'bg-gray-100 text-gray-700'}
                 `}>
                   {selectedTeacher.status.charAt(0).toUpperCase() + selectedTeacher.status.slice(1)}
                 </span>
@@ -394,18 +504,18 @@ const TeacherManagement = () => {
 
             {selectedTeacher.status === 'pending' && (
               <div className="flex gap-3 mt-6">
-                <Button 
-                  variant="primary" 
+                <Button
+                  variant="primary"
                   icon={CheckCircle}
-                  onClick={() => handleApprove(selectedTeacher)} 
+                  onClick={() => handleApprove(selectedTeacher)}
                   className="flex-1"
                 >
                   Approve
                 </Button>
-                <Button 
-                  variant="outline" 
+                <Button
+                  variant="outline"
                   icon={XCircle}
-                  onClick={() => handleReject(selectedTeacher)} 
+                  onClick={() => handleReject(selectedTeacher)}
                   className="flex-1"
                 >
                   Reject

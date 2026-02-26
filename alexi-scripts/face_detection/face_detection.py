@@ -29,6 +29,8 @@ import sys
 import time
 import threading
 import speech_recognition as sr
+from pymongo import MongoClient
+from datetime import datetime
 
 # ============================================================================
 # CONFIGURATION
@@ -77,72 +79,103 @@ logger.addHandler(console_handler)
 # ATTENDANCE MANAGER
 # ============================================================================
 
+# class AttendanceManager:
+#     def __init__(self, filename=ATTENDANCE_FILE):
+#         self.filename     = filename
+#         self.marked_today = set()
+#         self._init_file()
+#         self._load_today()
+#         logger.info("AttendanceManager ready")
+
+#     def _init_file(self):
+#         """Create file with headers if missing. Also fix empty or header-corrupt files."""
+#         write_header = False
+
+#         if not os.path.exists(self.filename):
+#             write_header = True
+#         else:
+#             # File exists — check it actually has the right header
+#             try:
+#                 with open(self.filename, 'r', encoding='utf-8') as f:
+#                     first_line = f.readline().strip()
+#                 # If empty or header doesn't contain expected columns, rewrite
+#                 if not first_line or 'Date' not in first_line or 'Name' not in first_line:
+#                     logger.warning(f"attendance.csv has bad/missing headers — rewriting")
+#                     write_header = True
+#             except Exception:
+#                 write_header = True
+
+#         if write_header:
+#             with open(self.filename, 'w', newline='', encoding='utf-8') as f:
+#                 csv.writer(f).writerow(['Name', 'Date', 'Time', 'Mood'])
+#             logger.info("attendance.csv initialised with headers")
+
+#     def _load_today(self):
+#         today = datetime.now().strftime("%Y-%m-%d")
+#         try:
+#             with open(self.filename, 'r', encoding='utf-8') as f:
+#                 reader = csv.DictReader(f)
+#                 # Guard: if headers are missing or wrong, skip silently
+#                 if reader.fieldnames is None or 'Date' not in reader.fieldnames:
+#                     logger.warning("attendance.csv has no valid headers — skipping load")
+#                     return
+#                 for row in reader:
+#                     if row.get('Date') == today:
+#                         self.marked_today.add(row['Name'])
+#         except Exception as e:
+#             logger.error(f"Load today error: {e}")
+#         if self.marked_today:
+#             logger.info(f"Already marked today: {', '.join(self.marked_today)}")
+
+#     def mark(self, name, mood="Neutral"):
+#         if name in self.marked_today:
+#             return False
+#         now = datetime.now()
+#         with open(self.filename, 'a', newline='', encoding='utf-8') as f:
+#             csv.writer(f).writerow([
+#                 name,
+#                 now.strftime("%Y-%m-%d"),
+#                 now.strftime("%H:%M:%S"),
+#                 mood
+#             ])
+#         self.marked_today.add(name)
+#         logger.info(f"ATTENDANCE MARKED: {name} | {now.strftime('%H:%M:%S')} | {mood}")
+#         return True
+
+#     def is_marked(self, name):
+#         return name in self.marked_today
+
+
 class AttendanceManager:
-    def __init__(self, filename=ATTENDANCE_FILE):
-        self.filename     = filename
-        self.marked_today = set()
-        self._init_file()
-        self._load_today()
-        logger.info("AttendanceManager ready")
-
-    def _init_file(self):
-        """Create file with headers if missing. Also fix empty or header-corrupt files."""
-        write_header = False
-
-        if not os.path.exists(self.filename):
-            write_header = True
-        else:
-            # File exists — check it actually has the right header
-            try:
-                with open(self.filename, 'r', encoding='utf-8') as f:
-                    first_line = f.readline().strip()
-                # If empty or header doesn't contain expected columns, rewrite
-                if not first_line or 'Date' not in first_line or 'Name' not in first_line:
-                    logger.warning(f"attendance.csv has bad/missing headers — rewriting")
-                    write_header = True
-            except Exception:
-                write_header = True
-
-        if write_header:
-            with open(self.filename, 'w', newline='', encoding='utf-8') as f:
-                csv.writer(f).writerow(['Name', 'Date', 'Time', 'Mood'])
-            logger.info("attendance.csv initialised with headers")
-
-    def _load_today(self):
-        today = datetime.now().strftime("%Y-%m-%d")
-        try:
-            with open(self.filename, 'r', encoding='utf-8') as f:
-                reader = csv.DictReader(f)
-                # Guard: if headers are missing or wrong, skip silently
-                if reader.fieldnames is None or 'Date' not in reader.fieldnames:
-                    logger.warning("attendance.csv has no valid headers — skipping load")
-                    return
-                for row in reader:
-                    if row.get('Date') == today:
-                        self.marked_today.add(row['Name'])
-        except Exception as e:
-            logger.error(f"Load today error: {e}")
-        if self.marked_today:
-            logger.info(f"Already marked today: {', '.join(self.marked_today)}")
+    def __init__(self, db_name="AlexiDB", collection_name="attendance"):
+        # Yahan hum MongoDB se connect kar rahe hain
+        self.client = MongoClient("mongodb://localhost:27017/")
+        self.db = self.client[db_name]
+        self.collection = self.db[collection_name]
+        print("MongoDB AttendanceManager ready")
 
     def mark(self, name, mood="Neutral"):
-        if name in self.marked_today:
-            return False
-        now = datetime.now()
-        with open(self.filename, 'a', newline='', encoding='utf-8') as f:
-            csv.writer(f).writerow([
-                name,
-                now.strftime("%Y-%m-%d"),
-                now.strftime("%H:%M:%S"),
-                mood
-            ])
-        self.marked_today.add(name)
-        logger.info(f"ATTENDANCE MARKED: {name} | {now.strftime('%H:%M:%S')} | {mood}")
+        today = datetime.now().strftime("%Y-%m-%d")
+        
+        # Check karein agar record pehle se hai
+        exists = self.collection.find_one({"name": name, "date": today})
+        
+        if exists:
+            return False # Pehle se marked hai
+            
+        # Naya record insert karein
+        record = {
+            "name": name,
+            "date": today,
+            "time": datetime.now().strftime("%H:%M:%S"),
+            "mood": mood
+        }
+        self.collection.insert_one(record)
         return True
 
     def is_marked(self, name):
-        return name in self.marked_today
-
+        today = datetime.now().strftime("%Y-%m-%d")
+        return self.collection.find_one({"name": name, "date": today}) is not None
 
 # ============================================================================
 # SPEECH MANAGER

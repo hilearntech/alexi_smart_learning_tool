@@ -33,64 +33,82 @@ const Register = () => {
 
   const validate = () => {
     const newErrors = {};
-    
+
     if (!formData.fullName) {
       newErrors.fullName = 'Full name is required';
     }
-    
+
     if (!formData.email) {
       newErrors.email = 'Email is required';
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
       newErrors.email = 'Email is invalid';
     }
-    
+
     if (!formData.phone) {
       newErrors.phone = 'Phone number is required';
     } else if (!/^\d{10}$/.test(formData.phone.replace(/\D/g, ''))) {
       newErrors.phone = 'Phone number must be 10 digits';
     }
-    
+
     if (!formData.school && formData.role === 'teacher') {
       newErrors.school = 'School name is required';
     }
-    
+
     if (!formData.password) {
       newErrors.password = 'Password is required';
     } else if (formData.password.length < 6) {
       newErrors.password = 'Password must be at least 6 characters';
     }
-    
+
     if (formData.password !== formData.confirmPassword) {
       newErrors.confirmPassword = 'Passwords do not match';
     }
-    
+
     if (!formData.agreeToTerms) {
       newErrors.agreeToTerms = 'You must agree to the terms';
     }
-    
+
     return newErrors;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     const newErrors = validate();
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return;
     }
-    
+
     setLoading(true);
-    
-    setTimeout(() => {
-      console.log('Register data:', formData);
-      alert('Registration successful! (Pending admin approval)');
-      
-      // ↓↓↓ UPDATED: Navigate to login after successful registration
-      navigate('/login');
-      
+
+    // setTimeout(() => {
+    //   console.log('Register data:', formData);
+    //   alert('Registration successful! (Pending admin approval)');
+
+    //   // ↓↓↓ UPDATED: Navigate to login after successful registration
+    //   navigate('/login');
+
+    //   setLoading(false);
+    // }, 1500);
+    try {
+      const res = await fetch("http://localhost:5000/api/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) throw new Error(data.msg);
+
+      alert("Registered! Wait for admin approval.");
+      navigate("/login");
+    } catch (err) {
+      alert(err.message);
+    } finally {
       setLoading(false);
-    }, 1500);
+    }
   };
 
   return (
@@ -99,7 +117,7 @@ const Register = () => {
       subtitle="Join Alexi Smart Learning Platform"
     >
       <form onSubmit={handleSubmit} className="space-y-4">
-        
+
         {/* Full Name */}
         <Input
           label="Full Name"
@@ -111,7 +129,7 @@ const Register = () => {
           onChange={handleChange}
           error={errors.fullName}
         />
-        
+
         {/* Email */}
         <Input
           label="Email Address"
@@ -123,7 +141,7 @@ const Register = () => {
           onChange={handleChange}
           error={errors.email}
         />
-        
+
         {/* Phone */}
         <Input
           label="Phone Number"
@@ -135,7 +153,7 @@ const Register = () => {
           onChange={handleChange}
           error={errors.phone}
         />
-        
+
         {/* Role Selection */}
         <div>
           <label className="block text-sm font-semibold text-text mb-2">
@@ -170,7 +188,7 @@ const Register = () => {
             </button>
           </div>
         </div>
-        
+
         {/* School Name (only for teachers) */}
         {formData.role === 'teacher' && (
           <Input
@@ -184,7 +202,7 @@ const Register = () => {
             error={errors.school}
           />
         )}
-        
+
         {/* Password */}
         <Input
           label="Password"
@@ -196,7 +214,7 @@ const Register = () => {
           onChange={handleChange}
           error={errors.password}
         />
-        
+
         {/* Confirm Password */}
         <Input
           label="Confirm Password"
@@ -208,7 +226,7 @@ const Register = () => {
           onChange={handleChange}
           error={errors.confirmPassword}
         />
-        
+
         {/* Terms & Conditions */}
         <div>
           <label className="flex items-start gap-2 cursor-pointer">
@@ -240,7 +258,7 @@ const Register = () => {
             </motion.p>
           )}
         </div>
-        
+
         {/* Submit Button */}
         <Button
           type="submit"
@@ -251,14 +269,14 @@ const Register = () => {
         >
           Create Account
         </Button>
-        
+
         {/* Info Message */}
         <div className="bg-blue-50 border border-blue-200 rounded-2xl p-4">
           <p className="text-sm text-blue-800">
             ℹ️ Your account will be reviewed by an administrator before you can access the platform.
           </p>
         </div>
-        
+
         {/* Login Link */}
         <p className="text-center text-sm text-text/60 mt-6">
           Already have an account?{' '}

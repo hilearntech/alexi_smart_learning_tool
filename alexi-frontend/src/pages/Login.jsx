@@ -6,20 +6,20 @@ import { Mail, Lock, Eye, EyeOff } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 // Test credentials for all account types
-const TEST_ACCOUNTS = {
-  admin: {
-    email: 'admin@alexi.com',
-    password: 'admin123'
-  },
-  teacher: {
-    email: 'teacher@alexi.com',
-    password: 'teacher123'
-  },
-  parent: {
-    email: 'parent@alexi.com',
-    password: 'parent123'
-  }
-};
+// const TEST_ACCOUNTS = {
+//   admin: {
+//     email: 'admin@alexi.com',
+//     password: 'admin123'
+//   },
+//   teacher: {
+//     email: 'teacher@alexi.com',
+//     password: 'teacher123'
+//   },
+//   parent: {
+//     email: 'parent@alexi.com',
+//     password: 'parent123'
+//   }
+// };
 
 const Login = () => {
   const navigate = useNavigate(); // ← ADD THIS
@@ -46,66 +46,102 @@ const Login = () => {
 
   const validate = () => {
     const newErrors = {};
-    
+
     if (!formData.email) {
       newErrors.email = 'Email is required';
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
       newErrors.email = 'Email is invalid';
     }
-    
+
     if (!formData.password) {
       newErrors.password = 'Password is required';
     } else if (formData.password.length < 6) {
       newErrors.password = 'Password must be at least 6 characters';
     }
-    
+
     return newErrors;
   };
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+
+  //   const newErrors = validate();
+  //   if (Object.keys(newErrors).length > 0) {
+  //     setErrors(newErrors);
+  //     return;
+  //   }
+
+  //   setLoading(true);
+
+  //   // Simulate API call and validate credentials
+  //   setTimeout(() => {
+  //     console.log('Login data:', formData);
+
+  //     // Check credentials against test accounts
+  //     let userRole = null;
+
+  //     if (formData.email === TEST_ACCOUNTS.admin.email && 
+  //         formData.password === TEST_ACCOUNTS.admin.password) {
+  //       userRole = 'admin';
+  //     } else if (formData.email === TEST_ACCOUNTS.teacher.email && 
+  //                formData.password === TEST_ACCOUNTS.teacher.password) {
+  //       userRole = 'teacher';
+  //     } else if (formData.email === TEST_ACCOUNTS.parent.email && 
+  //                formData.password === TEST_ACCOUNTS.parent.password) {
+  //       userRole = 'parent';
+  //     } else {
+  //       setErrors({ email: 'Invalid email or password' });
+  //       setLoading(false);
+  //       return;
+  //     }
+
+  //     // Navigate based on detected role
+  //     if (userRole === 'teacher') {
+  //       navigate('/teacher/home');
+  //     } else if (userRole === 'parent') {
+  //       navigate('/parent/home');
+  //     } else if (userRole === 'admin') {
+  //       navigate('/admin/dashboard');
+  //     }
+
+  //     setLoading(false);
+  //   }, 1500);
+  // };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     const newErrors = validate();
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return;
     }
-    
+
     setLoading(true);
-    
-    // Simulate API call and validate credentials
-    setTimeout(() => {
-      console.log('Login data:', formData);
-      
-      // Check credentials against test accounts
-      let userRole = null;
-      
-      if (formData.email === TEST_ACCOUNTS.admin.email && 
-          formData.password === TEST_ACCOUNTS.admin.password) {
-        userRole = 'admin';
-      } else if (formData.email === TEST_ACCOUNTS.teacher.email && 
-                 formData.password === TEST_ACCOUNTS.teacher.password) {
-        userRole = 'teacher';
-      } else if (formData.email === TEST_ACCOUNTS.parent.email && 
-                 formData.password === TEST_ACCOUNTS.parent.password) {
-        userRole = 'parent';
-      } else {
-        setErrors({ email: 'Invalid email or password' });
-        setLoading(false);
-        return;
-      }
-      
-      // Navigate based on detected role
-      if (userRole === 'teacher') {
-        navigate('/teacher/home');
-      } else if (userRole === 'parent') {
-        navigate('/parent/home');
-      } else if (userRole === 'admin') {
-        navigate('/admin/dashboard');
-      }
-      
+
+    try {
+      const res = await fetch("http://localhost:5000/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: formData.email,
+          password: formData.password,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) throw new Error(data.msg);
+
+      // Redirect based on role
+      if (data.role === "admin") navigate("/admin/dashboard");
+      else if (data.role === "teacher") navigate("/teacher/home");
+      else if (data.role === "parent") navigate("/parent/home");
+
+    } catch (err) {
+      setErrors({ email: err.message });
+    } finally {
       setLoading(false);
-    }, 1500);
+    }
   };
 
   return (
@@ -114,7 +150,7 @@ const Login = () => {
       subtitle="Sign in to continue to Alexi"
     >
       <form onSubmit={handleSubmit} className="space-y-5">
-        
+
         {/* Email Input */}
         <Input
           label="Email Address"
@@ -126,7 +162,7 @@ const Login = () => {
           onChange={handleChange}
           error={errors.email}
         />
-        
+
         {/* Password Input with Toggle */}
         <div>
           <label className="block text-sm font-semibold text-text mb-2">
@@ -168,7 +204,7 @@ const Login = () => {
             </motion.p>
           )}
         </div>
-        
+
         {/* Remember Me & Forgot Password */}
         <div className="flex items-center justify-between">
           <label className="flex items-center gap-2 cursor-pointer">
@@ -181,7 +217,7 @@ const Login = () => {
             />
             <span className="text-sm text-text">Remember me</span>
           </label>
-          
+
           {/* ↓↓↓ UPDATED: Add onClick to navigate */}
           <button
             type="button"
@@ -191,7 +227,7 @@ const Login = () => {
             Forgot Password?
           </button>
         </div>
-        
+
         {/* Submit Button */}
         <Button
           type="submit"
@@ -202,7 +238,7 @@ const Login = () => {
         >
           Sign In
         </Button>
-        
+
         {/* Divider */}
         <div className="relative my-6">
           <div className="absolute inset-0 flex items-center">
@@ -212,7 +248,7 @@ const Login = () => {
             <span className="px-4 bg-white text-gray-500">Or continue with</span>
           </div>
         </div>
-        
+
         {/* Social Login Buttons */}
         <div className="grid grid-cols-2 gap-4">
           <button
@@ -230,7 +266,7 @@ const Login = () => {
             <span className="font-semibold text-text">Microsoft</span>
           </button>
         </div>
-        
+
         {/* Register Link */}
         <p className="text-center text-sm text-text/60 mt-6">
           Don't have an account?{' '}

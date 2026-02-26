@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, Button, Input, Modal, Avatar } from '../../../components/shared';
 import { Search, CheckCircle, XCircle, Eye, Mail, Phone, User } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -9,73 +9,108 @@ const ParentManagement = () => {
   const [showApprovalModal, setShowApprovalModal] = useState(false);
   const [selectedParent, setSelectedParent] = useState(null);
 
-  const [parents, setParents] = useState([
-    {
-      id: 1,
-      name: 'Mr. Rajesh Sharma',
-      email: 'rajesh.sharma@email.com',
-      phone: '9876543210',
-      childName: 'Aarav Sharma',
-      childClass: 'Junior KG-A',
-      status: 'active',
-      joinedDate: '2025-01-20'
-    },
-    {
-      id: 2,
-      name: 'Mrs. Anjali Patel',
-      email: 'anjali.patel@email.com',
-      phone: '9876543211',
-      childName: 'Priya Patel',
-      childClass: 'Junior KG-A',
-      status: 'active',
-      joinedDate: '2025-01-22'
-    },
-    {
-      id: 3,
-      name: 'Mr. Vijay Kumar',
-      email: 'vijay.kumar@email.com',
-      phone: '9876543212',
-      childName: 'Rohan Kumar',
-      childClass: 'Junior KG-B',
-      status: 'active',
-      joinedDate: '2025-02-01'
-    },
-    {
-      id: 4,
-      name: 'Mrs. Neha Gupta',
-      email: 'neha.gupta@email.com',
-      phone: '9876543213',
-      childName: 'Sara Gupta',
-      childClass: 'Junior KG-A',
-      status: 'pending',
-      joinedDate: '2026-02-15'
-    },
-    {
-      id: 5,
-      name: 'Mr. Vikram Patel',
-      email: 'vikram.patel@email.com',
-      phone: '9876543214',
-      childName: 'Ananya Patel',
-      childClass: 'Junior KG-C',
-      status: 'pending',
-      joinedDate: '2026-02-14'
-    },
-  ]);
+  const [parents, setParents] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:5000/api/admin/all-users")
+      .then(res => res.json())
+      .then(data => {
+        const parentsOnly = data.filter(user => user.role === "parent"); // ⭐ FIX
+
+        const formatted = parentsOnly.map(user => ({
+          id: user._id,
+          name: user.name,
+          email: user.email,
+          phone: user.phone,
+          childName: "N/A",
+          childClass: "N/A",
+          status: user.status === "approved" ? "active" : "pending",
+          joinedDate: user.created_at
+            ? new Date(user.created_at).toLocaleDateString()
+            : "N/A"
+        }));
+
+        setParents(formatted);
+      });
+  }, []);
+  // const [parents, setParents] = useState([
+  //   {
+  //     id: 1,
+  //     name: 'Mr. Rajesh Sharma',
+  //     email: 'rajesh.sharma@email.com',
+  //     phone: '9876543210',
+  //     childName: 'Aarav Sharma',
+  //     childClass: 'Junior KG-A',
+  //     status: 'active',
+  //     joinedDate: '2025-01-20'
+  //   },
+  //   {
+  //     id: 2,
+  //     name: 'Mrs. Anjali Patel',
+  //     email: 'anjali.patel@email.com',
+  //     phone: '9876543211',
+  //     childName: 'Priya Patel',
+  //     childClass: 'Junior KG-A',
+  //     status: 'active',
+  //     joinedDate: '2025-01-22'
+  //   },
+  //   {
+  //     id: 3,
+  //     name: 'Mr. Vijay Kumar',
+  //     email: 'vijay.kumar@email.com',
+  //     phone: '9876543212',
+  //     childName: 'Rohan Kumar',
+  //     childClass: 'Junior KG-B',
+  //     status: 'active',
+  //     joinedDate: '2025-02-01'
+  //   },
+  //   {
+  //     id: 4,
+  //     name: 'Mrs. Neha Gupta',
+  //     email: 'neha.gupta@email.com',
+  //     phone: '9876543213',
+  //     childName: 'Sara Gupta',
+  //     childClass: 'Junior KG-A',
+  //     status: 'pending',
+  //     joinedDate: '2026-02-15'
+  //   },
+  //   {
+  //     id: 5,
+  //     name: 'Mr. Vikram Patel',
+  //     email: 'vikram.patel@email.com',
+  //     phone: '9876543214',
+  //     childName: 'Ananya Patel',
+  //     childClass: 'Junior KG-C',
+  //     status: 'pending',
+  //     joinedDate: '2026-02-14'
+  //   },
+  // ]);
 
   const filteredParents = parents.filter(parent => {
     const matchesSearch = parent.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         parent.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         parent.childName.toLowerCase().includes(searchQuery.toLowerCase());
+      parent.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      parent.childName.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesStatus = statusFilter === 'all' || parent.status === statusFilter;
     return matchesSearch && matchesStatus;
   });
 
-  const handleApprove = (parent) => {
-    setParents(parents.map(p => 
-      p.id === parent.id ? { ...p, status: 'active' } : p
-    ));
-    setShowApprovalModal(false);
-    alert(`${parent.name} has been approved!`);
+  // const handleApprove = (parent) => {
+  //   setParents(parents.map(p =>
+  //     p.id === parent.id ? { ...p, status: 'active' } : p
+  //   ));
+  //   setShowApprovalModal(false);
+  //   alert(`${parent.name} has been approved!`);
+  // };
+  const handleApprove = async (parent) => {
+    await fetch(`http://localhost:5000/api/admin/approve/${parent.id}`, {
+      method: "PUT"
+    });
+
+    setParents(prev =>
+      prev.map(p => p.id === parent.id ? { ...p, status: "active" } : p)
+    );
+
+    alert(`${parent.name} approved successfully`);
   };
 
   const handleReject = (parent) => {
@@ -278,18 +313,18 @@ const ParentManagement = () => {
 
             {selectedParent.status === 'pending' && (
               <div className="flex gap-3 mt-6">
-                <Button 
-                  variant="primary" 
+                <Button
+                  variant="primary"
                   icon={CheckCircle}
-                  onClick={() => handleApprove(selectedParent)} 
+                  onClick={() => handleApprove(selectedParent)}
                   className="flex-1"
                 >
                   Approve
                 </Button>
-                <Button 
-                  variant="outline" 
+                <Button
+                  variant="outline"
                   icon={XCircle}
-                  onClick={() => handleReject(selectedParent)} 
+                  onClick={() => handleReject(selectedParent)}
                   className="flex-1"
                 >
                   Reject
