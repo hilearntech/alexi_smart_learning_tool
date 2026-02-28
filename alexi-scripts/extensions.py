@@ -9,3 +9,4 @@ db = client[DB_NAME]
 
 users = db["users"]
 attendance_collection = db["attendance"]
+students = db["students"]

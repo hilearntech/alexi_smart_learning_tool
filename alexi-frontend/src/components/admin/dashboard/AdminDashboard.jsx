@@ -2,23 +2,13 @@ import React from 'react';
 import { Card, Button } from '../../../components/shared';
 import { Users, UserPlus, TrendingUp, AlertCircle, CheckCircle, Clock } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 const AdminDashboard = () => {
-  const stats = {
-    totalTeachers: 5,
-    totalParents: 45,
-    totalStudents: 90,
-    pendingApprovals: 7,
-    activeToday: 78,
-    systemHealth: 'Excellent'
-  };
 
-  const pendingApprovals = [
-    { id: 1, type: 'teacher', name: 'Mr. Rahul Verma', email: 'rahul.v@school.com', date: '2 hours ago' },
-    { id: 2, type: 'parent', name: 'Mrs. Anjali Mehta', email: 'anjali.m@email.com', date: '5 hours ago' },
-    { id: 3, type: 'teacher', name: 'Ms. Sneha Kapoor', email: 'sneha.k@school.com', date: '1 day ago' },
-    { id: 4, type: 'parent', name: 'Mr. Vikram Patel', email: 'vikram.p@email.com', date: '1 day ago' },
-  ];
+  const [stats, setStats] = useState({});
+  const [pendingApprovals, setPendingApprovals] = useState([]);
 
   const recentActivity = [
     { action: 'New teacher registered', user: 'Mr. Rahul Verma', time: '2 hours ago', type: 'info' },
@@ -34,6 +24,22 @@ const AdminDashboard = () => {
     { label: 'Active Sessions', value: '12', status: 'good' },
   ];
 
+  useEffect(() => {
+    fetchDashboardData();
+  }, []);
+
+  const fetchDashboardData = async () => {
+    try {
+      const statsRes = await axios.get("http://localhost:5000/api/admin/dashboard-stats");
+      setStats(statsRes.data);
+
+      const pendingRes = await axios.get("http://localhost:5000/api/admin/pending-users");
+      setPendingApprovals(pendingRes.data);
+
+    } catch (error) {
+      console.error("Dashboard fetch error:", error);
+    }
+  };
   return (
     <div className="space-y-6">
       {/* Header */}
@@ -46,31 +52,31 @@ const AdminDashboard = () => {
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
         <Card className="bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200">
           <Users size={24} className="text-blue-600 mb-2" />
-          <p className="text-3xl font-bold text-blue-900">{stats.totalTeachers}</p>
+          <p className="text-3xl font-bold text-blue-900">{stats?.totalTeachers || 0}</p>
           <p className="text-sm text-blue-700">Teachers</p>
         </Card>
 
         <Card className="bg-gradient-to-br from-green-50 to-green-100 border-green-200">
           <UserPlus size={24} className="text-green-600 mb-2" />
-          <p className="text-3xl font-bold text-green-900">{stats.totalParents}</p>
+          <p className="text-3xl font-bold text-green-900">{stats?.totalParents || 0}</p>
           <p className="text-sm text-green-700">Parents</p>
         </Card>
 
         <Card className="bg-gradient-to-br from-purple-50 to-purple-100 border-purple-200">
           <Users size={24} className="text-purple-600 mb-2" />
-          <p className="text-3xl font-bold text-purple-900">{stats.totalStudents}</p>
+          <p className="text-3xl font-bold text-purple-900">{stats?.totalStudents || 0}</p>
           <p className="text-sm text-purple-700">Students</p>
         </Card>
 
         <Card className="bg-gradient-to-br from-yellow-50 to-yellow-100 border-yellow-200">
           <Clock size={24} className="text-yellow-600 mb-2" />
-          <p className="text-3xl font-bold text-yellow-900">{stats.pendingApprovals}</p>
+          <p className="text-3xl font-bold text-yellow-900">{stats?.pendingApprovals || 0}</p>
           <p className="text-sm text-yellow-700">Pending</p>
         </Card>
 
         <Card className="bg-gradient-to-br from-cyan-50 to-cyan-100 border-cyan-200">
           <TrendingUp size={24} className="text-cyan-600 mb-2" />
-          <p className="text-3xl font-bold text-cyan-900">{stats.activeToday}</p>
+          <p className="text-3xl font-bold text-cyan-900">{stats?.activeToday || 0}</p>
           <p className="text-sm text-cyan-700">Active Today</p>
         </Card>
 

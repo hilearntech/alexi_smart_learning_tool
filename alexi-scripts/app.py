@@ -8,6 +8,8 @@ from bson import ObjectId
 from bson.json_util import dumps
 from routes.auth_routes import auth_bp
 from routes.admin_routes import admin_bp
+from routes.whatsapp_route import whatsapp_bp
+from extensions import users, attendance_collection, bcrypt
 import jwt
 
 try:
@@ -25,15 +27,6 @@ bcrypt = Bcrypt(app)
 SECRET = "alexi_secret"
 
 
-# ==========================================
-# MONGODB CONNECTION SETUP
-# ==========================================
-# 'AlexiDB' database name and 'attendance' is collection name
-
-client = MongoClient("mongodb://localhost:27017/")
-db = client["AlexiDB"]
-users = db["users"]
-attendance_collection = db["attendance"]
 
 # System initialize karein
 system = FaceRecognitionSystem()
@@ -129,6 +122,7 @@ def mimi_get():
 
 app.register_blueprint(auth_bp)
 app.register_blueprint(admin_bp)
+app.register_blueprint(whatsapp_bp)
     
 if __name__ == "__main__":
     # debug=False rakhein threading ke waqt, warna camera do baar khul sakta hai

@@ -10,6 +10,8 @@ const ParentManagement = () => {
   const [selectedParent, setSelectedParent] = useState(null);
 
   const [parents, setParents] = useState([]);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [editForm, setEditForm] = useState({});
 
   useEffect(() => {
     fetch("http://localhost:5000/api/admin/all-users")
@@ -22,8 +24,8 @@ const ParentManagement = () => {
           name: user.name,
           email: user.email,
           phone: user.phone,
-          childName: "N/A",
-          childClass: "N/A",
+          childName: user.child_name || "N/A",
+          childClass: user.child_class || "N/A",
           status: user.status === "approved" ? "active" : "pending",
           joinedDate: user.created_at
             ? new Date(user.created_at).toLocaleDateString()
@@ -33,58 +35,13 @@ const ParentManagement = () => {
         setParents(formatted);
       });
   }, []);
-  // const [parents, setParents] = useState([
-  //   {
-  //     id: 1,
-  //     name: 'Mr. Rajesh Sharma',
-  //     email: 'rajesh.sharma@email.com',
-  //     phone: '9876543210',
-  //     childName: 'Aarav Sharma',
-  //     childClass: 'Junior KG-A',
-  //     status: 'active',
-  //     joinedDate: '2025-01-20'
-  //   },
-  //   {
-  //     id: 2,
-  //     name: 'Mrs. Anjali Patel',
-  //     email: 'anjali.patel@email.com',
-  //     phone: '9876543211',
-  //     childName: 'Priya Patel',
-  //     childClass: 'Junior KG-A',
-  //     status: 'active',
-  //     joinedDate: '2025-01-22'
-  //   },
-  //   {
-  //     id: 3,
-  //     name: 'Mr. Vijay Kumar',
-  //     email: 'vijay.kumar@email.com',
-  //     phone: '9876543212',
-  //     childName: 'Rohan Kumar',
-  //     childClass: 'Junior KG-B',
-  //     status: 'active',
-  //     joinedDate: '2025-02-01'
-  //   },
-  //   {
-  //     id: 4,
-  //     name: 'Mrs. Neha Gupta',
-  //     email: 'neha.gupta@email.com',
-  //     phone: '9876543213',
-  //     childName: 'Sara Gupta',
-  //     childClass: 'Junior KG-A',
-  //     status: 'pending',
-  //     joinedDate: '2026-02-15'
-  //   },
-  //   {
-  //     id: 5,
-  //     name: 'Mr. Vikram Patel',
-  //     email: 'vikram.patel@email.com',
-  //     phone: '9876543214',
-  //     childName: 'Ananya Patel',
-  //     childClass: 'Junior KG-C',
-  //     status: 'pending',
-  //     joinedDate: '2026-02-14'
-  //   },
-  // ]);
+
+  useEffect(() => {
+    if (selectedParent) {
+      setEditForm(selectedParent);
+    }
+  }, [selectedParent]);
+
 
   const filteredParents = parents.filter(parent => {
     const matchesSearch = parent.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -94,13 +51,7 @@ const ParentManagement = () => {
     return matchesSearch && matchesStatus;
   });
 
-  // const handleApprove = (parent) => {
-  //   setParents(parents.map(p =>
-  //     p.id === parent.id ? { ...p, status: 'active' } : p
-  //   ));
-  //   setShowApprovalModal(false);
-  //   alert(`${parent.name} has been approved!`);
-  // };
+
   const handleApprove = async (parent) => {
     await fetch(`http://localhost:5000/api/admin/approve/${parent.id}`, {
       method: "PUT"
@@ -117,6 +68,37 @@ const ParentManagement = () => {
     if (window.confirm(`Are you sure you want to reject ${parent.name}?`)) {
       setParents(parents.filter(p => p.id !== parent.id));
       setShowApprovalModal(false);
+    }
+  };
+
+  const handleUpdateParent = async () => {
+    try {
+      const res = await fetch(
+        `http://localhost:5000/api/admin/edit-parent/${editForm.id}`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(editForm),
+        }
+      );
+
+      const data = await res.json();
+
+      alert(data.msg || "Parent updated successfully");
+
+      // close modal
+      setShowEditModal(false);
+
+      // update UI without reload
+      setParents(prev =>
+        prev.map(p =>
+          p.id === editForm.id ? { ...p, ...editForm } : p
+        )
+      );
+
+    } catch (err) {
+      console.error(err);
+      alert("Update failed");
     }
   };
 
@@ -241,6 +223,16 @@ const ParentManagement = () => {
                       >
                         <Eye size={18} className="text-blue-600" />
                       </button>
+                      <button
+                        onClick={() => {
+                          setEditForm(parent);
+                          setShowEditModal(true);
+                        }}
+                        className="p-2 hover:bg-indigo-50 rounded-lg transition-colors"
+                        title="Edit"
+                      >
+                        ✏️
+                      </button>
                       {parent.status === 'pending' && (
                         <>
                           <button
@@ -295,20 +287,24 @@ const ParentManagement = () => {
               <div className="flex items-center gap-2">
                 <Mail size={18} className="text-text/60" />
                 <span className="text-text">{selectedParent.email}</span>
+
               </div>
               <div className="flex items-center gap-2">
                 <Phone size={18} className="text-text/60" />
                 <span className="text-text">{selectedParent.phone}</span>
+
               </div>
               <div className="flex items-center gap-2">
                 <User size={18} className="text-text/60" />
                 <span className="text-text">Child: {selectedParent.childName}</span>
+
               </div>
             </div>
 
             <div className="bg-blue-50 rounded-2xl p-4 text-center">
               <p className="text-sm text-blue-700 mb-1">Child's Class</p>
               <p className="text-xl font-bold text-blue-900">{selectedParent.childClass}</p>
+
             </div>
 
             {selectedParent.status === 'pending' && (
@@ -331,6 +327,78 @@ const ParentManagement = () => {
                 </Button>
               </div>
             )}
+          </div>
+        </Modal>
+      )}
+
+      {/* Edit Modal */}
+      {editForm && (
+        <Modal
+          isOpen={showEditModal}
+          onClose={() => setShowEditModal(false)}
+          title="Edit Parent"
+          size="md"
+        >
+          <div className="space-y-4">
+
+            <Input
+              label="Name"
+              value={editForm.name}
+              onChange={(e) =>
+                setEditForm({ ...editForm, name: e.target.value })
+              }
+            />
+
+            <Input
+              label="Email"
+              value={editForm.email}
+              onChange={(e) =>
+                setEditForm({ ...editForm, email: e.target.value })
+              }
+            />
+
+            <Input
+              label="Phone"
+              value={editForm.phone}
+              onChange={(e) =>
+                setEditForm({ ...editForm, phone: e.target.value })
+              }
+            />
+            <Input
+              label="Child Name"
+              value={editForm.childName}
+              onChange={(e) =>
+                setEditForm({ ...editForm, childName: e.target.value })
+              }
+            />
+
+            <Input
+              label="Child Class"
+              value={editForm.childClass}
+              onChange={(e) =>
+                setEditForm({ ...editForm, childClass: e.target.value })
+              }
+            />
+
+            {/* Status Dropdown */}
+            <select
+              className="w-full border rounded-lg p-2"
+              value={editForm.status}
+              onChange={(e) =>
+                setEditForm({ ...editForm, status: e.target.value })
+              }
+            >
+              <option value="active">Active</option>
+              <option value="pending">Pending</option>
+            </select>
+
+            <Button
+              variant="primary"
+              className="w-full"
+              onClick={handleUpdateParent}
+            >
+              Save Changes
+            </Button>
           </div>
         </Modal>
       )}
