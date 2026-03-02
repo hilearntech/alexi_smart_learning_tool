@@ -174,11 +174,16 @@ class SpeechManager:
         logger.info("SpeechManager ready")
 
     def _worker(self):
-        """The ONE thread that plays audio using gTTS + pygame."""
+        """The ONE thread that plays audio using edge-tts + pygame."""
         import pygame
-        from gtts import gTTS
         import tempfile
+        import asyncio
+        import edge_tts
         pygame.mixer.init()
+
+        async def speak(text, path):
+            communicate = edge_tts.Communicate(text, voice="en-IN-NeerjaNeural", rate="-10%", pitch="+15Hz")
+            await communicate.save(path)
 
         while True:
             self._trigger.wait()
@@ -192,10 +197,12 @@ class SpeechManager:
 
                 try:
                     logger.info(f"SPEAKING: {text}")
-                    tts = gTTS(text=text, lang='en', tld='co.in')
                     with tempfile.NamedTemporaryFile(delete=False, suffix='.mp3') as f:
                         tmp_path = f.name
-                    tts.save(tmp_path)
+                    loop = asyncio.new_event_loop()
+                    asyncio.set_event_loop(loop)
+                    loop.run_until_complete(speak(text, tmp_path))
+                    loop.close()
                     pygame.mixer.music.load(tmp_path)
                     pygame.mixer.music.play()
                     while pygame.mixer.music.get_busy():
@@ -208,8 +215,6 @@ class SpeechManager:
                 finally:
                     if done_event:
                         done_event.set()
-                    # unblock speak_and_wait() caller
-
     def speak_and_wait(self, text):
         """Queue text and block the calling thread until it is fully spoken."""
         done = threading.Event()
@@ -235,7 +240,7 @@ class SpeechManager:
             self._queue.clear()
         if dropped:
             logger.info(f"TTS queue cleared — dropped {dropped} stale item(s)")
-
+ 
 
 # ============================================================================
 # SPEECH RECOGNISER
@@ -265,24 +270,34 @@ class SpeechRecognizer:
     def listen(self, timeout=10):
         if not self.recognizer or not self.microphone:
             return None
-        try:
-            logger.info(f"LISTENING… (energy threshold: {self.recognizer.energy_threshold:.0f})")
-            with  sr.Microphone() as source:
-                audio = self.recognizer.listen(source, timeout=timeout, phrase_time_limit=10)
-            logger.info("Audio captured — sending to Google STT…")
-            text = self.recognizer.recognize_google(audio, language="en-IN")  # Indian English accent
-            logger.info(f"HEARD: '{text}'")
-            return text.lower()
-        except sr.WaitTimeoutError:
-            logger.warning("LISTEN TIMEOUT — no speech detected within timeout")
-        except sr.UnknownValueError:
-            logger.warning("COULD NOT UNDERSTAND — audio captured but unclear. Check mic/accent.")
-        except sr.RequestError as e:
-            logger.error(f"Google STT error: {e}")
-        except Exception as e:
-            logger.error(f"Listen error: {e}")
+        
+        for attempt in range(3):  # 3 attempts
+            try:
+                logger.info(f"LISTENING… (energy threshold: {self.recognizer.energy_threshold:.0f})")
+                with sr.Microphone() as source:
+                    if attempt > 0:
+                        # Recalibrate on retry
+                        self.recognizer.adjust_for_ambient_noise(source, duration=0.5)
+                    audio = self.recognizer.listen(source, timeout=timeout, phrase_time_limit=10)
+                logger.info("Audio captured — sending to Google STT…")
+                text = self.recognizer.recognize_google(audio, language="en-IN")
+                logger.info(f"HEARD: '{text}'")
+                return text.lower()
+            except sr.WaitTimeoutError:
+                logger.warning(f"LISTEN TIMEOUT (attempt {attempt+1}/3)")
+                if attempt == 2:
+                    return None
+            except sr.UnknownValueError:
+                logger.warning(f"COULD NOT UNDERSTAND (attempt {attempt+1}/3)")
+                if attempt == 2:
+                    return None
+            except sr.RequestError as e:
+                logger.error(f"Google STT error: {e}")
+                return None
+            except Exception as e:
+                logger.error(f"Listen error: {e}")
+                return None
         return None
-
 
 # ============================================================================
 # MOOD ANALYSER

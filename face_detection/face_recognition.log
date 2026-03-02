@@ -9902,3 +9902,679 @@ AttributeError: module 'cv2' has no attribute 'VideoCapture'
 2026-02-28 11:50:59,853 - INFO - SPEAKING: Yes! I'm here. You can ask me anything.
 2026-02-28 11:51:04,268 - INFO - DONE SPEAKING
 2026-02-28 11:51:04,269 - INFO - LISTENING… (energy threshold: 400)
+2026-02-28 12:17:09,351 - INFO - Already marked today: Rahil
+2026-02-28 12:17:09,353 - INFO - AttendanceManager ready
+2026-02-28 12:17:09,353 - INFO - SpeechManager ready
+2026-02-28 12:17:11,725 - INFO - Calibrating microphone…
+2026-02-28 12:17:12,805 - INFO - SpeechRecognizer ready
+2026-02-28 12:17:12,806 - INFO - ============================================================
+2026-02-28 12:17:12,806 - INFO - FACE RECOGNITION ATTENDANCE SYSTEM
+2026-02-28 12:17:12,806 - INFO - ============================================================
+2026-02-28 12:17:14,405 - INFO - Loaded: Dron
+2026-02-28 12:17:15,694 - INFO - Loaded: ghanisht
+2026-02-28 12:17:17,097 - INFO - Loaded: Nishit
+2026-02-28 12:17:18,445 - INFO - Loaded: Rahil
+2026-02-28 12:17:19,662 - INFO - Loaded: Shikha
+2026-02-28 12:17:20,664 - INFO - Loaded: Tushar
+2026-02-28 12:17:22,577 - INFO - Loaded: vini
+2026-02-28 12:17:24,045 - INFO - Loaded: vini
+2026-02-28 12:17:24,045 - INFO - Known people (8): Dron, ghanisht, Nishit, Rahil, Shikha, Tushar, vini, vini
+2026-02-28 12:17:24,045 - INFO - SpeechManager ready
+2026-02-28 12:17:24,445 - INFO - Calibrating microphone…
+2026-02-28 12:17:25,496 - INFO - SpeechRecognizer ready
+2026-02-28 12:17:41,205 - INFO - Camera started
+2026-02-28 12:17:42,995 - INFO - SPEAKING: Hi Rahil! How are you today?
+2026-02-28 12:17:43,083 - ERROR - TTS engine error: Failed to connect. Probable cause: Host 'https://translate.google.co.in/' is not reachable
+2026-02-28 12:17:43,083 - INFO - LISTENING… (energy threshold: 400)
+2026-02-28 12:17:51,560 - WARNING - LISTEN TIMEOUT — no speech detected within timeout
+2026-02-28 12:17:51,563 - INFO - SPEAKING: Great! Attendance marked. Have a wonderful day Rahil!
+2026-02-28 12:17:58,239 - INFO - DONE SPEAKING
+2026-02-28 12:18:29,447 - INFO - SPEAKING: Yes! I'm here. You can ask me anything.
+2026-02-28 12:18:34,230 - INFO - DONE SPEAKING
+2026-02-28 12:18:34,230 - INFO - LISTENING… (energy threshold: 400)
+2026-02-28 12:18:46,291 - WARNING - LISTEN TIMEOUT — no speech detected within timeout
+2026-02-28 12:18:46,301 - INFO - SPEAKING: I didn't hear you. Can you say that again?
+2026-02-28 12:18:52,353 - INFO - DONE SPEAKING
+2026-02-28 12:18:52,353 - INFO - LISTENING… (energy threshold: 400)
+2026-02-28 12:20:11,420 - INFO - Already marked today: Rahil
+2026-02-28 12:20:11,421 - INFO - AttendanceManager ready
+2026-02-28 12:20:11,423 - INFO - SpeechManager ready
+2026-02-28 12:20:11,950 - INFO - Calibrating microphone…
+2026-02-28 12:20:13,007 - INFO - SpeechRecognizer ready
+2026-02-28 12:20:13,011 - INFO - ============================================================
+2026-02-28 12:20:13,012 - INFO - FACE RECOGNITION ATTENDANCE SYSTEM
+2026-02-28 12:20:13,015 - INFO - ============================================================
+2026-02-28 12:20:14,553 - INFO - Loaded: Dron
+2026-02-28 12:20:15,796 - INFO - Loaded: ghanisht
+2026-02-28 12:20:17,223 - INFO - Loaded: Nishit
+2026-02-28 12:20:18,600 - INFO - Loaded: Rahil
+2026-02-28 12:20:19,889 - INFO - Loaded: Shikha
+2026-02-28 12:20:20,844 - INFO - Loaded: Tushar
+2026-02-28 12:20:22,699 - INFO - Loaded: vini
+2026-02-28 12:20:24,119 - INFO - Loaded: vini
+2026-02-28 12:20:24,119 - INFO - Known people (8): Dron, ghanisht, Nishit, Rahil, Shikha, Tushar, vini, vini
+2026-02-28 12:20:24,121 - INFO - SpeechManager ready
+2026-02-28 12:20:24,507 - INFO - Calibrating microphone…
+2026-02-28 12:20:25,549 - INFO - SpeechRecognizer ready
+2026-02-28 12:20:51,832 - INFO - Camera started
+2026-02-28 12:20:53,339 - INFO - SPEAKING: Hi Rahil! How are you today?
+2026-02-28 12:20:56,452 - INFO - DONE SPEAKING
+2026-02-28 12:20:56,454 - INFO - LISTENING… (energy threshold: 400)
+2026-02-28 12:21:00,582 - INFO - Audio captured — sending to Google STT…
+2026-02-28 12:21:00,797 - ERROR - Listen error: Expecting value: line 1 column 1 (char 0)
+2026-02-28 12:21:00,798 - INFO - SPEAKING: Great! Attendance marked. Have a wonderful day Rahil!
+2026-02-28 12:21:00,841 - ERROR - TTS engine error: Failed to connect. Probable cause: Host 'https://translate.google.co.in/' is not reachable
+2026-02-28 12:22:45,506 - INFO - Already marked today: Rahil
+2026-02-28 12:22:45,507 - INFO - AttendanceManager ready
+2026-02-28 12:22:45,508 - INFO - SpeechManager ready
+2026-02-28 12:22:46,001 - INFO - Calibrating microphone…
+2026-02-28 12:22:47,019 - INFO - SpeechRecognizer ready
+2026-02-28 12:22:47,021 - INFO - ============================================================
+2026-02-28 12:22:47,021 - INFO - FACE RECOGNITION ATTENDANCE SYSTEM
+2026-02-28 12:22:47,023 - INFO - ============================================================
+2026-02-28 12:22:48,615 - INFO - Loaded: Dron
+2026-02-28 12:22:50,143 - INFO - Loaded: ghanisht
+2026-02-28 12:22:51,647 - INFO - Loaded: Nishit
+2026-02-28 12:22:53,108 - INFO - Loaded: Rahil
+2026-02-28 12:22:54,389 - INFO - Loaded: Shikha
+2026-02-28 12:22:55,340 - INFO - Loaded: Tushar
+2026-02-28 12:22:57,198 - INFO - Loaded: vini
+2026-02-28 12:22:58,577 - INFO - Loaded: vini
+2026-02-28 12:22:58,577 - INFO - Known people (8): Dron, ghanisht, Nishit, Rahil, Shikha, Tushar, vini, vini
+2026-02-28 12:22:58,579 - INFO - SpeechManager ready
+2026-02-28 12:22:58,741 - INFO - Calibrating microphone…
+2026-02-28 12:22:59,762 - INFO - SpeechRecognizer ready
+2026-02-28 12:23:14,717 - INFO - Camera started
+2026-02-28 12:23:16,296 - INFO - SPEAKING: Hi Rahil! How are you today?
+2026-02-28 12:23:19,378 - INFO - DONE SPEAKING
+2026-02-28 12:23:19,379 - INFO - LISTENING… (energy threshold: 400)
+2026-02-28 12:23:21,971 - INFO - Audio captured — sending to Google STT…
+2026-02-28 12:23:30,233 - INFO - HEARD: 'I am fine'
+2026-02-28 12:23:30,233 - INFO - Mood → Happy (matched 'fine')
+2026-02-28 12:23:30,233 - INFO - SPEAKING: Great! Attendance marked. Have a wonderful day Rahil!
+2026-02-28 12:23:35,936 - INFO - DONE SPEAKING
+2026-02-28 12:23:47,945 - INFO - SPEAKING: Yes! I'm here. You can ask me anything.
+2026-02-28 12:23:52,456 - INFO - DONE SPEAKING
+2026-02-28 12:23:52,458 - INFO - LISTENING… (energy threshold: 400)
+2026-02-28 12:23:56,887 - INFO - Audio captured — sending to Google STT…
+2026-02-28 12:23:57,535 - INFO - HEARD: 'what is Sun'
+2026-02-28 12:24:00,311 - INFO - SPEAKING: Sun ek bada, garam, peela ball hai! Wo hamesha chamakta hai. Kya aapko suraj ki roshni pasand hai?
+2026-02-28 12:24:09,823 - INFO - DONE SPEAKING
+2026-02-28 12:24:13,824 - INFO - LISTENING… (energy threshold: 400)
+2026-02-28 12:24:22,189 - INFO - Audio captured — sending to Google STT…
+2026-02-28 12:24:22,343 - ERROR - Listen error: Expecting value: line 1 column 1 (char 0)
+2026-02-28 12:24:22,344 - INFO - SPEAKING: I didn't hear you. Can you say that again?
+2026-02-28 12:24:22,425 - ERROR - TTS engine error: Failed to connect. Probable cause: Host 'https://translate.google.co.in/' is not reachable
+2026-02-28 12:24:22,426 - INFO - LISTENING… (energy threshold: 400)
+2026-02-28 12:24:28,518 - INFO - Audio captured — sending to Google STT…
+2026-02-28 12:24:29,282 - INFO - HEARD: 'what is cat'
+2026-02-28 12:24:31,226 - INFO - SPEAKING: Wo ek billi hai! Billi soft hoti hai aur meow karti hai. Kya aapne kabhi billi ko pyaar kiya hai?
+2026-02-28 12:24:40,410 - INFO - DONE SPEAKING
+2026-02-28 12:24:44,412 - INFO - LISTENING… (energy threshold: 400)
+2026-02-28 12:24:48,789 - INFO - Audio captured — sending to Google STT…
+2026-02-28 12:24:48,914 - ERROR - Listen error: Expecting value: line 1 column 1 (char 0)
+2026-02-28 12:24:48,915 - INFO - SPEAKING: I didn't hear you. Can you say that again?
+2026-02-28 12:24:48,955 - ERROR - TTS engine error: Failed to connect. Probable cause: Host 'https://translate.google.co.in/' is not reachable
+2026-02-28 12:24:48,955 - INFO - LISTENING… (energy threshold: 400)
+2026-02-28 12:24:52,338 - INFO - Audio captured — sending to Google STT…
+2026-02-28 12:24:53,038 - INFO - HEARD: 'what is dog'
+2026-02-28 12:24:55,978 - INFO - SPEAKING: Dog ek pyaara animal hai! Wo bhaagta hai aur dosti karta hai. Kya aapko dogs pasand hain?
+2026-02-28 12:25:05,152 - INFO - DONE SPEAKING
+2026-02-28 12:25:09,154 - INFO - LISTENING… (energy threshold: 400)
+2026-02-28 12:25:13,250 - INFO - Audio captured — sending to Google STT…
+2026-02-28 12:25:14,228 - INFO - HEARD: 'ok bye'
+2026-02-28 12:25:14,228 - INFO - SPEAKING: Goodbye! See you soon. Take care!
+2026-02-28 12:25:18,025 - INFO - DONE SPEAKING
+2026-02-28 12:43:38,389 - INFO - Already marked today: Rahil
+2026-02-28 12:43:38,390 - INFO - AttendanceManager ready
+2026-02-28 12:43:38,392 - INFO - SpeechManager ready
+2026-02-28 12:43:39,428 - INFO - Calibrating microphone…
+2026-02-28 12:43:40,456 - INFO - SpeechRecognizer ready
+2026-02-28 12:43:40,456 - INFO - ============================================================
+2026-02-28 12:43:40,458 - INFO - FACE RECOGNITION ATTENDANCE SYSTEM
+2026-02-28 12:43:40,458 - INFO - ============================================================
+2026-02-28 12:43:41,954 - INFO - Loaded: Dron
+2026-02-28 12:43:43,182 - INFO - Loaded: ghanisht
+2026-02-28 12:43:44,564 - INFO - Loaded: Nishit
+2026-02-28 12:43:45,995 - INFO - Loaded: Rahil
+2026-02-28 12:43:47,258 - INFO - Loaded: Shikha
+2026-02-28 12:43:48,204 - INFO - Loaded: Tushar
+2026-02-28 12:43:50,063 - INFO - Loaded: vini
+2026-02-28 12:43:51,462 - INFO - Loaded: vini
+2026-02-28 12:43:51,463 - INFO - Known people (8): Dron, ghanisht, Nishit, Rahil, Shikha, Tushar, vini, vini
+2026-02-28 12:43:51,464 - INFO - SpeechManager ready
+2026-02-28 12:43:51,612 - INFO - Calibrating microphone…
+2026-02-28 12:43:52,636 - INFO - SpeechRecognizer ready
+2026-02-28 12:44:15,083 - INFO - Camera started
+2026-02-28 12:44:16,658 - INFO - SPEAKING: Hi Rahil! How are you today?
+2026-02-28 12:44:19,973 - INFO - DONE SPEAKING
+2026-02-28 12:44:19,973 - INFO - LISTENING… (energy threshold: 400)
+2026-02-28 12:44:23,438 - INFO - Audio captured — sending to Google STT…
+2026-02-28 12:44:23,776 - ERROR - Listen error: Expecting value: line 1 column 1 (char 0)
+2026-02-28 12:44:23,776 - INFO - SPEAKING: Great! Attendance marked. Have a wonderful day Rahil!
+2026-02-28 12:44:23,819 - ERROR - TTS engine error: Failed to connect. Probable cause: Host 'https://translate.google.co.in/' is not reachable
+2026-02-28 12:45:23,976 - INFO - Already marked today: Rahil
+2026-02-28 12:45:23,976 - INFO - AttendanceManager ready
+2026-02-28 12:45:23,978 - INFO - SpeechManager ready
+2026-02-28 12:45:24,742 - INFO - Calibrating microphone…
+2026-02-28 12:45:25,768 - INFO - SpeechRecognizer ready
+2026-02-28 12:45:25,769 - INFO - ============================================================
+2026-02-28 12:45:25,770 - INFO - FACE RECOGNITION ATTENDANCE SYSTEM
+2026-02-28 12:45:25,770 - INFO - ============================================================
+2026-02-28 12:45:27,209 - INFO - Loaded: Dron
+2026-02-28 12:45:28,567 - INFO - Loaded: ghanisht
+2026-02-28 12:45:30,228 - INFO - Loaded: Nishit
+2026-02-28 12:45:31,759 - INFO - Loaded: Rahil
+2026-02-28 12:45:33,010 - INFO - Loaded: Shikha
+2026-02-28 12:45:34,063 - INFO - Loaded: Tushar
+2026-02-28 12:45:35,895 - INFO - Loaded: vini
+2026-02-28 12:45:37,276 - INFO - Loaded: vini
+2026-02-28 12:45:37,276 - INFO - Known people (8): Dron, ghanisht, Nishit, Rahil, Shikha, Tushar, vini, vini
+2026-02-28 12:45:37,277 - INFO - SpeechManager ready
+2026-02-28 12:45:37,449 - INFO - Calibrating microphone…
+2026-02-28 12:45:38,473 - INFO - SpeechRecognizer ready
+2026-02-28 12:45:48,983 - INFO - Camera started
+2026-02-28 12:45:58,755 - INFO - SPEAKING: Hi Rahil! How are you today?
+2026-02-28 12:46:01,837 - INFO - DONE SPEAKING
+2026-02-28 12:46:01,837 - INFO - LISTENING… (energy threshold: 400)
+2026-02-28 12:46:04,741 - INFO - Audio captured — sending to Google STT…
+2026-02-28 12:46:08,950 - INFO - HEARD: 'I am fine'
+2026-02-28 12:46:08,950 - INFO - Mood → Happy (matched 'fine')
+2026-02-28 12:46:08,951 - INFO - SPEAKING: Great! Attendance marked. Have a wonderful day Rahil!
+2026-02-28 12:46:14,278 - INFO - DONE SPEAKING
+2026-02-28 12:46:19,531 - INFO - SPEAKING: Yes! I'm here. You can ask me anything.
+2026-02-28 12:46:24,151 - INFO - DONE SPEAKING
+2026-02-28 12:46:24,152 - INFO - LISTENING… (energy threshold: 400)
+2026-02-28 12:46:27,712 - INFO - Audio captured — sending to Google STT…
+2026-02-28 12:46:28,339 - INFO - HEARD: 'what is'
+2026-02-28 12:46:31,990 - INFO - SPEAKING: Kya aap mujhe thoda aur bata sakte ho? Main madad karne ke liye yahan hoon! Kya aapko kuch padhna hai?
+2026-02-28 12:46:41,885 - INFO - DONE SPEAKING
+2026-02-28 12:46:45,887 - INFO - LISTENING… (energy threshold: 400)
+2026-02-28 12:46:48,421 - INFO - Audio captured — sending to Google STT…
+2026-02-28 12:46:48,566 - ERROR - Listen error: Expecting value: line 1 column 1 (char 0)
+2026-02-28 12:46:48,567 - INFO - SPEAKING: I didn't hear you. Can you say that again?
+2026-02-28 12:46:48,624 - ERROR - TTS engine error: Failed to connect. Probable cause: Host 'https://translate.google.co.in/' is not reachable
+2026-02-28 12:46:48,625 - INFO - LISTENING… (energy threshold: 400)
+2026-02-28 12:46:54,104 - INFO - Audio captured — sending to Google STT…
+2026-02-28 12:46:54,282 - ERROR - Listen error: Expecting value: line 1 column 1 (char 0)
+2026-02-28 12:46:54,284 - INFO - SPEAKING: I didn't hear you. Can you say that again?
+2026-02-28 12:46:54,324 - ERROR - TTS engine error: Failed to connect. Probable cause: Host 'https://translate.google.co.in/' is not reachable
+2026-02-28 12:46:54,324 - INFO - LISTENING… (energy threshold: 400)
+2026-02-28 12:46:59,665 - INFO - Audio captured — sending to Google STT…
+2026-02-28 12:46:59,841 - ERROR - Listen error: Expecting value: line 1 column 1 (char 0)
+2026-02-28 12:46:59,842 - INFO - SPEAKING: I didn't hear you. Can you say that again?
+2026-02-28 12:46:59,886 - ERROR - TTS engine error: Failed to connect. Probable cause: Host 'https://translate.google.co.in/' is not reachable
+2026-02-28 12:46:59,888 - INFO - LISTENING… (energy threshold: 400)
+2026-02-28 13:31:45,212 - INFO - Already marked today: Rahil
+2026-02-28 13:31:45,213 - INFO - AttendanceManager ready
+2026-02-28 13:31:45,213 - INFO - SpeechManager ready
+2026-02-28 13:31:46,183 - INFO - Calibrating microphone…
+2026-02-28 13:31:47,225 - INFO - SpeechRecognizer ready
+2026-02-28 13:31:47,226 - INFO - ============================================================
+2026-02-28 13:31:47,226 - INFO - FACE RECOGNITION ATTENDANCE SYSTEM
+2026-02-28 13:31:47,226 - INFO - ============================================================
+2026-02-28 13:31:48,187 - INFO - Loaded: Dron
+2026-02-28 13:31:49,184 - INFO - Loaded: ghanisht
+2026-02-28 13:31:50,665 - INFO - Loaded: Nishit
+2026-02-28 13:31:51,692 - INFO - Loaded: Rahil
+2026-02-28 13:31:52,581 - INFO - Loaded: Shikha
+2026-02-28 13:31:53,211 - INFO - Loaded: Tushar
+2026-02-28 13:31:54,474 - INFO - Loaded: vini
+2026-02-28 13:31:55,406 - INFO - Loaded: vini
+2026-02-28 13:31:55,406 - INFO - Known people (8): Dron, ghanisht, Nishit, Rahil, Shikha, Tushar, vini, vini
+2026-02-28 13:31:55,407 - INFO - SpeechManager ready
+2026-02-28 13:31:55,654 - INFO - Calibrating microphone…
+2026-02-28 13:31:56,692 - INFO - SpeechRecognizer ready
+2026-02-28 13:32:12,699 - INFO - Camera started
+2026-02-28 13:32:13,755 - INFO - SPEAKING: Hi Rahil! How are you today?
+2026-02-28 13:32:16,803 - INFO - DONE SPEAKING
+2026-02-28 13:32:16,804 - INFO - LISTENING… (energy threshold: 400)
+2026-02-28 13:32:20,245 - INFO - Audio captured — sending to Google STT…
+2026-02-28 13:32:22,370 - INFO - HEARD: 'I am fine'
+2026-02-28 13:32:22,371 - INFO - Mood → Happy (matched 'fine')
+2026-02-28 13:32:22,371 - INFO - SPEAKING: Great! Attendance marked. Have a wonderful day Rahil!
+2026-02-28 13:32:27,568 - INFO - DONE SPEAKING
+2026-02-28 13:32:31,700 - INFO - SPEAKING: Yes! I'm here. You can ask me anything.
+2026-02-28 13:32:36,260 - INFO - DONE SPEAKING
+2026-02-28 13:32:36,261 - INFO - LISTENING… (energy threshold: 400)
+2026-02-28 13:32:39,586 - INFO - Audio captured — sending to Google STT…
+2026-02-28 13:32:40,322 - INFO - HEARD: 'what is elephant'
+2026-02-28 13:32:44,150 - INFO - SPEAKING: Elephant ek bahut bada aur samajhdar janwar hai! Inka lamba trunk hota hai jo unhe khana aur paani lene mein madad karta hai.
+2026-02-28 13:32:55,805 - INFO - DONE SPEAKING
+2026-02-28 13:32:59,807 - INFO - LISTENING… (energy threshold: 400)
+2026-02-28 13:33:03,854 - INFO - Audio captured — sending to Google STT…
+2026-02-28 13:33:04,971 - INFO - HEARD: 'can you please give me a image of this'
+2026-02-28 13:33:08,127 - INFO - SPEAKING: Mujhe image dena nahi aata, par main aapko kuch interesting bata sakti hoon!
+2026-02-28 13:33:15,054 - INFO - DONE SPEAKING
+2026-02-28 13:33:19,055 - INFO - LISTENING… (energy threshold: 400)
+2026-02-28 13:33:23,502 - INFO - Audio captured — sending to Google STT…
+2026-02-28 13:33:24,572 - INFO - HEARD: 'can you please give me a YouTube link of this'
+2026-02-28 13:33:28,204 - INFO - SPEAKING: Mujhe maaf karo, par main YouTube link nahi de sakti. Main sirf mazedaar aur seekhne wale baatein kar sakti hoon!
+2026-02-28 13:33:37,903 - INFO - DONE SPEAKING
+2026-02-28 13:55:09,473 - INFO - Already marked today: Rahil
+2026-02-28 13:55:09,474 - INFO - AttendanceManager ready
+2026-02-28 13:55:09,475 - INFO - SpeechManager ready
+2026-02-28 13:55:12,423 - INFO - Calibrating microphone…
+2026-02-28 13:55:12,456 - ERROR - SpeechRecognizer init failed: 'NoneType' object has no attribute 'close'
+2026-02-28 13:55:12,463 - INFO - ============================================================
+2026-02-28 13:55:12,466 - INFO - FACE RECOGNITION ATTENDANCE SYSTEM
+2026-02-28 13:55:12,473 - INFO - ============================================================
+2026-02-28 13:55:14,441 - INFO - Loaded: Dron
+2026-02-28 13:55:15,626 - INFO - Loaded: ghanisht
+2026-02-28 13:55:17,028 - INFO - Loaded: Nishit
+2026-02-28 13:55:18,386 - INFO - Loaded: Rahil
+2026-02-28 13:55:19,650 - INFO - Loaded: Shikha
+2026-02-28 13:55:20,593 - INFO - Loaded: Tushar
+2026-02-28 13:55:22,449 - INFO - Loaded: vini
+2026-02-28 13:55:23,791 - INFO - Loaded: vini
+2026-02-28 13:55:23,791 - INFO - Known people (8): Dron, ghanisht, Nishit, Rahil, Shikha, Tushar, vini, vini
+2026-02-28 13:55:23,792 - INFO - SpeechManager ready
+2026-02-28 13:55:23,971 - INFO - Calibrating microphone…
+2026-02-28 13:55:25,012 - INFO - SpeechRecognizer ready
+2026-02-28 13:55:56,839 - INFO - Camera started
+2026-02-28 13:55:58,602 - INFO - SPEAKING: Hi Rahil! How are you today?
+2026-02-28 13:56:02,331 - INFO - DONE SPEAKING
+2026-02-28 13:56:02,332 - INFO - SPEAKING: Great! Attendance marked. Have a wonderful day Rahil!
+2026-02-28 13:56:07,573 - INFO - DONE SPEAKING
+2026-02-28 13:56:28,854 - INFO - SPEAKING: Yes! I'm here. You can ask me anything.
+2026-02-28 13:56:33,779 - INFO - DONE SPEAKING
+2026-02-28 13:56:33,780 - INFO - LISTENING… (energy threshold: 400)
+2026-02-28 13:56:36,678 - INFO - Audio captured — sending to Google STT…
+2026-02-28 13:56:41,463 - INFO - HEARD: 'how'
+2026-02-28 13:56:43,915 - INFO - SPEAKING: "How" ka matlab hai kis tarah se. Yeh aksar hum kisi cheez ko samajhne ke liye puchte hain.
+2026-02-28 13:56:51,845 - INFO - DONE SPEAKING
+2026-02-28 13:56:55,846 - INFO - LISTENING… (energy threshold: 400)
+2026-02-28 13:56:58,658 - INFO - Audio captured — sending to Google STT…
+2026-02-28 13:56:59,460 - INFO - HEARD: 'what is elephant'
+2026-02-28 13:57:01,343 - INFO - SPEAKING: Elephant ek bahut bada aur samajhdar janwar hai! Yeh apni lambi trunk se khana uthate hain.
+2026-02-28 13:57:09,278 - INFO - DONE SPEAKING
+2026-02-28 13:57:13,280 - INFO - LISTENING… (energy threshold: 400)
+2026-02-28 13:57:16,466 - INFO - Audio captured — sending to Google STT…
+2026-02-28 13:57:17,401 - INFO - HEARD: 'Iske YouTube video do'
+2026-02-28 13:57:21,261 - INFO - SPEAKING: Mujhe maaf karo, par main YouTube video nahi de sakti. Lekin main tumhe mazaa karne ke liye yahan hoon!
+2026-02-28 13:57:31,023 - INFO - DONE SPEAKING
+2026-02-28 14:01:45,335 - INFO - Already marked today: Rahil
+2026-02-28 14:01:45,335 - INFO - AttendanceManager ready
+2026-02-28 14:01:45,336 - INFO - SpeechManager ready
+2026-02-28 14:01:46,232 - INFO - Calibrating microphone…
+2026-02-28 14:01:47,268 - INFO - SpeechRecognizer ready
+2026-02-28 14:01:47,269 - INFO - ============================================================
+2026-02-28 14:01:47,269 - INFO - FACE RECOGNITION ATTENDANCE SYSTEM
+2026-02-28 14:01:47,269 - INFO - ============================================================
+2026-02-28 14:01:48,686 - INFO - Loaded: Dron
+2026-02-28 14:01:49,814 - INFO - Loaded: ghanisht
+2026-02-28 14:01:51,154 - INFO - Loaded: Nishit
+2026-02-28 14:01:52,486 - INFO - Loaded: Rahil
+2026-02-28 14:01:53,675 - INFO - Loaded: Shikha
+2026-02-28 14:01:54,599 - INFO - Loaded: Tushar
+2026-02-28 14:01:56,350 - INFO - Loaded: vini
+2026-02-28 14:01:57,656 - INFO - Loaded: vini
+2026-02-28 14:01:57,656 - INFO - Known people (8): Dron, ghanisht, Nishit, Rahil, Shikha, Tushar, vini, vini
+2026-02-28 14:01:57,657 - INFO - SpeechManager ready
+2026-02-28 14:01:57,805 - INFO - Calibrating microphone…
+2026-02-28 14:01:58,819 - INFO - SpeechRecognizer ready
+2026-02-28 14:02:16,068 - INFO - Camera started
+2026-02-28 14:02:17,582 - INFO - SPEAKING: Hi Rahil! How are you today?
+2026-02-28 14:02:20,804 - INFO - DONE SPEAKING
+2026-02-28 14:02:20,804 - INFO - LISTENING… (energy threshold: 400)
+2026-02-28 14:02:23,706 - INFO - Audio captured — sending to Google STT…
+2026-02-28 14:02:24,975 - INFO - HEARD: 'I am fine'
+2026-02-28 14:02:24,975 - INFO - Mood → Happy (matched 'fine')
+2026-02-28 14:02:24,976 - INFO - SPEAKING: Great! Attendance marked. Have a wonderful day Rahil!
+2026-02-28 14:02:30,064 - INFO - DONE SPEAKING
+2026-02-28 14:02:33,568 - INFO - SPEAKING: Yes! I'm here. You can ask me anything.
+2026-02-28 14:02:38,426 - INFO - DONE SPEAKING
+2026-02-28 14:02:38,427 - INFO - LISTENING… (energy threshold: 400)
+2026-02-28 14:02:42,070 - INFO - Audio captured — sending to Google STT…
+2026-02-28 14:02:42,672 - INFO - HEARD: 'what is elephant'
+2026-02-28 14:02:44,736 - INFO - SPEAKING: Elephant ek bahut bada aur samajhdaar janwar hai! Yeh apne bade kaan aur lambi naak ke liye jaana jaata hai.
+2026-02-28 14:02:54,635 - INFO - DONE SPEAKING
+2026-02-28 14:02:58,636 - INFO - LISTENING… (energy threshold: 400)
+2026-02-28 14:03:03,180 - INFO - Audio captured — sending to Google STT…
+2026-02-28 14:03:04,254 - INFO - HEARD: 'can you please give me a image of it'
+2026-02-28 14:03:07,429 - INFO - SPEAKING: Mujhe khushi se madad karna hai! Lekin mujhe kisi cheez ka naam nahi pata. Aap mujhe koi topic bata sakte ho?
+2026-02-28 14:03:18,063 - INFO - DONE SPEAKING
+2026-02-28 14:03:22,064 - INFO - LISTENING… (energy threshold: 400)
+2026-02-28 14:03:26,163 - INFO - Audio captured — sending to Google STT…
+2026-02-28 14:03:27,328 - INFO - HEARD: 'can you please give me a image of elephant'
+2026-02-28 14:03:29,460 - INFO - SPEAKING: Elephant ek bahut bada janwar hai!
+2026-02-28 14:03:32,860 - INFO - DONE SPEAKING
+2026-02-28 14:03:36,862 - INFO - LISTENING… (energy threshold: 400)
+2026-02-28 14:03:38,802 - INFO - Audio captured — sending to Google STT…
+2026-02-28 14:03:39,614 - WARNING - COULD NOT UNDERSTAND (attempt 1/3)
+2026-02-28 14:03:39,614 - INFO - LISTENING… (energy threshold: 400)
+2026-02-28 14:03:44,598 - INFO - Audio captured — sending to Google STT…
+2026-02-28 14:03:45,472 - INFO - HEARD: 'electric pose'
+2026-02-28 14:03:47,018 - INFO - SPEAKING: Electric pose ek fun dance move hai! Isme aap apne haath aur paon ko tarang dete ho jaise bijli chamakti hai.
+2026-02-28 14:03:57,190 - INFO - DONE SPEAKING
+2026-02-28 14:04:01,192 - INFO - LISTENING… (energy threshold: 159)
+2026-02-28 14:04:03,606 - INFO - Audio captured — sending to Google STT…
+2026-02-28 14:04:05,904 - INFO - HEARD: 'electric stop'
+2026-02-28 14:04:08,244 - INFO - SPEAKING: Electric stop ek aisa switch hai jo bijli band karta hai!
+2026-02-28 14:04:13,258 - INFO - DONE SPEAKING
+2026-02-28 14:04:17,260 - INFO - LISTENING… (energy threshold: 159)
+2026-02-28 14:04:20,007 - INFO - Audio captured — sending to Google STT…
+2026-02-28 14:04:20,656 - INFO - HEARD: 'ok stop'
+2026-02-28 14:04:23,180 - INFO - SPEAKING: Chalo, hum thoda aaraam karte hain!
+2026-02-28 14:04:26,902 - INFO - DONE SPEAKING
+2026-02-28 14:04:30,905 - INFO - LISTENING… (energy threshold: 159)
+2026-02-28 14:04:33,839 - INFO - Audio captured — sending to Google STT…
+2026-02-28 14:04:34,439 - INFO - HEARD: 'ok bye'
+2026-02-28 14:04:34,439 - INFO - SPEAKING: Goodbye! See you soon. Take care!
+2026-02-28 14:04:38,527 - INFO - DONE SPEAKING
+2026-02-28 14:23:43,347 - INFO - Already marked today: Rahil
+2026-02-28 14:23:43,347 - INFO - AttendanceManager ready
+2026-02-28 14:23:43,348 - INFO - SpeechManager ready
+2026-02-28 14:23:44,209 - INFO - Calibrating microphone…
+2026-02-28 14:23:45,286 - INFO - SpeechRecognizer ready
+2026-02-28 14:23:45,288 - INFO - ============================================================
+2026-02-28 14:23:45,290 - INFO - FACE RECOGNITION ATTENDANCE SYSTEM
+2026-02-28 14:23:45,290 - INFO - ============================================================
+2026-02-28 14:23:46,751 - INFO - Loaded: Dron
+2026-02-28 14:23:48,016 - INFO - Loaded: ghanisht
+2026-02-28 14:23:49,552 - INFO - Loaded: Nishit
+2026-02-28 14:23:50,987 - INFO - Loaded: Rahil
+2026-02-28 14:23:52,185 - INFO - Loaded: Shikha
+2026-02-28 14:23:53,084 - INFO - Loaded: Tushar
+2026-02-28 14:23:54,822 - INFO - Loaded: vini
+2026-02-28 14:23:56,133 - INFO - Loaded: vini
+2026-02-28 14:23:56,134 - INFO - Known people (8): Dron, ghanisht, Nishit, Rahil, Shikha, Tushar, vini, vini
+2026-02-28 14:23:56,135 - INFO - SpeechManager ready
+2026-02-28 14:23:56,315 - INFO - Calibrating microphone…
+2026-02-28 14:23:57,353 - INFO - SpeechRecognizer ready
+2026-02-28 14:24:13,613 - INFO - Camera started
+2026-02-28 14:24:15,002 - INFO - SPEAKING: Hi Rahil! How are you today?
+2026-02-28 14:24:18,191 - INFO - DONE SPEAKING
+2026-02-28 14:24:18,192 - INFO - LISTENING… (energy threshold: 400)
+2026-02-28 14:24:21,280 - INFO - Audio captured — sending to Google STT…
+2026-02-28 14:24:26,125 - INFO - HEARD: 'I am fine'
+2026-02-28 14:24:26,125 - INFO - Mood → Happy (matched 'fine')
+2026-02-28 14:24:26,126 - INFO - SPEAKING: Great! Attendance marked. Have a wonderful day Rahil!
+2026-02-28 14:24:31,629 - INFO - DONE SPEAKING
+2026-02-28 14:24:59,084 - INFO - SPEAKING: Yes! I'm here. You can ask me anything.
+2026-02-28 14:25:03,594 - INFO - DONE SPEAKING
+2026-02-28 14:25:03,595 - INFO - LISTENING… (energy threshold: 400)
+2026-02-28 14:25:07,842 - INFO - Audio captured — sending to Google STT…
+2026-02-28 14:25:08,822 - INFO - HEARD: 'what is elephant'
+2026-02-28 14:25:11,852 - INFO - SPEAKING: Elephant ek bahut bada aur samajhdar janwar hai! Ye apne dosto ke saath rehta hai aur dosti karta hai.
+2026-02-28 14:25:25,412 - INFO - DONE SPEAKING
+2026-03-02 14:04:01,451 - INFO - AttendanceManager ready
+2026-03-02 14:04:01,453 - INFO - SpeechManager ready
+2026-03-02 14:04:03,782 - INFO - Calibrating microphone…
+2026-03-02 14:04:04,854 - INFO - SpeechRecognizer ready
+2026-03-02 14:04:04,855 - INFO - ============================================================
+2026-03-02 14:04:04,856 - INFO - FACE RECOGNITION ATTENDANCE SYSTEM
+2026-03-02 14:04:04,857 - INFO - ============================================================
+2026-03-02 14:04:06,310 - INFO - Loaded: Dron
+2026-03-02 14:04:07,471 - INFO - Loaded: ghanisht
+2026-03-02 14:04:08,769 - INFO - Loaded: Nishit
+2026-03-02 14:04:10,035 - INFO - Loaded: Rahil
+2026-03-02 14:04:11,214 - INFO - Loaded: Shikha
+2026-03-02 14:04:12,096 - INFO - Loaded: Tushar
+2026-03-02 14:04:13,811 - INFO - Loaded: vini
+2026-03-02 14:04:15,131 - INFO - Loaded: vini
+2026-03-02 14:04:15,132 - INFO - Known people (8): Dron, ghanisht, Nishit, Rahil, Shikha, Tushar, vini, vini
+2026-03-02 14:04:15,132 - INFO - SpeechManager ready
+2026-03-02 14:04:15,281 - INFO - Calibrating microphone…
+2026-03-02 14:04:16,300 - INFO - SpeechRecognizer ready
+2026-03-02 14:05:13,472 - INFO - Camera started
+2026-03-02 14:05:24,769 - INFO - SPEAKING: Hi Rahil! How are you today?
+2026-03-02 14:05:28,018 - INFO - DONE SPEAKING
+2026-03-02 14:05:28,019 - INFO - LISTENING… (energy threshold: 400)
+2026-03-02 14:05:36,249 - WARNING - LISTEN TIMEOUT (attempt 1/3)
+2026-03-02 14:05:36,249 - INFO - LISTENING… (energy threshold: 400)
+2026-03-02 14:05:40,337 - INFO - Audio captured — sending to Google STT…
+2026-03-02 14:05:41,221 - INFO - HEARD: 'I am fine'
+2026-03-02 14:05:41,222 - INFO - Mood → Happy (matched 'fine')
+2026-03-02 14:05:41,223 - INFO - ATTENDANCE MARKED: Rahil | 14:05:41 | Happy
+2026-03-02 14:05:41,223 - INFO - SPEAKING: Great! Attendance marked. Have a wonderful day Rahil!
+2026-03-02 14:05:46,562 - INFO - DONE SPEAKING
+2026-03-02 14:05:51,272 - INFO - SPEAKING: Yes! I'm here. You can ask me anything.
+2026-03-02 14:05:56,083 - INFO - DONE SPEAKING
+2026-03-02 14:05:56,084 - INFO - LISTENING… (energy threshold: 400)
+2026-03-02 14:05:59,013 - INFO - Audio captured — sending to Google STT…
+2026-03-02 14:06:00,030 - INFO - HEARD: 'what is elephant'
+2026-03-02 14:06:04,019 - INFO - SPEAKING: Elephant ek bahut bada aur dosti bhara janwar hai! Yeh apne lambi trunk se kaam karte hain.
+2026-03-02 14:06:11,992 - INFO - DONE SPEAKING
+2026-03-02 14:06:15,995 - INFO - LISTENING… (energy threshold: 400)
+2026-03-02 14:06:24,045 - WARNING - LISTEN TIMEOUT (attempt 1/3)
+2026-03-02 14:06:24,049 - INFO - LISTENING… (energy threshold: 400)
+2026-03-02 14:06:27,558 - INFO - Audio captured — sending to Google STT…
+2026-03-02 14:06:28,383 - INFO - HEARD: 'ok bye'
+2026-03-02 14:06:28,384 - INFO - SPEAKING: Goodbye! See you soon. Take care!
+2026-03-02 14:06:32,425 - INFO - DONE SPEAKING
+2026-03-02 14:08:41,819 - INFO - Already marked today: Rahil
+2026-03-02 14:08:41,820 - INFO - AttendanceManager ready
+2026-03-02 14:08:41,821 - INFO - SpeechManager ready
+2026-03-02 14:08:44,155 - INFO - Calibrating microphone…
+2026-03-02 14:08:45,218 - INFO - SpeechRecognizer ready
+2026-03-02 14:08:45,219 - INFO - ============================================================
+2026-03-02 14:08:45,222 - INFO - FACE RECOGNITION ATTENDANCE SYSTEM
+2026-03-02 14:08:45,223 - INFO - ============================================================
+2026-03-02 14:08:46,766 - INFO - Loaded: Dron
+2026-03-02 14:08:48,113 - INFO - Loaded: ghanisht
+2026-03-02 14:08:49,462 - INFO - Loaded: Nishit
+2026-03-02 14:08:50,950 - INFO - Loaded: Rahil
+2026-03-02 14:08:52,272 - INFO - Loaded: Shikha
+2026-03-02 14:08:53,299 - INFO - Loaded: Tushar
+2026-03-02 14:08:55,361 - INFO - Loaded: vini
+2026-03-02 14:08:56,743 - INFO - Loaded: vini
+2026-03-02 14:08:56,743 - INFO - Known people (8): Dron, ghanisht, Nishit, Rahil, Shikha, Tushar, vini, vini
+2026-03-02 14:08:56,745 - INFO - SpeechManager ready
+2026-03-02 14:08:56,907 - INFO - Calibrating microphone…
+2026-03-02 14:08:57,933 - INFO - SpeechRecognizer ready
+2026-03-02 14:09:10,612 - INFO - Camera started
+2026-03-02 14:09:12,553 - INFO - SPEAKING: Hi Rahil! How are you today?
+2026-03-02 14:09:15,813 - INFO - DONE SPEAKING
+2026-03-02 14:09:15,814 - INFO - LISTENING… (energy threshold: 400)
+2026-03-02 14:09:19,058 - INFO - Audio captured — sending to Google STT…
+2026-03-02 14:09:19,893 - INFO - HEARD: 'I am fine'
+2026-03-02 14:09:19,894 - INFO - Mood → Happy (matched 'fine')
+2026-03-02 14:09:19,894 - INFO - SPEAKING: Great! Attendance marked. Have a wonderful day Rahil!
+2026-03-02 14:09:25,130 - INFO - DONE SPEAKING
+2026-03-02 14:09:36,948 - INFO - SPEAKING: Yes! I'm here. You can ask me anything.
+2026-03-02 14:09:41,573 - INFO - DONE SPEAKING
+2026-03-02 14:09:41,575 - INFO - LISTENING… (energy threshold: 400)
+2026-03-02 14:09:45,195 - INFO - Audio captured — sending to Google STT…
+2026-03-02 14:09:45,897 - INFO - HEARD: 'what is elephant'
+2026-03-02 14:09:50,047 - INFO - SPEAKING: Elephant ek bahut bada aur samajhdar janwar hai! Yeh apne lambi naak se paani peete hain aur khana khate hain.
+2026-03-02 14:10:00,350 - INFO - DONE SPEAKING
+2026-03-02 14:10:04,353 - INFO - LISTENING… (energy threshold: 400)
+2026-03-02 14:11:44,622 - INFO - Already marked today: Rahil
+2026-03-02 14:11:44,623 - INFO - AttendanceManager ready
+2026-03-02 14:11:44,624 - INFO - SpeechManager ready
+2026-03-02 14:11:45,313 - INFO - Calibrating microphone…
+2026-03-02 14:11:46,329 - INFO - SpeechRecognizer ready
+2026-03-02 14:11:46,330 - INFO - ============================================================
+2026-03-02 14:11:46,330 - INFO - FACE RECOGNITION ATTENDANCE SYSTEM
+2026-03-02 14:11:46,330 - INFO - ============================================================
+2026-03-02 14:11:47,783 - INFO - Loaded: Dron
+2026-03-02 14:11:49,172 - INFO - Loaded: ghanisht
+2026-03-02 14:11:50,657 - INFO - Loaded: Nishit
+2026-03-02 14:11:52,208 - INFO - Loaded: Rahil
+2026-03-02 14:11:53,714 - INFO - Loaded: Shikha
+2026-03-02 14:11:54,658 - INFO - Loaded: Tushar
+2026-03-02 14:11:56,526 - INFO - Loaded: vini
+2026-03-02 14:11:58,091 - INFO - Loaded: vini
+2026-03-02 14:11:58,092 - INFO - Known people (8): Dron, ghanisht, Nishit, Rahil, Shikha, Tushar, vini, vini
+2026-03-02 14:11:58,094 - INFO - SpeechManager ready
+2026-03-02 14:11:58,284 - INFO - Calibrating microphone…
+2026-03-02 14:11:59,304 - INFO - SpeechRecognizer ready
+2026-03-02 14:12:06,858 - INFO - Camera started
+2026-03-02 14:12:08,670 - INFO - SPEAKING: Hi Rahil! How are you today?
+2026-03-02 14:12:12,038 - INFO - DONE SPEAKING
+2026-03-02 14:12:12,040 - INFO - LISTENING… (energy threshold: 400)
+2026-03-02 14:12:15,216 - INFO - Audio captured — sending to Google STT…
+2026-03-02 14:12:16,271 - INFO - HEARD: 'I am fine'
+2026-03-02 14:12:16,272 - INFO - Mood → Happy (matched 'fine')
+2026-03-02 14:12:16,273 - INFO - SPEAKING: Great! Attendance marked. Have a wonderful day Rahil!
+2026-03-02 14:12:21,586 - INFO - DONE SPEAKING
+2026-03-02 14:12:25,505 - INFO - SPEAKING: Yes! I'm here. You can ask me anything.
+2026-03-02 14:12:30,146 - INFO - DONE SPEAKING
+2026-03-02 14:12:30,147 - INFO - LISTENING… (energy threshold: 400)
+2026-03-02 14:12:34,131 - INFO - Audio captured — sending to Google STT…
+2026-03-02 14:12:34,834 - INFO - HEARD: 'tell me a poem'
+2026-03-02 14:12:38,466 - INFO - SPEAKING: Chand se chamak rahi hai raat,
+Taaron ki hai khushboo, sab kuch hai saaf!
+2026-03-02 14:12:45,502 - INFO - DONE SPEAKING
+2026-03-02 14:12:49,504 - INFO - LISTENING… (energy threshold: 400)
+2026-03-02 14:12:54,582 - INFO - Audio captured — sending to Google STT…
+2026-03-02 14:12:55,332 - INFO - HEARD: 'tell me a poem about Sun'
+2026-03-02 14:12:59,312 - INFO - SPEAKING: Suraj aata hai subah, chamakta hai dhoondh ke, 
+Garmi se bharta hai din, sabko khush karta hai wo!
+2026-03-02 14:23:59,584 - INFO - Already marked today: Rahil
+2026-03-02 14:23:59,586 - INFO - AttendanceManager ready
+2026-03-02 14:23:59,588 - INFO - SpeechManager ready
+2026-03-02 14:24:00,339 - INFO - Calibrating microphone…
+2026-03-02 14:24:01,417 - INFO - SpeechRecognizer ready
+2026-03-02 14:24:01,418 - INFO - ============================================================
+2026-03-02 14:24:01,418 - INFO - FACE RECOGNITION ATTENDANCE SYSTEM
+2026-03-02 14:24:01,418 - INFO - ============================================================
+2026-03-02 14:24:02,982 - INFO - Loaded: Dron
+2026-03-02 14:24:04,297 - INFO - Loaded: ghanisht
+2026-03-02 14:24:05,692 - INFO - Loaded: Nishit
+2026-03-02 14:24:06,998 - INFO - Loaded: Rahil
+2026-03-02 14:24:08,270 - INFO - Loaded: Shikha
+2026-03-02 14:24:09,261 - INFO - Loaded: Tushar
+2026-03-02 14:24:11,062 - INFO - Loaded: vini
+2026-03-02 14:24:12,482 - INFO - Loaded: vini
+2026-03-02 14:24:12,482 - INFO - Known people (8): Dron, ghanisht, Nishit, Rahil, Shikha, Tushar, vini, vini
+2026-03-02 14:24:12,483 - INFO - SpeechManager ready
+2026-03-02 14:24:12,659 - INFO - Calibrating microphone…
+2026-03-02 14:24:13,680 - INFO - SpeechRecognizer ready
+2026-03-02 14:24:34,362 - INFO - Camera started
+2026-03-02 14:24:35,943 - INFO - SPEAKING: Hi Rahil! How are you today?
+2026-03-02 14:24:39,173 - INFO - DONE SPEAKING
+2026-03-02 14:24:39,173 - INFO - LISTENING… (energy threshold: 400)
+2026-03-02 14:24:47,404 - WARNING - LISTEN TIMEOUT (attempt 1/3)
+2026-03-02 14:24:47,404 - INFO - LISTENING… (energy threshold: 400)
+2026-03-02 14:24:51,330 - INFO - Audio captured — sending to Google STT…
+2026-03-02 14:24:52,088 - INFO - HEARD: 'I am fine'
+2026-03-02 14:24:52,089 - INFO - Mood → Happy (matched 'fine')
+2026-03-02 14:24:52,089 - INFO - SPEAKING: Great! Attendance marked. Have a wonderful day Rahil!
+2026-03-02 14:24:57,394 - INFO - DONE SPEAKING
+2026-03-02 14:25:20,080 - INFO - Already marked today: Rahil
+2026-03-02 14:25:20,080 - INFO - AttendanceManager ready
+2026-03-02 14:25:20,081 - INFO - SpeechManager ready
+2026-03-02 14:25:20,784 - INFO - Calibrating microphone…
+2026-03-02 14:25:21,795 - INFO - SpeechRecognizer ready
+2026-03-02 14:25:21,799 - INFO - ============================================================
+2026-03-02 14:25:21,800 - INFO - FACE RECOGNITION ATTENDANCE SYSTEM
+2026-03-02 14:25:21,800 - INFO - ============================================================
+2026-03-02 14:25:23,124 - INFO - Loaded: Dron
+2026-03-02 14:25:24,321 - INFO - Loaded: ghanisht
+2026-03-02 14:25:25,713 - INFO - Loaded: Nishit
+2026-03-02 14:25:27,075 - INFO - Loaded: Rahil
+2026-03-02 14:25:28,330 - INFO - Loaded: Shikha
+2026-03-02 14:25:29,244 - INFO - Loaded: Tushar
+2026-03-02 14:25:30,997 - INFO - Loaded: vini
+2026-03-02 14:25:32,331 - INFO - Loaded: vini
+2026-03-02 14:25:32,331 - INFO - Known people (8): Dron, ghanisht, Nishit, Rahil, Shikha, Tushar, vini, vini
+2026-03-02 14:25:32,332 - INFO - SpeechManager ready
+2026-03-02 14:25:32,941 - INFO - Calibrating microphone…
+2026-03-02 14:25:33,966 - INFO - SpeechRecognizer ready
+2026-03-02 14:26:52,423 - INFO - Already marked today: Rahil
+2026-03-02 14:26:52,423 - INFO - AttendanceManager ready
+2026-03-02 14:26:52,424 - INFO - SpeechManager ready
+2026-03-02 14:26:53,172 - INFO - Calibrating microphone…
+2026-03-02 14:26:54,182 - INFO - SpeechRecognizer ready
+2026-03-02 14:26:54,187 - INFO - ============================================================
+2026-03-02 14:26:54,189 - INFO - FACE RECOGNITION ATTENDANCE SYSTEM
+2026-03-02 14:26:54,189 - INFO - ============================================================
+2026-03-02 14:26:55,549 - INFO - Loaded: Dron
+2026-03-02 14:26:56,781 - INFO - Loaded: ghanisht
+2026-03-02 14:26:58,170 - INFO - Loaded: Nishit
+2026-03-02 14:26:59,588 - INFO - Loaded: Rahil
+2026-03-02 14:27:00,788 - INFO - Loaded: Shikha
+2026-03-02 14:27:01,740 - INFO - Loaded: Tushar
+2026-03-02 14:27:03,613 - INFO - Loaded: vini
+2026-03-02 14:27:04,965 - INFO - Loaded: vini
+2026-03-02 14:27:04,965 - INFO - Known people (8): Dron, ghanisht, Nishit, Rahil, Shikha, Tushar, vini, vini
+2026-03-02 14:27:04,967 - INFO - SpeechManager ready
+2026-03-02 14:27:05,582 - INFO - Calibrating microphone…
+2026-03-02 14:27:06,599 - INFO - SpeechRecognizer ready
+2026-03-02 14:27:54,864 - INFO - Camera started
+2026-03-02 14:33:47,771 - INFO - Already marked today: Rahil
+2026-03-02 14:33:47,772 - INFO - AttendanceManager ready
+2026-03-02 14:33:47,772 - INFO - SpeechManager ready
+2026-03-02 14:33:48,538 - INFO - Calibrating microphone…
+2026-03-02 14:33:49,582 - INFO - SpeechRecognizer ready
+2026-03-02 14:33:49,591 - INFO - ============================================================
+2026-03-02 14:33:49,594 - INFO - FACE RECOGNITION ATTENDANCE SYSTEM
+2026-03-02 14:33:49,594 - INFO - ============================================================
+2026-03-02 14:33:50,932 - INFO - Loaded: Dron
+2026-03-02 14:33:52,216 - INFO - Loaded: ghanisht
+2026-03-02 14:33:53,595 - INFO - Loaded: Nishit
+2026-03-02 14:33:54,927 - INFO - Loaded: Rahil
+2026-03-02 14:33:56,122 - INFO - Loaded: Shikha
+2026-03-02 14:33:57,111 - INFO - Loaded: Tushar
+2026-03-02 14:33:58,970 - INFO - Loaded: vini
+2026-03-02 14:34:00,494 - INFO - Loaded: vini
+2026-03-02 14:34:00,495 - INFO - Known people (8): Dron, ghanisht, Nishit, Rahil, Shikha, Tushar, vini, vini
+2026-03-02 14:34:00,496 - INFO - SpeechManager ready
+2026-03-02 14:34:00,664 - INFO - Calibrating microphone…
+2026-03-02 14:34:01,677 - INFO - SpeechRecognizer ready
+2026-03-02 14:34:21,941 - INFO - Camera started
+2026-03-02 14:34:23,429 - INFO - SPEAKING: Hi Rahil! How are you today?
+2026-03-02 14:34:29,804 - INFO - DONE SPEAKING
+2026-03-02 14:34:29,805 - INFO - LISTENING… (energy threshold: 400)
+2026-03-02 14:34:33,056 - INFO - Audio captured — sending to Google STT…
+2026-03-02 14:34:34,324 - INFO - HEARD: 'I am fine'
+2026-03-02 14:34:34,326 - INFO - Mood → Happy (matched 'fine')
+2026-03-02 14:34:34,326 - INFO - SPEAKING: Great! Attendance marked. Have a wonderful day Rahil!
+2026-03-02 14:34:42,813 - INFO - DONE SPEAKING
+2026-03-02 14:34:54,616 - INFO - SPEAKING: Yes! I'm here. You can ask me anything.
+2026-03-02 14:35:02,388 - INFO - DONE SPEAKING
+2026-03-02 14:35:02,388 - INFO - LISTENING… (energy threshold: 400)
+2026-03-02 14:35:06,980 - INFO - Audio captured — sending to Google STT…
+2026-03-02 14:35:07,787 - INFO - HEARD: 'what is elephant'
+2026-03-02 14:35:11,099 - INFO - SPEAKING: Elephant ek bahut bada aur pyaara janwar hai! Inka lamba trunk hota hai jo unhe khana aur paani lene mein madad karta hai.
+2026-03-02 14:35:24,009 - INFO - DONE SPEAKING
+2026-03-02 14:35:28,011 - INFO - LISTENING… (energy threshold: 400)
+2026-03-02 14:35:30,581 - INFO - Audio captured — sending to Google STT…
+2026-03-02 14:35:31,382 - INFO - HEARD: 'ok bye election'
+2026-03-02 14:35:31,383 - INFO - SPEAKING: Goodbye! See you soon. Take care!
+2026-03-02 14:35:38,678 - INFO - DONE SPEAKING
+2026-03-02 14:40:38,249 - INFO - Already marked today: Rahil
+2026-03-02 14:40:38,250 - INFO - AttendanceManager ready
+2026-03-02 14:40:38,250 - INFO - SpeechManager ready
+2026-03-02 14:40:39,109 - INFO - Calibrating microphone…
+2026-03-02 14:40:40,154 - INFO - SpeechRecognizer ready
+2026-03-02 14:40:40,155 - INFO - ============================================================
+2026-03-02 14:40:40,156 - INFO - FACE RECOGNITION ATTENDANCE SYSTEM
+2026-03-02 14:40:40,157 - INFO - ============================================================
+2026-03-02 14:40:41,707 - INFO - Loaded: Dron
+2026-03-02 14:40:43,001 - INFO - Loaded: ghanisht
+2026-03-02 14:40:44,590 - INFO - Loaded: Nishit
+2026-03-02 14:40:46,037 - INFO - Loaded: Rahil
+2026-03-02 14:40:47,408 - INFO - Loaded: Shikha
+2026-03-02 14:40:48,366 - INFO - Loaded: Tushar
+2026-03-02 14:40:50,259 - INFO - Loaded: vini
+2026-03-02 14:40:51,632 - INFO - Loaded: vini
+2026-03-02 14:40:51,633 - INFO - Known people (8): Dron, ghanisht, Nishit, Rahil, Shikha, Tushar, vini, vini
+2026-03-02 14:40:51,634 - INFO - SpeechManager ready
+2026-03-02 14:40:51,791 - INFO - Calibrating microphone…
+2026-03-02 14:40:52,799 - INFO - SpeechRecognizer ready
+2026-03-02 14:41:07,767 - INFO - Camera started
+2026-03-02 14:41:09,341 - INFO - SPEAKING: Hi Rahil! How are you today?
+2026-03-02 14:41:14,944 - INFO - DONE SPEAKING
+2026-03-02 14:41:14,945 - INFO - LISTENING… (energy threshold: 400)
+2026-03-02 14:41:23,136 - WARNING - LISTEN TIMEOUT (attempt 1/3)
+2026-03-02 14:41:23,147 - INFO - LISTENING… (energy threshold: 400)
+2026-03-02 14:41:28,275 - INFO - Audio captured — sending to Google STT…
+2026-03-02 14:41:29,114 - INFO - HEARD: 'I am fine'
+2026-03-02 14:41:29,114 - INFO - Mood → Happy (matched 'fine')
+2026-03-02 14:41:29,115 - INFO - SPEAKING: Great! Attendance marked. Have a wonderful day Rahil!
+2026-03-02 14:41:37,207 - INFO - DONE SPEAKING
+2026-03-02 14:42:07,963 - INFO - SPEAKING: Yes! I'm here. You can ask me anything.
+2026-03-02 14:42:15,401 - INFO - DONE SPEAKING
+2026-03-02 14:42:15,402 - INFO - LISTENING… (energy threshold: 400)
+2026-03-02 14:42:21,514 - INFO - Audio captured — sending to Google STT…
+2026-03-02 14:42:22,369 - INFO - HEARD: 'what is Sun'
+2026-03-02 14:42:25,392 - INFO - SPEAKING: Surya ek bada sundar sitara hai jo din mein chamakta hai!
+2026-03-02 14:42:32,948 - INFO - DONE SPEAKING
+2026-03-02 14:42:36,950 - INFO - LISTENING… (energy threshold: 400)
+2026-03-02 14:42:41,058 - INFO - Audio captured — sending to Google STT…
+2026-03-02 14:42:41,959 - INFO - HEARD: 'tell me a poem about Sun'
+2026-03-02 14:42:44,553 - INFO - SPEAKING: Suraj chamakta hai, sabko roshni deta hai! Uski garmi se sab khush rehte hai!
+2026-03-02 14:42:54,396 - INFO - DONE SPEAKING
