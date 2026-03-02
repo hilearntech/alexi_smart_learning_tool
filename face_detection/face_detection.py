@@ -212,6 +212,16 @@ class SpeechManager:
                     logger.info("DONE SPEAKING")
                 except Exception as e:
                     logger.error(f"TTS engine error: {e}")
+                    try:
+                        from gtts import gTTS
+                        tts = gTTS(text=text, lang='en', tld='co.in')
+                        tts.save(tmp_path)
+                        pygame.mixer.music.load(tmp_path)
+                        pygame.mixer.music.play()
+                        while pygame.mixer.music.get_busy():
+                            pygame.time.wait(100)
+                    except Exception as e2:
+                        logger.error(f"Fallback TTS also failed: {e2}")
                 finally:
                     if done_event:
                         done_event.set()
@@ -397,6 +407,11 @@ class FaceRecognitionSystem:
     def run(self):
         import cv2
         cap = cv2.VideoCapture(0)
+        if not cap.isOpened():
+          cap = cv2.VideoCapture(1)
+        if not cap.isOpened():
+          logger.error("No camera found!")
+          return
         logger.info('Camera started')
         while True:
             ret, frame = cap.read()
