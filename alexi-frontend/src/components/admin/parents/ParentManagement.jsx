@@ -12,6 +12,7 @@ const ParentManagement = () => {
   const [parents, setParents] = useState([]);
   const [showEditModal, setShowEditModal] = useState(false);
   const [editForm, setEditForm] = useState({});
+  const [students, setStudents] = useState([]);
 
   useEffect(() => {
     fetch("http://localhost:5000/api/admin/all-users")
@@ -41,6 +42,15 @@ const ParentManagement = () => {
       setEditForm(selectedParent);
     }
   }, [selectedParent]);
+
+  useEffect(() => {
+    fetch("http://localhost:5000/api/admin/all-students")
+      .then(res => res.json())
+      .then(data => {
+        setStudents(data);
+      })
+      .catch(err => console.error("Student fetch error", err));
+  }, []);
 
 
   const filteredParents = parents.filter(parent => {
@@ -364,13 +374,29 @@ const ParentManagement = () => {
                 setEditForm({ ...editForm, phone: e.target.value })
               }
             />
-            <Input
-              label="Child Name"
-              value={editForm.childName}
-              onChange={(e) =>
-                setEditForm({ ...editForm, childName: e.target.value })
-              }
-            />
+            <div>
+              <label className="text-sm font-semibold">Child</label>
+              <select
+                className="w-full border rounded-lg p-2 mt-1"
+                value={editForm.childName || ""}
+                onChange={(e) => {
+                  const selectedStudent = students.find(s => s.name === e.target.value);
+
+                  setEditForm({
+                    ...editForm,
+                    childName: selectedStudent?.name,
+                    childClass: selectedStudent?.class || ""
+                  });
+                }}
+              >
+                <option value="">Select Child</option>
+                {students.map(student => (
+                  <option key={student._id} value={student.name}>
+                    {student.name} 
+                  </option>
+                ))}
+              </select>
+            </div>
 
             <Input
               label="Child Class"
