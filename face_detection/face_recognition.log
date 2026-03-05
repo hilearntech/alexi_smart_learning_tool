@@ -10625,3 +10625,56 @@ Jungle mein hai sabse nyara!
 2026-03-02 15:08:28,926 - INFO - HEARD: 'Ok Galaxy bike'
 2026-03-02 15:08:32,593 - INFO - SPEAKING: Galaxy bike ek special bike hai jo space themes aur designs se bhari hoti hai!
 2026-03-02 15:08:36,193 - INFO - DONE SPEAKING
+2026-03-05 17:40:02,764 - INFO - AttendanceManager ready
+2026-03-05 17:40:02,766 - INFO - SpeechManager ready
+2026-03-05 17:40:06,233 - INFO - Calibrating microphone…
+2026-03-05 17:40:07,379 - INFO - SpeechRecognizer ready
+2026-03-05 17:40:07,380 - INFO - ============================================================
+2026-03-05 17:40:07,380 - INFO - FACE RECOGNITION ATTENDANCE SYSTEM
+2026-03-05 17:40:07,380 - INFO - ============================================================
+2026-03-05 17:40:09,581 - INFO - Loaded: Dron
+2026-03-05 17:40:10,903 - INFO - Loaded: ghanisht
+2026-03-05 17:40:12,247 - INFO - Loaded: Nishit
+2026-03-05 17:40:13,702 - INFO - Loaded: Rahil
+2026-03-05 17:40:15,213 - INFO - Loaded: Shikha
+2026-03-05 17:40:16,122 - INFO - Loaded: Tushar
+2026-03-05 17:40:18,053 - INFO - Loaded: vini
+2026-03-05 17:40:19,364 - INFO - Loaded: vini
+2026-03-05 17:40:19,365 - INFO - Known people (8): Dron, ghanisht, Nishit, Rahil, Shikha, Tushar, vini, vini
+2026-03-05 17:40:19,366 - INFO - SpeechManager ready
+2026-03-05 17:40:19,509 - INFO - Calibrating microphone…
+2026-03-05 17:40:20,559 - INFO - SpeechRecognizer ready
+2026-03-05 17:40:33,274 - INFO - Camera started
+2026-03-05 17:40:34,995 - INFO - SPEAKING: Hi Rahil! How are you today?
+2026-03-05 17:40:40,487 - INFO - DONE SPEAKING
+2026-03-05 17:40:40,489 - INFO - LISTENING… (energy threshold: 400)
+2026-03-05 17:40:48,712 - INFO - Audio captured — sending to Google STT…
+2026-03-05 17:40:49,689 - WARNING - COULD NOT UNDERSTAND (attempt 1/3)
+2026-03-05 17:40:49,690 - INFO - LISTENING… (energy threshold: 400)
+2026-03-05 17:40:58,345 - WARNING - LISTEN TIMEOUT (attempt 2/3)
+2026-03-05 17:40:58,349 - INFO - LISTENING… (energy threshold: 159)
+2026-03-05 17:41:07,012 - WARNING - LISTEN TIMEOUT (attempt 3/3)
+2026-03-05 17:41:07,014 - INFO - ATTENDANCE MARKED: Rahil | 17:41:07 | Neutral
+2026-03-05 17:41:07,014 - INFO - SPEAKING: Great! Attendance marked. Have a wonderful day Rahil!
+2026-03-05 17:41:14,928 - INFO - DONE SPEAKING
+2026-03-05 17:41:21,689 - INFO - SPEAKING: Yes! I'm here. You can ask me anything.
+2026-03-05 17:41:28,883 - INFO - DONE SPEAKING
+2026-03-05 17:41:28,884 - INFO - LISTENING… (energy threshold: 400)
+2026-03-05 17:41:33,464 - INFO - Audio captured — sending to Google STT…
+2026-03-05 17:41:34,079 - INFO - HEARD: 'what is elephant'
+2026-03-05 17:41:36,968 - INFO - SPEAKING: Elephant ek bahut bada aur samajhdaar janwar hai! Yeh apne lambe hathi ke naak se khana uthate hain.
+2026-03-05 17:41:48,013 - INFO - DONE SPEAKING
+2026-03-05 17:41:52,014 - INFO - LISTENING… (energy threshold: 400)
+2026-03-05 17:42:00,134 - WARNING - LISTEN TIMEOUT (attempt 1/3)
+2026-03-05 17:42:00,139 - INFO - LISTENING… (energy threshold: 400)
+2026-03-05 17:42:08,679 - WARNING - LISTEN TIMEOUT (attempt 2/3)
+2026-03-05 17:42:08,679 - INFO - LISTENING… (energy threshold: 159)
+2026-03-05 17:42:17,228 - WARNING - LISTEN TIMEOUT (attempt 3/3)
+2026-03-05 17:42:17,241 - INFO - SPEAKING: I didn't hear you. Can you say that again?
+2026-03-05 17:42:23,487 - INFO - DONE SPEAKING
+2026-03-05 17:42:23,489 - INFO - LISTENING… (energy threshold: 63)
+2026-03-05 17:42:27,319 - INFO - Audio captured — sending to Google STT…
+2026-03-05 17:42:28,234 - INFO - HEARD: 'tell me a poem about it'
+2026-03-05 17:42:32,061 - INFO - SPEAKING: Choti chidiya, udti hai, 
+Aasman mein ghoomti hai!
+2026-03-05 17:42:38,889 - INFO - DONE SPEAKING
