@@ -61,6 +61,13 @@ const ParentManagement = () => {
     return matchesSearch && matchesStatus;
   });
 
+  const getChildrenOfParent = (parentId) => {
+    if (!parentId) return [];
+    return students.filter((student) => {
+      // String conversion zaroori hai taaki ID format match ho jaye
+      return String(student.parent_id) === String(parentId);
+    });
+  };
 
   const handleApprove = async (parent) => {
     await fetch(`http://localhost:5000/api/admin/approve/${parent.id}`, {
@@ -118,6 +125,8 @@ const ParentManagement = () => {
     pending: parents.filter(p => p.status === 'pending').length,
   };
 
+  console.log("Parents:", parents);
+  console.log("Students:", students);
   return (
     <div className="space-y-6">
       {/* Header */}
@@ -163,9 +172,11 @@ const ParentManagement = () => {
         </div>
       </Card>
 
+
       {/* Parents Table */}
       <Card>
         <div className="overflow-x-auto">
+
           <table className="w-full">
             <thead>
               <tr className="border-b border-gray-200">
@@ -207,10 +218,37 @@ const ParentManagement = () => {
                       </p>
                     </div>
                   </td>
+                  {/* Child Column - Loop ke andar (approx Line 155) */}
                   <td className="py-4 px-4">
-                    <p className="font-semibold text-text">{parent.childName}</p>
+                    {(() => {
+                      const parentChildren = getChildrenOfParent(parent.id); // Yahan parent.id use karein
+                      return parentChildren.length === 0 ? (
+                        <span className="text-gray-400 italic">No Child Linked</span>
+                      ) : (
+                        parentChildren.map((child) => (
+                          <p key={child._id} className="font-semibold text-text">
+                            {child.name}
+                          </p>
+                        ))
+                      );
+                    })()}
                   </td>
-                  <td className="py-4 px-4 text-text/70">{parent.childClass}</td>
+
+                  {/* Class Column - Loop ke andar (approx Line 170) */}
+                  <td className="py-4 px-4 text-text/70">
+                    {(() => {
+                      const parentChildren = getChildrenOfParent(parent.id);
+                      return parentChildren.length === 0 ? (
+                        <p className="text-gray-400">-</p>
+                      ) : (
+                        parentChildren.map(child => (
+                          <p key={child._id} className="text-sm">
+                            {child.class}
+                          </p>
+                        ))
+                      );
+                    })()}
+                  </td>
                   <td className="py-4 px-4">
                     <span className={`
                       px-3 py-1 rounded-full text-sm font-semibold inline-flex items-center gap-1
@@ -306,7 +344,9 @@ const ParentManagement = () => {
               </div>
               <div className="flex items-center gap-2">
                 <User size={18} className="text-text/60" />
-                <span className="text-text">Child: {selectedParent.childName}</span>
+                <span className="text-text">Child: {getChildrenOfParent(selectedParent.id).map(child => (
+                  <p key={child._id}>{child.name}</p>
+                ))}</span>
 
               </div>
             </div>
@@ -392,7 +432,7 @@ const ParentManagement = () => {
                 <option value="">Select Child</option>
                 {students.map(student => (
                   <option key={student._id} value={student.name}>
-                    {student.name} 
+                    {student.name}
                   </option>
                 ))}
               </select>

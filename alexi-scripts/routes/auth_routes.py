@@ -38,7 +38,7 @@ def login():
             SECRET,
             algorithm="HS256"
         )
-        return jsonify({"token": token, "role": "admin"})
+        return jsonify({"token": token, "role": "admin", "user_id": "admin_fixed"})
 
     user = users.find_one({"email": data["email"]})
 
@@ -57,4 +57,8 @@ def login():
         algorithm="HS256"
     )
 
-    return jsonify({"token": token, "role": user["role"]})
+    return jsonify({
+        "token": token, 
+        "role": user["role"],
+        "user_id": str(user["_id"]) # Ye line miss thi!
+    })

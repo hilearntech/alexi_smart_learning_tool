@@ -132,6 +132,10 @@ const Login = () => {
 
       if (!res.ok) throw new Error(data.msg);
 
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("role", data.role);
+      localStorage.setItem("userId", data.user_id);
+
       // Redirect based on role
       if (data.role === "admin") navigate("/admin/dashboard");
       else if (data.role === "teacher") navigate("/teacher/home");

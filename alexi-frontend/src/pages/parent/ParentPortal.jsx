@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
 import { Home, TrendingUp, Award, FileText, LogOut, Settings } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -14,7 +14,41 @@ import ParentChildSelector from '../../components/parent/ParentChildSelector';
 const ParentPortal = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [selectedChild, setSelectedChild] = useState(1);
+  const [children, setChildren] = useState([]);
+  const [selectedChild, setSelectedChild] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchMyChildren = async () => {
+      // Login ke waqt aapne 'userId' store kiya hoga localStorage mein
+      const parentId = localStorage.getItem('userId');
+
+      if (!parentId) {
+        navigate('/login');
+        return;
+      }
+
+      try {
+        const res = await fetch(`http://localhost:5000/api/parent/my-children/${parentId}`);
+        const data = await res.json();
+
+        if (res.ok) {
+          setChildren(data);
+          if (data.length > 0) {
+            setSelectedChild(data[0]); // Pehle bachhe ko default select karo
+          }
+        }
+      } catch (err) {
+        console.error("Error fetching children:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchMyChildren();
+  }, [navigate]);
+
+  if (loading) return <div className="flex h-screen items-center justify-center">Loading...</div>;
 
   const tabs = [
     { path: '/parent/home', icon: Home, label: 'Home', emoji: '🏠', color: 'pink' },
@@ -56,7 +90,8 @@ const ParentPortal = () => {
           </div>
           <div className="flex items-center gap-4">
             {/* Parent Child Selector */}
-            <ParentChildSelector 
+            <ParentChildSelector
+              childrenList={children}
               selectedChild={selectedChild}
               onSelectChild={setSelectedChild}
             />
@@ -76,7 +111,7 @@ const ParentPortal = () => {
           {tabs.map((tab) => {
             const Icon = tab.icon;
             const active = isActive(tab.path);
-            
+
             return (
               <motion.button
                 key={tab.path}
@@ -110,7 +145,7 @@ const ParentPortal = () => {
         >
           <Routes>
             <Route path="/" element={<Navigate to="home" replace />} />
-            <Route path="home" element={<ParentHome />} />
+            <Route path="home" element={<ParentHome  />} />
             <Route path="progress" element={<ProgressTab />} />
             <Route path="achievements" element={<AchievementsTab />} />
             <Route path="activity-log" element={<ActivityLog />} />

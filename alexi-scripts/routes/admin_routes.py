@@ -181,9 +181,15 @@ def edit_parent(id):
 def add_student():
     data = request.json
 
+    parent = users.find_one({
+        "name": data.get("parentName"),
+        "role": "parent"
+    })
+
     student = {
         "name": data["name"],
         "class": data["class"],
+        "parent_id": parent["_id"] if parent else None,
         "parent_name": data.get("parentName"),
         "email": data.get("email"),
         "phone": data.get("phone"),
@@ -191,7 +197,15 @@ def add_student():
         "created_at": datetime.utcnow()
     }
 
-    students.insert_one(student)
+    result = students.insert_one(student)
+    student_id = result.inserted_id
+
+    # students.insert_one(student)
+    if parent:
+        users.update_one(
+            {"_id": parent["_id"]},
+            {"$push": {"children_ids": student_id}}
+        )
 
     return jsonify({"msg": "Student added successfully"})
 
@@ -207,6 +221,7 @@ def get_all_students():
             "class": s.get("class"),
             "roll_number": s.get("roll_number"),
             "parent_name": s.get("parent_name"),
+            "parent_id": str(s["parent_id"]) if s.get("parent_id") else None,
             "email": s.get("email"),
             "phone": s.get("phone"),
             "roll_number": s.get("roll_number"),
@@ -227,6 +242,9 @@ def edit_student(id):
         "phone": data.get("phone"),
         "roll_number": data.get("rollNumber"),
     }
+    # ID change logic: Agar parent_id aayi hai toh use update karo
+    if data.get("parent_id"):
+        update_data["parent_id"] = ObjectId(data["parent_id"])
 
     update_data = {k: v for k, v in update_data.items() if v is not None}
 
@@ -241,3 +259,5 @@ def edit_student(id):
 def delete_student(id):
     students.delete_one({"_id": ObjectId(id)})
     return jsonify({"msg": "Student deleted successfully"})
+
+

@@ -7191,3 +7191,231 @@ AttributeError: module 'cv2' has no attribute 'VideoCapture'
 2026-03-02 17:08:38,021 - INFO - SpeechManager ready
 2026-03-02 17:08:38,084 - INFO - Calibrating microphone…
 2026-03-02 17:08:39,094 - INFO - SpeechRecognizer ready
+2026-03-06 11:37:35,278 - INFO - SpeechManager ready
+2026-03-06 11:37:35,819 - INFO - Calibrating microphone…
+2026-03-06 11:37:36,875 - INFO - SpeechRecognizer ready
+2026-03-06 11:37:36,875 - INFO - ============================================================
+2026-03-06 11:37:36,877 - INFO - FACE RECOGNITION ATTENDANCE SYSTEM
+2026-03-06 11:37:36,877 - INFO - ============================================================
+2026-03-06 11:37:37,911 - INFO - Loaded: Dron
+2026-03-06 11:37:38,632 - INFO - Loaded: ghanisht
+2026-03-06 11:37:39,577 - INFO - Loaded: Nishit
+2026-03-06 11:37:40,374 - INFO - Loaded: Shikha
+2026-03-06 11:37:40,976 - INFO - Loaded: Tushar
+2026-03-06 11:37:42,189 - INFO - Loaded: vini
+2026-03-06 11:37:43,057 - INFO - Loaded: vini
+2026-03-06 11:37:43,059 - INFO - Known people (7): Dron, ghanisht, Nishit, Shikha, Tushar, vini, vini
+2026-03-06 11:37:43,059 - INFO - SpeechManager ready
+2026-03-06 11:37:43,226 - INFO - Calibrating microphone…
+2026-03-06 11:37:44,288 - INFO - SpeechRecognizer ready
+2026-03-06 12:20:42,274 - INFO - SpeechManager ready
+2026-03-06 12:20:42,622 - INFO - Calibrating microphone…
+2026-03-06 12:20:43,677 - INFO - SpeechRecognizer ready
+2026-03-06 12:20:43,678 - INFO - ============================================================
+2026-03-06 12:20:43,678 - INFO - FACE RECOGNITION ATTENDANCE SYSTEM
+2026-03-06 12:20:43,678 - INFO - ============================================================
+2026-03-06 12:20:45,033 - INFO - Loaded: Dron
+2026-03-06 12:20:45,829 - INFO - Loaded: ghanisht
+2026-03-06 12:20:46,838 - INFO - Loaded: Nishit
+2026-03-06 12:20:47,764 - INFO - Loaded: Shikha
+2026-03-06 12:20:48,518 - INFO - Loaded: Tushar
+2026-03-06 12:20:50,055 - INFO - Loaded: vini
+2026-03-06 12:20:51,414 - INFO - Loaded: vini
+2026-03-06 12:20:51,415 - INFO - Known people (7): Dron, ghanisht, Nishit, Shikha, Tushar, vini, vini
+2026-03-06 12:20:51,416 - INFO - SpeechManager ready
+2026-03-06 12:20:51,593 - INFO - Calibrating microphone…
+2026-03-06 12:20:52,662 - INFO - SpeechRecognizer ready
+2026-03-06 13:49:54,079 - INFO - SpeechManager ready
+2026-03-06 13:49:54,338 - INFO - Calibrating microphone…
+2026-03-06 13:49:55,413 - INFO - SpeechRecognizer ready
+2026-03-06 13:49:55,414 - INFO - ============================================================
+2026-03-06 13:49:55,414 - INFO - FACE RECOGNITION ATTENDANCE SYSTEM
+2026-03-06 13:49:55,414 - INFO - ============================================================
+2026-03-06 13:49:56,318 - INFO - Loaded: Dron
+2026-03-06 13:49:57,053 - INFO - Loaded: ghanisht
+2026-03-06 13:49:58,115 - INFO - Loaded: Nishit
+2026-03-06 13:49:58,936 - INFO - Loaded: Shikha
+2026-03-06 13:49:59,546 - INFO - Loaded: Tushar
+2026-03-06 13:50:00,991 - INFO - Loaded: vini
+2026-03-06 13:50:01,941 - INFO - Loaded: vini
+2026-03-06 13:50:01,942 - INFO - Known people (7): Dron, ghanisht, Nishit, Shikha, Tushar, vini, vini
+2026-03-06 13:50:01,943 - INFO - SpeechManager ready
+2026-03-06 13:50:02,118 - INFO - Calibrating microphone…
+2026-03-06 13:50:03,178 - INFO - SpeechRecognizer ready
+2026-03-06 14:08:53,687 - INFO - SpeechManager ready
+2026-03-06 14:08:53,951 - INFO - Calibrating microphone…
+2026-03-06 14:08:54,997 - INFO - SpeechRecognizer ready
+2026-03-06 14:08:54,997 - INFO - ============================================================
+2026-03-06 14:08:54,998 - INFO - FACE RECOGNITION ATTENDANCE SYSTEM
+2026-03-06 14:08:54,998 - INFO - ============================================================
+2026-03-06 14:08:55,879 - INFO - Loaded: Dron
+2026-03-06 14:08:56,580 - INFO - Loaded: ghanisht
+2026-03-06 14:08:57,447 - INFO - Loaded: Nishit
+2026-03-06 14:08:58,233 - INFO - Loaded: Shikha
+2026-03-06 14:08:58,804 - INFO - Loaded: Tushar
+2026-03-06 14:08:59,983 - INFO - Loaded: vini
+2026-03-06 14:09:00,848 - INFO - Loaded: vini
+2026-03-06 14:09:00,848 - INFO - Known people (7): Dron, ghanisht, Nishit, Shikha, Tushar, vini, vini
+2026-03-06 14:09:00,849 - INFO - SpeechManager ready
+2026-03-06 14:09:01,008 - INFO - Calibrating microphone…
+2026-03-06 14:09:02,068 - INFO - SpeechRecognizer ready
+2026-03-06 14:14:30,940 - INFO - SpeechManager ready
+2026-03-06 14:14:31,157 - INFO - Calibrating microphone…
+2026-03-06 14:14:32,211 - INFO - SpeechRecognizer ready
+2026-03-06 14:14:32,211 - INFO - ============================================================
+2026-03-06 14:14:32,212 - INFO - FACE RECOGNITION ATTENDANCE SYSTEM
+2026-03-06 14:14:32,212 - INFO - ============================================================
+2026-03-06 14:14:33,198 - INFO - Loaded: Dron
+2026-03-06 14:14:33,952 - INFO - Loaded: ghanisht
+2026-03-06 14:14:34,892 - INFO - Loaded: Nishit
+2026-03-06 14:14:35,742 - INFO - Loaded: Shikha
+2026-03-06 14:14:36,337 - INFO - Loaded: Tushar
+2026-03-06 14:14:37,574 - INFO - Loaded: vini
+2026-03-06 14:14:38,443 - INFO - Loaded: vini
+2026-03-06 14:14:38,443 - INFO - Known people (7): Dron, ghanisht, Nishit, Shikha, Tushar, vini, vini
+2026-03-06 14:14:38,444 - INFO - SpeechManager ready
+2026-03-06 14:14:38,603 - INFO - Calibrating microphone…
+2026-03-06 14:14:39,657 - INFO - SpeechRecognizer ready
+2026-03-06 16:01:18,137 - INFO - SpeechManager ready
+2026-03-06 16:01:18,686 - INFO - Calibrating microphone…
+2026-03-06 16:01:19,747 - INFO - SpeechRecognizer ready
+2026-03-06 16:01:19,747 - INFO - ============================================================
+2026-03-06 16:01:19,747 - INFO - FACE RECOGNITION ATTENDANCE SYSTEM
+2026-03-06 16:01:19,748 - INFO - ============================================================
+2026-03-06 16:01:20,681 - INFO - Loaded: Dron
+2026-03-06 16:01:21,575 - INFO - Loaded: ghanisht
+2026-03-06 16:01:22,549 - INFO - Loaded: Nishit
+2026-03-06 16:06:36,430 - INFO - SpeechManager ready
+2026-03-06 16:06:36,958 - INFO - Calibrating microphone…
+2026-03-06 16:06:38,020 - INFO - SpeechRecognizer ready
+2026-03-06 16:06:38,021 - INFO - ============================================================
+2026-03-06 16:06:38,021 - INFO - FACE RECOGNITION ATTENDANCE SYSTEM
+2026-03-06 16:06:38,021 - INFO - ============================================================
+2026-03-06 16:06:38,970 - INFO - Loaded: Dron
+2026-03-06 16:06:39,806 - INFO - Loaded: ghanisht
+2026-03-06 16:06:40,779 - INFO - Loaded: Nishit
+2026-03-06 16:06:41,611 - INFO - Loaded: Shikha
+2026-03-06 16:06:42,357 - INFO - Loaded: Tushar
+2026-03-06 16:06:43,960 - INFO - Loaded: vini
+2026-03-06 16:06:45,058 - INFO - Loaded: vini
+2026-03-06 16:06:45,058 - INFO - Known people (7): Dron, ghanisht, Nishit, Shikha, Tushar, vini, vini
+2026-03-06 16:06:45,060 - INFO - SpeechManager ready
+2026-03-06 16:06:45,236 - INFO - Calibrating microphone…
+2026-03-06 16:06:46,289 - INFO - SpeechRecognizer ready
+2026-03-06 16:57:02,161 - INFO - SpeechManager ready
+2026-03-06 16:57:02,469 - INFO - Calibrating microphone…
+2026-03-06 16:57:03,541 - INFO - SpeechRecognizer ready
+2026-03-06 16:57:03,541 - INFO - ============================================================
+2026-03-06 16:57:03,542 - INFO - FACE RECOGNITION ATTENDANCE SYSTEM
+2026-03-06 16:57:03,542 - INFO - ============================================================
+2026-03-06 16:57:04,526 - INFO - Loaded: Dron
+2026-03-06 16:57:05,299 - INFO - Loaded: ghanisht
+2026-03-06 16:57:06,249 - INFO - Loaded: Nishit
+2026-03-06 16:57:07,091 - INFO - Loaded: Shikha
+2026-03-06 16:57:07,718 - INFO - Loaded: Tushar
+2026-03-06 16:57:08,987 - INFO - Loaded: vini
+2026-03-06 16:57:09,906 - INFO - Loaded: vini
+2026-03-06 16:57:09,907 - INFO - Known people (7): Dron, ghanisht, Nishit, Shikha, Tushar, vini, vini
+2026-03-06 16:57:09,908 - INFO - SpeechManager ready
+2026-03-06 16:57:10,142 - INFO - Calibrating microphone…
+2026-03-06 16:57:11,207 - INFO - SpeechRecognizer ready
+2026-03-06 17:35:32,348 - INFO - SpeechManager ready
+2026-03-06 17:35:32,622 - INFO - Calibrating microphone…
+2026-03-06 17:35:33,688 - INFO - SpeechRecognizer ready
+2026-03-06 17:35:33,689 - INFO - ============================================================
+2026-03-06 17:35:33,689 - INFO - FACE RECOGNITION ATTENDANCE SYSTEM
+2026-03-06 17:35:33,689 - INFO - ============================================================
+2026-03-06 17:35:34,668 - INFO - Loaded: Dron
+2026-03-06 17:35:35,454 - INFO - Loaded: ghanisht
+2026-03-06 17:35:36,388 - INFO - Loaded: Nishit
+2026-03-06 17:35:37,260 - INFO - Loaded: Shikha
+2026-03-06 17:35:37,892 - INFO - Loaded: Tushar
+2026-03-06 17:35:39,186 - INFO - Loaded: vini
+2026-03-06 17:35:40,206 - INFO - Loaded: vini
+2026-03-06 17:35:40,207 - INFO - Known people (7): Dron, ghanisht, Nishit, Shikha, Tushar, vini, vini
+2026-03-06 17:35:40,208 - INFO - SpeechManager ready
+2026-03-06 17:35:40,446 - INFO - Calibrating microphone…
+2026-03-06 17:35:41,516 - INFO - SpeechRecognizer ready
+2026-03-06 17:48:12,097 - INFO - SpeechManager ready
+2026-03-06 17:48:12,648 - INFO - Calibrating microphone…
+2026-03-06 17:48:13,700 - INFO - SpeechRecognizer ready
+2026-03-06 17:48:13,701 - INFO - ============================================================
+2026-03-06 17:48:13,701 - INFO - FACE RECOGNITION ATTENDANCE SYSTEM
+2026-03-06 17:48:13,701 - INFO - ============================================================
+2026-03-06 17:48:14,649 - INFO - Loaded: Dron
+2026-03-06 17:48:15,421 - INFO - Loaded: ghanisht
+2026-03-06 17:48:16,363 - INFO - Loaded: Nishit
+2026-03-06 17:48:17,195 - INFO - Loaded: Shikha
+2026-03-06 17:48:17,816 - INFO - Loaded: Tushar
+2026-03-06 17:48:19,093 - INFO - Loaded: vini
+2026-03-06 17:48:20,005 - INFO - Loaded: vini
+2026-03-06 17:48:20,006 - INFO - Known people (7): Dron, ghanisht, Nishit, Shikha, Tushar, vini, vini
+2026-03-06 17:48:20,007 - INFO - SpeechManager ready
+2026-03-06 17:48:20,235 - INFO - Calibrating microphone…
+2026-03-06 17:48:21,299 - INFO - SpeechRecognizer ready
+2026-03-07 10:51:39,169 - INFO - SpeechManager ready
+2026-03-07 10:51:39,853 - INFO - Calibrating microphone…
+2026-03-07 10:51:40,909 - INFO - SpeechRecognizer ready
+2026-03-07 10:51:40,909 - INFO - ============================================================
+2026-03-07 10:51:40,910 - INFO - FACE RECOGNITION ATTENDANCE SYSTEM
+2026-03-07 10:51:40,910 - INFO - ============================================================
+2026-03-07 10:51:42,191 - INFO - Loaded: Dron
+2026-03-07 10:51:43,079 - INFO - Loaded: ghanisht
+2026-03-07 10:51:44,202 - INFO - Loaded: Nishit
+2026-03-07 10:51:45,192 - INFO - Loaded: Shikha
+2026-03-07 10:51:45,880 - INFO - Loaded: Tushar
+2026-03-07 10:51:47,378 - INFO - Loaded: vini
+2026-03-07 10:51:48,514 - INFO - Loaded: vini
+2026-03-07 10:51:48,514 - INFO - Known people (7): Dron, ghanisht, Nishit, Shikha, Tushar, vini, vini
+2026-03-07 10:51:48,515 - INFO - SpeechManager ready
+2026-03-07 10:51:48,736 - INFO - Calibrating microphone…
+2026-03-07 10:51:49,795 - INFO - SpeechRecognizer ready
+2026-03-07 10:52:44,237 - INFO - Wake word listener started — say 'Hey Alexi'
+2026-03-07 10:52:44,239 - INFO - System standing by — say 'Hey Alexi' to begin
+2026-03-07 10:52:45,388 - INFO - 👂 Waiting for 'Hey Alexi'...
+2026-03-07 10:52:49,879 - ERROR - Wake word error: recognition connection failed: [Errno 11001] getaddrinfo failed
+2026-03-07 10:52:51,914 - INFO - 👂 Waiting for 'Hey Alexi'...
+2026-03-07 10:52:56,033 - ERROR - Wake word error: recognition connection failed: [Errno 11001] getaddrinfo failed
+2026-03-07 10:52:57,788 - INFO - 👂 Waiting for 'Hey Alexi'...
+2026-03-07 10:53:01,890 - ERROR - Wake word error: recognition connection failed: [Errno 11001] getaddrinfo failed
+2026-03-07 10:53:03,659 - INFO - 👂 Waiting for 'Hey Alexi'...
+2026-03-07 10:53:07,775 - ERROR - Wake word error: recognition connection failed: [Errno 11001] getaddrinfo failed
+2026-03-07 10:53:09,558 - INFO - 👂 Waiting for 'Hey Alexi'...
+2026-03-07 10:53:13,682 - ERROR - Wake word error: recognition connection failed: [Errno 11001] getaddrinfo failed
+2026-03-07 10:53:15,452 - INFO - 👂 Waiting for 'Hey Alexi'...
+2026-03-07 10:53:19,553 - ERROR - Wake word error: recognition connection failed: [Errno 11001] getaddrinfo failed
+2026-03-07 10:53:21,300 - INFO - 👂 Waiting for 'Hey Alexi'...
+2026-03-07 10:53:25,412 - ERROR - Wake word error: recognition connection failed: [Errno 11001] getaddrinfo failed
+2026-03-07 10:53:27,189 - INFO - 👂 Waiting for 'Hey Alexi'...
+2026-03-07 10:53:31,285 - ERROR - Wake word error: recognition connection failed: [Errno 11001] getaddrinfo failed
+2026-03-07 10:53:33,042 - INFO - 👂 Waiting for 'Hey Alexi'...
+2026-03-07 10:53:57,961 - INFO - SpeechManager ready
+2026-03-07 10:53:58,557 - INFO - Calibrating microphone…
+2026-03-07 10:53:59,625 - INFO - SpeechRecognizer ready
+2026-03-07 10:53:59,625 - INFO - ============================================================
+2026-03-07 10:53:59,626 - INFO - FACE RECOGNITION ATTENDANCE SYSTEM
+2026-03-07 10:53:59,627 - INFO - ============================================================
+2026-03-07 10:54:00,868 - INFO - Loaded: Dron
+2026-03-07 10:54:01,895 - INFO - Loaded: ghanisht
+2026-03-07 10:54:03,123 - INFO - Loaded: Nishit
+2026-03-07 10:54:04,194 - INFO - Loaded: Shikha
+2026-03-07 10:54:05,110 - INFO - Loaded: Tushar
+2026-03-07 10:54:06,727 - INFO - Loaded: vini
+2026-03-07 10:54:07,918 - INFO - Loaded: vini
+2026-03-07 10:54:07,919 - INFO - Known people (7): Dron, ghanisht, Nishit, Shikha, Tushar, vini, vini
+2026-03-07 10:54:07,921 - INFO - SpeechManager ready
+2026-03-07 10:54:08,209 - INFO - Calibrating microphone…
+2026-03-07 10:54:09,295 - INFO - SpeechRecognizer ready
+2026-03-07 10:54:12,130 - INFO - Wake word listener started — say 'Hey Alexi'
+2026-03-07 10:54:12,133 - INFO - System standing by — say 'Hey Alexi' to begin
+2026-03-07 10:54:12,976 - INFO - 👂 Waiting for 'Hey Alexi'...
+2026-03-07 10:54:17,191 - ERROR - Wake word error: recognition connection failed: [Errno 11001] getaddrinfo failed
+2026-03-07 10:54:19,142 - INFO - 👂 Waiting for 'Hey Alexi'...
+2026-03-07 10:54:23,331 - ERROR - Wake word error: recognition connection failed: [Errno 11001] getaddrinfo failed
+2026-03-07 10:54:25,387 - INFO - 👂 Waiting for 'Hey Alexi'...
+2026-03-07 10:54:29,578 - ERROR - Wake word error: recognition connection failed: [Errno 11001] getaddrinfo failed
+2026-03-07 10:54:31,400 - INFO - 👂 Waiting for 'Hey Alexi'...
+2026-03-07 10:54:35,499 - ERROR - Wake word error: recognition connection failed: [Errno 11001] getaddrinfo failed
+2026-03-07 10:54:37,266 - INFO - 👂 Waiting for 'Hey Alexi'...
+2026-03-07 10:54:41,382 - ERROR - Wake word error: recognition connection failed: [Errno 11001] getaddrinfo failed
+2026-03-07 10:54:43,145 - INFO - 👂 Waiting for 'Hey Alexi'...

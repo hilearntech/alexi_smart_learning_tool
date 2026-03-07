@@ -11,6 +11,7 @@ const StudentManagement = () => {
     const [showAddModal, setShowAddModal] = useState(false);
     const [showEditModal, setShowEditModal] = useState(false);
     const [editData, setEditData] = useState(null);
+    const [parents, setParents] = useState([]);
 
     const [formData, setFormData] = useState({
         studentName: '',
@@ -29,6 +30,7 @@ const StudentManagement = () => {
             studentName: s.name,
             studentClass: s.class,
             parentName: s.parent_name || "N/A",
+            parentId: s.parent_id || "",
             email: s.email || "-",
             phone: s.phone || "-",
             status: "active",
@@ -40,11 +42,23 @@ const StudentManagement = () => {
         setStudents(formatted);
     };
 
+    const fetchParents = async () => {
+        const res = await fetch("http://localhost:5000/api/admin/all-users");
+        const data = await res.json();
+
+        const onlyParents = data.filter(u => u.role === "parent");
+
+        setParents(onlyParents);
+    };
+
     useEffect(() => {
         fetchStudents();
+        fetchParents();
     }, []);
 
+
     const handleAddStudent = async () => {
+        const selectedParentObj = parents.find(p => p._id === formData.parentName);
         try {
             const response = await fetch("http://localhost:5000/api/admin/add-student", {
                 method: "POST",
@@ -54,7 +68,9 @@ const StudentManagement = () => {
                 body: JSON.stringify({
                     name: formData.studentName,
                     class: formData.studentClass,
-                    parentName: formData.parentName,
+                    // parentName: formData.parentName,
+                    parentName: selectedParentObj ? selectedParentObj.name : "",
+                    parent_id: formData.parentName,
                     email: formData.email,
                     phone: formData.phone
                 })
@@ -72,6 +88,7 @@ const StudentManagement = () => {
     };
 
     const handleUpdateStudent = async () => {
+        const selectedParentObj = parents.find(p => p._id === editData.parentId || p.name === editData.parentName);
         try {
             const res = await fetch(`http://localhost:5000/api/admin/edit-student/${editData.id}`, {
                 method: "PUT",
@@ -81,7 +98,8 @@ const StudentManagement = () => {
                 body: JSON.stringify({
                     name: editData.studentName,
                     class: editData.studentClass,
-                    parentName: editData.parentName,
+                    parentName: selectedParentObj ? selectedParentObj.name : editData.parentName,
+                    parent_id: editData.parentId,
                     email: editData.email,
                     phone: editData.phone
                 })
@@ -97,6 +115,24 @@ const StudentManagement = () => {
         } catch (err) {
             console.error(err);
             alert("Server error");
+        }
+    };
+
+    const handleParentChange = (e) => {
+        const parentId = e.target.value;
+
+        // Parents list mein se selected parent ki puri info nikalna
+        const selectedParent = parents.find(p => p._id === parentId);
+
+        if (selectedParent) {
+            setFormData({
+                ...formData,
+                parentName: parentId, // Hum ID store kar rahe hain name ki jagah
+                email: selectedParent.email || '',
+                phone: selectedParent.phone || ''
+            });
+        } else {
+            setFormData({ ...formData, parentName: '', email: '', phone: '' });
         }
     };
 
@@ -255,12 +291,32 @@ const StudentManagement = () => {
                             onChange={(e) => setFormData({ ...formData, studentClass: e.target.value })}
                         />
 
-                        <Input
-                            label="Parent Name"
-                            icon={User}
-                            value={formData.parentName}
-                            onChange={(e) => setFormData({ ...formData, parentName: e.target.value })}
-                        />
+                        <div className="space-y-2">
+                            <label className="text-sm font-medium text-gray-700">
+                                Parent
+                            </label>
+
+                            <div className="relative">
+                                <User className="absolute left-4 top-3.5 text-gray-400" size={18} />
+
+                                <select
+                                    className="w-full border rounded-full py-3 pl-12 pr-4 bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                    value={formData.parentName}
+                                    // onChange={(e) =>
+                                    //     setFormData({ ...formData, parentName: e.target.value })
+                                    // }
+                                    onChange={handleParentChange}
+                                >
+                                    <option value="">Select Parent</option>
+
+                                    {parents.map((p) => (
+                                        <option key={p._id} value={p._id}>
+                                            {p.name}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                        </div>
 
                         <Input
                             label="Email"
@@ -312,13 +368,21 @@ const StudentManagement = () => {
                             }
                         />
 
-                        <Input
-                            label="Parent Name"
-                            value={editData.parentName}
+                        <select
+                            className="w-full border rounded-lg p-2"
+                            // parentId use karein takki ID select ho
+                            value={editData.parentId || ""}
                             onChange={(e) =>
-                                setEditData({ ...editData, parentName: e.target.value })
+                                setEditData({ ...editData, parentId: e.target.value })
                             }
-                        />
+                        >
+                            <option value="">Select Parent</option>
+                            {parents.map(p => (
+                                <option key={p._id} value={p._id}> {/* <--- Value ID honi chahiye */}
+                                    {p.name}
+                                </option>
+                            ))}
+                        </select>
 
                         <Input
                             label="Email"
