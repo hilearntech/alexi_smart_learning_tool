@@ -52,20 +52,16 @@ class MimiLLMSession:
         headers = {'Authorization': f'Bearer {api_key}', 'Content-Type': 'application/json'}
         # Full Mimi persona + developer tips for child-safe interactive behavior
         system_instructions = (
-            "ROLE: You are Mimi, a friendly, magical animal friend for children aged 3 to 5. "
-            "Your goal is to educate and inform children in a simple, fun way.\n\n"
-            "TONE & LANGUAGE: Speak in simple Hinglish (mix of Hindi and English). Use vocabulary a preschooler knows. "
-            "Keep responses to 1-2 short sentences. Never ask questions in your response.\n\n"
-            "RULES & SAFETY: Never mention ghosts, monsters, death, violence, sickness, politics, or adult topics. If asked about a scary topic, "
-            "pivot to something happy (e.g., 'Chalo, let's play with colors!'). If child sounds sad, give gentle emotional support. "
-            "Always be encouraging and upbeat.\n\n"
-            "RESPONSE FORMAT: Always reply with a JSON object only. Keys: text, image_url, yt_video.\n"
-            "- 'text': 1-2 short simple sentences. No questions. Just a clear, friendly definition or explanation.\n"
-            "- 'image_url': Always use Wikipedia Commons URLs only in this exact format: 'https://upload.wikimedia.org/wikipedia/commons/[path]/[filename.jpg]'. Example: 'https://upload.wikimedia.org/wikipedia/commons/3/37/African_Bush_Elephant.jpg'. Only Wikipedia Commons URLs are allowed.\n"
-            "- yt_video: Only include for poems, songs, stories or detailed explanations. Use this exact YouTube URL format: 'https://www.youtube.com/watch?v=[video_id]'. Example for elephant song: 'https://www.youtube.com/watch?v=3HfC0Dg8nWg'. Only provide if you are confident the video exists. Otherwise null.\n"
-            "Example 1 (no video): {\"text\": \"Elephant ek bahut bada janwar hai! Uski lambi naak hoti hai jise trunk kehte hain.\", \"image_url\": \"https://upload.wikimedia.org/wikipedia/commons/3/37/African_Bush_Elephant.jpg\", \"yt_video\": null}\n"
-            "Example 2 (with video): {\"text\": \"Suraj ek sitara hai jo humein roshni aur garmi deta hai!\", \"image_url\": \"https://upload.wikimedia.org/wikipedia/commons/b/b4/The_Sun_by_the_Atmospheric_Imaging_Assembly_of_NASA%27s_Solar_Dynamics_Observatory.jpg\", \"yt_video\": \"https://www.youtube.com/watch?v=3HfC0Dg8nWg\"}"
+            "ROLE: You are Mimi, a friendly, magical animal friend for children aged 3 to 5. Your goal is to educate and inform children in a simple, fun way.\n\n"
+            "TONE & LANGUAGE: Speak mostly in simple English. Use only 1-2 Hindi words occasionally like 'ek', 'bahut', 'aur'. Use vocabulary a preschooler knows. Keep responses to 1-2 short sentences. Never ask questions in your response.\n\n"
+            "RULES & SAFETY: Never mention ghosts, monsters, death, violence, sickness, politics, or adult topics. If asked about a scary topic, pivot to something happy. If child sounds sad, give gentle emotional support. Always be encouraging and upbeat.\n\n"
+            "RESPONSE FORMAT: Always reply with a JSON object only. Keys: text, image_search_term, youtube_search_term.\n"
+            "- text: 1-2 short simple sentences in English only. Max 1-2 Hindi words. No questions.\n"
+            "- image_search_term: A short search term to find a relevant image on Wikimedia Commons. Example: 'African elephant'\n"
+            "- youtube_search_term: A short search term to find a relevant nursery rhyme or educational video on YouTube. Example: 'elephant song for kids'. Use null if not needed.\n\n"
+            "Example: {\"text\": \"Elephant is a very big animal! It has a long trunk.\", \"image_search_term\": \"African elephant\", \"youtube_search_term\": \"elephant song for kids\"}"
         )
+         
         body = {
             'model': 'gpt-4o-mini',
             'messages': [
@@ -96,7 +92,7 @@ class MimiLLMSession:
         # Anthropic: provide the same detailed Mimi instructions
         anthropic_instructions = (
             "ROLE: You are Mimi, a friendly, magical animal friend for children aged 3 to 5. "
-            "Speak in simple Hinglish, use very simple words, keep tone happy and encouraging. Keep replies 1-2 short sentences and end with a playful question.\n\n"
+            "Speak mostly in simple English with only 1-2 Hindi words, use very simple words, keep tone happy and encouraging. Keep replies 1-2 short sentences and end with a playful question.\n\n"
             "RULES: No scary, violent, adult, or political topics. Provide emotional support when child is sad.\n\n"
             "DEV: Prefer gentle voices (alloy/shimmer) and suggest 'turn_detection: server_vad' and 'silence_duration_ms' ~800-1000ms when applicable.\n\n"
             "OUTPUT: Reply ONLY with a JSON object {text, image_url, yt_video} where 'text' is 1-2 short sentences for ages 3-5."
@@ -119,6 +115,59 @@ class MimiLLMSession:
         except Exception as e:
             logger.error('Anthropic call failed: %s', e)
             return None
+    def _fetch_wikimedia_image(self, search_term):
+        """Fetch real image URL from Wikimedia Commons API."""
+        try:
+            url = "https://commons.wikimedia.org/w/api.php"
+            params = {
+                "action": "query",
+                "generator": "search",
+                "gsrsearch": search_term,
+                "gsrlimit": 5,
+                "gsrnamespace": 6,
+                "prop": "imageinfo",
+                "iiprop": "url",
+                "format": "json"
+            }
+            r = requests.get(url, params=params, timeout=10, headers={"User-Agent": "MimiBot/1.0 (educational children app)"})
+            data = r.json()
+            pages = data.get("query", {}).get("pages", {})
+            for page in pages.values():
+                image_url = page.get("imageinfo", [{}])[0].get("url")
+                if image_url:
+                    logger.info(f"Wikimedia image found: {image_url}")
+                    return image_url
+        except Exception as e:
+            logger.error(f"Wikimedia API error: {e}")
+        return None
+
+    def _fetch_youtube_video(self, search_term):
+        """Fetch real YouTube video URL using YouTube Data API."""
+        try:
+            api_key = os.environ.get("YOUTUBE_API_KEY")
+            if not api_key:
+                logger.warning("YOUTUBE_API_KEY not set")
+                return None
+            url = "https://www.googleapis.com/youtube/v3/search"
+            params = {
+                "part": "snippet",
+                "q": search_term,
+                "type": "video",
+                "videoCategoryId": "27",
+                "maxResults": 1,
+                "key": api_key
+            }
+            r = requests.get(url, params=params, timeout=10, headers={"User-Agent": "MimiBot/1.0"})
+            data = r.json()
+            items = data.get("items", [])
+            if items:
+                video_id = items[0]["id"]["videoId"]
+                video_url = f"https://www.youtube.com/watch?v={video_id}"
+                logger.info(f"YouTube video found: {video_url}")
+                return video_url
+        except Exception as e:
+            logger.error(f"YouTube API error: {e}")
+        return None
 
     def _parse_json_response(self, text):
         if not text:
@@ -135,7 +184,6 @@ class MimiLLMSession:
         return None
 
     def _get_llm_response_json(self, user_text):
-        # Compose a short prompt asking for JSON
         prompt = user_text
         text = None
         if self.openai_key:
@@ -143,17 +191,27 @@ class MimiLLMSession:
         if not text and self.anthropic_key:
             text = self._call_anthropic(prompt)
         if not text:
-            # fallback canned reply
             return {'text': "I'm sorry, I can't reach the brain right now.", 'image_url': None, 'yt_video': None}
         data = self._parse_json_response(text)
         if not data:
-            # As a safe fallback, wrap plain text
             return {'text': text.strip(), 'image_url': None, 'yt_video': None}
-        # Ensure keys
+
+        # Fetch real image from Wikimedia
+        image_url = None
+        image_search_term = data.get('image_search_term')
+        if image_search_term:
+            image_url = self._fetch_wikimedia_image(image_search_term)
+
+        # Fetch real YouTube video
+        yt_video = None
+        youtube_search_term = data.get('youtube_search_term')
+        if youtube_search_term:
+            yt_video = self._fetch_youtube_video(youtube_search_term)
+
         return {
             'text': data.get('text') or '',
-            'image_url': data.get('image_url'),
-            'yt_video': data.get('yt_video')
+            'image_url': image_url,
+            'yt_video': yt_video
         }
 
     # --------------------------- Conversation ---------------------------
@@ -262,4 +320,5 @@ class MimiLLMSession:
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO)
     MimiLLMSession().run()
+ 
  

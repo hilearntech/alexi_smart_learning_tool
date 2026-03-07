@@ -56,15 +56,15 @@ class MimiLLMSession:
         system_instructions = (
             "ROLE: You are Mimi, a friendly, magical animal friend for children aged 3 to 5. "
             "Your goal is to educate and inform children in a simple, fun way.\n\n"
-            "TONE & LANGUAGE: Speak in simple Hinglish. Use vocabulary a preschooler knows. "
+            "TONE & LANGUAGE: Speak in English only. You may use maximum 1 Hindi word per response like ek or aur. Never full Hindi sentences. Use vocabulary a preschooler knows. "
             "Keep responses to 1-2 short sentences. Never ask questions.\n\n"
             "RULES & SAFETY: Never mention ghosts, monsters, death, violence, sickness, politics. "
             "Always be encouraging and upbeat.\n\n"
-            "RESPONSE FORMAT: Reply ONLY with a JSON object. Keys: text, image_url, yt_video.\n"
-            "- text: 1-2 short simple sentences. No questions. Clear friendly definition.\n"
-            "- image_url: real working image URL related to topic. Always include.\n"
-            "- yt_video: YouTube URL only for poems, songs, detailed explanation. Otherwise null.\n"
-            "Example: {\"text\": \"Elephant ek bahut bada janwar hai!\", \"image_url\": \"https://upload.wikimedia.org/wikipedia/commons/3/37/African_Bush_Elephant.jpg\", \"yt_video\": null}"
+            "RESPONSE FORMAT: Reply ONLY with a JSON object. Keys: text, image_search_term, youtube_search_term.\n"
+            "- text: 1-2 short simple sentences in English only. Max 1-2 Hindi words allowed. No questions.\n"
+            "- image_search_term: short search term to find image on Wikimedia. Example: African elephant\n"
+            "- youtube_search_term: short search term to find YouTube video for kids. Otherwise null.\n"
+            "Example: {\"text\": \"Elephant ek bahut bada janwar hai!\", \"image_search_term\": \"African elephant.org/wikipedia/commons/3/37/African_Bush_Elephant.jpg\", \"yt_video\": null}"
         )
         body = {
             'model': 'gpt-4o-mini',
@@ -119,6 +119,25 @@ class MimiLLMSession:
             logger.error('Anthropic call failed: %s', e)
             return None
 
+
+    def _fetch_wikimedia_image(self, search_term):
+        print('WIKIMEDIA SEARCHING:', search_term)
+        try:
+            import requests as req
+            r = req.get(
+                'https://commons.wikimedia.org/w/api.php',
+                params={'action':'query','generator':'search','gsrsearch':search_term,'gsrlimit':5,'gsrnamespace':6,'prop':'imageinfo','iiprop':'url','format':'json'},
+                headers={'User-Agent':'MimiBot/1.0'},
+                timeout=10
+            )
+            pages = r.json().get('query',{}).get('pages',{})
+            for page in pages.values():
+                url = page.get('imageinfo',[{}])[0].get('url')
+                if url:
+                    return url
+        except Exception as e:
+            print('Wikimedia error:', e)
+        return None
     def _parse_json_response(self, text):
         if not text:
             return None
@@ -134,28 +153,27 @@ class MimiLLMSession:
         return None
 
     def _get_llm_response_json(self, user_text):
-        # Compose a short prompt asking for JSON
-        prompt = f'User asked: "{user_text}"\nRespond with JSON: text, image_url, yt_video (or null)'
         text = None
         if self.openai_key:
-            text = self._call_openai(prompt)
+            text = self._call_openai(user_text)
         if not text and self.anthropic_key:
-            text = self._call_anthropic(prompt)
+            text = self._call_anthropic(user_text)
         if not text:
-            # fallback canned reply
-            return {'text': "I'm sorry, I can't reach the brain right now.", 'image_url': None, 'yt_video': None}
+            return {'text': "Sorry, I cannot connect right now.", 'image_url': None, 'yt_video': None}
         data = self._parse_json_response(text)
         if not data:
-            # As a safe fallback, wrap plain text
             return {'text': text.strip(), 'image_url': None, 'yt_video': None}
-        # Ensure keys
+        search = data.get('image_search_term') or ''
+        print('WIKIMEDIA SEARCH:', search)
+        image_url = self._fetch_wikimedia_image(search)
+        print('WIKIMEDIA RESULT:', image_url)
+        yt_video = None
         return {
             'text': data.get('text') or '',
-            'image_url': data.get('image_url'),
-            'yt_video': data.get('yt_video')
+            'image_url': image_url,
+            'yt_video': yt_video
         }
 
-    # --------------------------- Conversation ---------------------------
     def run(self):
         # Simple wake-word loop (blocking until user says "hey alexi")
         logger.info('Mimi LLM session ready — say "Hey Alexi" to start')
