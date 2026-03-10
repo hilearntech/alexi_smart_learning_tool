@@ -132,9 +132,12 @@ class MimiLLMSession:
             )
             pages = r.json().get('query',{}).get('pages',{})
             for page in pages.values():
-                url = page.get('imageinfo',[{}])[0].get('url')
-                if url:
-                    return url
+                imageinfo = page.get('imageinfo', [])
+                if imageinfo:
+                    url = imageinfo[0].get('url')
+                    if url:
+                        print('WIKIMEDIA RESULT:', url)
+                        return url
         except Exception as e:
             print('Wikimedia error:', e)
         return None
@@ -152,6 +155,31 @@ class MimiLLMSession:
             logger.warning('Failed to parse JSON from LLM response: %s', e)
         return None
 
+
+    def _fetch_youtube_video(self, search_term):
+        import requests
+        api_key = os.environ.get('YOUTUBE_API_KEY')
+        if not api_key:
+            return None
+        try:
+            url = 'https://www.googleapis.com/youtube/v3/search'
+            params = {
+                'part': 'snippet',
+                'q': search_term,
+                'type': 'video',
+                'maxResults': 1,
+                'key': api_key
+            }
+            r = requests.get(url, params=params, timeout=10)
+            r.raise_for_status()
+            items = r.json().get('items', [])
+            if items:
+                video_id = items[0]['id']['videoId']
+                return f'https://www.youtube.com/watch?v={video_id}'
+        except Exception as e:
+            print(f'YOUTUBE ERROR: {e}')
+        return None
+
     def _get_llm_response_json(self, user_text):
         text = None
         if self.openai_key:
@@ -163,11 +191,21 @@ class MimiLLMSession:
         data = self._parse_json_response(text)
         if not data:
             return {'text': text.strip(), 'image_url': None, 'yt_video': None}
-        search = data.get('image_search_term') or ''
-        print('WIKIMEDIA SEARCH:', search)
-        image_url = self._fetch_wikimedia_image(search)
-        print('WIKIMEDIA RESULT:', image_url)
+
+        image_url = None
+        image_search_term = data.get('image_search_term')
+        if image_search_term:
+            image_url = self._fetch_wikimedia_image(image_search_term)
+
         yt_video = None
+        youtube_search_term = data.get('youtube_search_term')
+        if youtube_search_term:
+            try:
+                yt_video = self._fetch_youtube_video(youtube_search_term)
+                print(f"YOUTUBE RESULT: {yt_video}")
+            except Exception:
+                yt_video = None
+
         return {
             'text': data.get('text') or '',
             'image_url': image_url,
