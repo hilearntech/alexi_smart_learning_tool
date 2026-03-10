@@ -6119,3 +6119,84 @@ AttributeError: module 'cv2' has no attribute 'VideoCapture'
 2026-02-22 16:47:33,172 - INFO - 👂 Waiting for 'Hey Alexi'...
 2026-02-22 16:47:41,503 - INFO - 👂 Waiting for 'Hey Alexi'...
 2026-02-22 16:47:47,580 - INFO - 👂 Waiting for 'Hey Alexi'...
+2026-02-28 14:28:06,384 - INFO - AttendanceManager ready
+2026-02-28 14:28:06,386 - INFO - SpeechManager ready
+2026-02-28 14:28:08,761 - INFO - Calibrating microphone…
+2026-02-28 14:28:09,884 - INFO - SpeechRecognizer ready
+2026-02-28 14:28:09,906 - INFO - ============================================================
+2026-02-28 14:28:09,971 - INFO - FACE RECOGNITION ATTENDANCE SYSTEM
+2026-02-28 14:28:10,041 - INFO - ============================================================
+2026-02-28 14:28:14,734 - INFO - Loaded: Dron
+2026-02-28 14:28:17,886 - INFO - Loaded: ghanisht
+2026-02-28 14:28:21,967 - INFO - Loaded: Nishit
+2026-02-28 14:28:25,272 - INFO - Loaded: Shikha
+2026-02-28 14:28:26,586 - INFO - Loaded: Tushar
+2026-02-28 14:28:29,548 - INFO - Loaded: vini
+2026-02-28 14:28:31,762 - INFO - Loaded: vini
+2026-02-28 14:28:31,763 - INFO - Known people (7): Dron, ghanisht, Nishit, Shikha, Tushar, vini, vini
+2026-02-28 14:28:31,766 - INFO - SpeechManager ready
+2026-02-28 14:28:32,834 - INFO - Calibrating microphone…
+2026-02-28 14:28:33,903 - INFO - SpeechRecognizer ready
+2026-02-28 14:38:17,283 - INFO - AttendanceManager ready
+2026-02-28 14:38:17,284 - INFO - SpeechManager ready
+2026-02-28 14:38:18,885 - INFO - Calibrating microphone…
+2026-02-28 14:38:19,927 - INFO - SpeechRecognizer ready
+2026-02-28 14:38:19,928 - INFO - ============================================================
+2026-02-28 14:38:19,928 - INFO - FACE RECOGNITION ATTENDANCE SYSTEM
+2026-02-28 14:38:19,929 - INFO - ============================================================
+2026-02-28 14:38:22,499 - INFO - Loaded: Dron
+2026-02-28 14:38:24,034 - INFO - Loaded: ghanisht
+2026-02-28 14:38:26,138 - INFO - Loaded: Nishit
+2026-02-28 14:38:27,728 - INFO - Loaded: Shikha
+2026-02-28 14:38:29,384 - INFO - Loaded: Tushar
+2026-02-28 14:38:32,062 - INFO - Loaded: vini
+2026-02-28 14:38:33,900 - INFO - Loaded: vini
+2026-02-28 14:38:33,900 - INFO - Known people (7): Dron, ghanisht, Nishit, Shikha, Tushar, vini, vini
+2026-02-28 14:38:33,902 - INFO - SpeechManager ready
+2026-02-28 14:38:35,117 - INFO - Calibrating microphone…
+2026-02-28 14:38:36,173 - INFO - SpeechRecognizer ready
+2026-02-28 14:43:17,342 - INFO - Wake word listener started — say 'Hey Alexi'
+2026-02-28 14:43:17,345 - INFO - System standing by — say 'Hey Alexi' to begin
+2026-02-28 14:43:19,225 - INFO - 👂 Waiting for 'Hey Alexi'...
+2026-02-28 14:43:29,257 - INFO - Wake word heard: 'hey alexa'
+2026-02-28 14:43:29,261 - INFO - ✅ Wake word detected!
+2026-02-28 14:43:29,266 - INFO - SPEAKING: Yes! I'm here.
+2026-02-28 14:43:29,463 - INFO - Session triggered — opening camera
+2026-02-28 14:43:31,127 - INFO - Camera open — press Q to quit
+2026-02-28 14:43:32,830 - INFO - First face detected
+2026-02-28 14:43:32,857 - INFO - RECOGNISED: vini (dist=0.383)
+2026-02-28 14:43:32,858 - INFO - STEP 1 — Greeting vini
+2026-02-28 14:43:32,891 - INFO - DONE SPEAKING
+2026-02-28 14:43:32,892 - INFO - SPEAKING: Hi vini! How are you today?
+2026-02-28 14:43:33,349 - INFO - DONE SPEAKING
+2026-02-28 14:43:33,350 - INFO - STEP 2 — Listening
+2026-02-28 14:43:34,152 - INFO - LISTENING… (energy threshold: 1367)
+2026-02-28 14:43:39,411 - INFO - Audio captured — sending to Google STT…
+2026-02-28 14:43:40,321 - INFO - HEARD: 'I am fine'
+2026-02-28 14:43:40,322 - INFO - STEP 2 — Got: 'i am fine'
+2026-02-28 14:43:40,324 - INFO - Mood → Happy (matched 'fine')
+2026-02-28 14:43:40,325 - INFO - STEP 3 — Mood: Happy
+2026-02-28 14:43:40,328 - INFO - ATTENDANCE MARKED: vini | 14:43:40 | Happy
+2026-02-28 14:43:40,328 - INFO - STEP 4 — Attendance saved
+2026-02-28 14:43:40,329 - INFO - STEP 5 — Replying: That's great to hear, vini! You sound happy today. Have a wonderful day ahead!
+2026-02-28 14:43:40,331 - INFO - SPEAKING: That's great to hear, vini! You sound happy today. Have a wonderful day ahead!
+2026-02-28 14:43:40,732 - INFO - DONE SPEAKING
+2026-02-28 14:43:40,734 - INFO - Conversation done for vini
+2026-03-10 11:10:47,243 - INFO - AttendanceManager ready
+2026-03-10 11:10:47,245 - INFO - SpeechManager ready
+2026-03-10 11:10:48,842 - INFO - Calibrating microphone…
+2026-03-10 11:10:49,880 - INFO - SpeechRecognizer ready
+2026-03-10 11:10:49,880 - INFO - ============================================================
+2026-03-10 11:10:49,881 - INFO - FACE RECOGNITION ATTENDANCE SYSTEM
+2026-03-10 11:10:49,882 - INFO - ============================================================
+2026-03-10 11:10:53,920 - INFO - Loaded: Dron
+2026-03-10 11:10:56,327 - INFO - Loaded: ghanisht
+2026-03-10 11:11:00,895 - INFO - Loaded: Nishit
+2026-03-10 11:11:03,393 - INFO - Loaded: Shikha
+2026-03-10 11:11:06,144 - INFO - Loaded: Tushar
+2026-03-10 11:11:12,030 - INFO - Loaded: vini
+2026-03-10 11:11:16,863 - INFO - Loaded: vini
+2026-03-10 11:11:16,866 - INFO - Known people (7): Dron, ghanisht, Nishit, Shikha, Tushar, vini, vini
+2026-03-10 11:11:16,871 - INFO - SpeechManager ready
+2026-03-10 11:11:17,912 - INFO - Calibrating microphone…
+2026-03-10 11:11:18,969 - INFO - SpeechRecognizer ready

@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_cors import CORS
 import threading
 import json
@@ -251,16 +251,46 @@ QUESTION_PROMPTS = {
     },
 }
 
+# @app.route('/start-classroom', methods=['GET'])
+# def start_classroom():
+#     try:
+#         def run_integrated():
+#             system.run()
+#             mimi_system.run()
+
+#         thread = threading.Thread(target=run_integrated)
+#         thread.daemon = True
+#         thread.start()
+
+#         return jsonify({
+#             "status": "success",
+#             "message": "Mimi is now active and looking for faces!",
+#             "character_state": "waving"
+#         })
+#     except Exception as e:
+#         return jsonify({"status": "error", "message": str(e)}), 500
+
+
 @app.route('/start-classroom', methods=['GET'])
 def start_classroom():
     try:
-        def run_integrated():
-            system.run()
-            mimi_system.run()
+        def run_face():
+            try:
+                system.run()
+            except Exception as e:
+                print(f"[FaceSystem] Error: {e}")
+                traceback.print_exc()
 
-        thread = threading.Thread(target=run_integrated)
-        thread.daemon = True
-        thread.start()
+        def run_mimi():
+            try:
+                mimi_system.start()
+            except Exception as e:
+                print(f"[MimiSystem] Error: {e}")
+
+        t1 = threading.Thread(target=run_face, daemon=True)
+        t2 = threading.Thread(target=run_mimi, daemon=True)
+        t1.start()
+        t2.start()
 
         return jsonify({
             "status": "success",
@@ -271,16 +301,92 @@ def start_classroom():
         return jsonify({"status": "error", "message": str(e)}), 500
 
 
+# @app.route('/start-face-detect', methods=['GET'])
+# def start_face_detect():
+#     """
+#     Face detection for Activities — identifies WHO is in front of the camera
+#     but does NOT mark attendance or trigger mood conversation.
+#     """
+#     try:
+#         def _detect_only():
+#             if not _cv_available:
+#                 return
+#             known_dir = os.path.join(os.path.dirname(__file__), "face_detection", "known_faces")
+#             if not os.path.exists(known_dir):
+#                 known_dir = os.path.join(os.path.dirname(__file__), "known_faces")
+
+#             known_encodings, known_names = [], []
+#             if os.path.exists(known_dir):
+#                 for fname in os.listdir(known_dir):
+#                     if not fname.lower().endswith(('.jpg', '.jpeg', '.png')):
+#                         continue
+#                     img = _face_recognition_lib.load_image_file(os.path.join(known_dir, fname))
+#                     encs = _face_recognition_lib.face_encodings(img)
+#                     if encs:
+#                         known_encodings.append(encs[0])
+#                         known_names.append(os.path.splitext(fname)[0].replace('_', ' ').title())
+
+#             cap = cv2.VideoCapture(0)
+#             system.current_person  = None
+#             system.current_action  = 'detecting'
+#             system.current_warning = None
+
+#             try:
+#                 while getattr(system, '_activity_detecting', False):
+#                     ret, frame = cap.read()
+#                     if not ret:
+#                         time.sleep(0.1)
+#                         continue
+#                     small = cv2.resize(frame, (0, 0), fx=0.25, fy=0.25)
+#                     rgb   = cv2.cvtColor(small, cv2.COLOR_BGR2RGB)
+#                     locs  = _face_recognition_lib.face_locations(rgb)
+#                     encs  = _face_recognition_lib.face_encodings(rgb, locs)
+
+#                     # Too-close warning
+#                     system.current_warning = None
+#                     for (top, right, bottom, left) in locs:
+#                         if (bottom - top) > 80:
+#                             system.current_warning = 'too_close'
+#                             break
+
+#                     # Match face — identify only, no attendance
+#                     matched = None
+#                     for enc in encs:
+#                         if not known_encodings:
+#                             break
+#                         dists = _face_recognition_lib.face_distance(known_encodings, enc)
+#                         best  = int(np.argmin(dists))
+#                         if dists[best] < 0.6:
+#                             matched = known_names[best]
+#                             break
+#                     system.current_person = matched
+#                     system.current_action = 'recognized' if matched else 'detecting'
+#                     time.sleep(0.05)
+#             finally:
+#                 cap.release()
+#                 system.current_action  = 'idle'
+#                 system.current_person  = None
+#                 system._activity_detecting = False
+
+#         system._activity_detecting = True
+#         t = threading.Thread(target=_detect_only, daemon=True)
+#         t.start()
+#         return jsonify({"status": "success", "message": "Face detection started (no attendance)"})
+#     except Exception as e:
+#         return jsonify({"status": "error", "message": str(e)}), 500
+
 @app.route('/start-face-detect', methods=['GET'])
 def start_face_detect():
-    """
-    Face detection for Activities — identifies WHO is in front of the camera
-    but does NOT mark attendance or trigger mood conversation.
-    """
     try:
+        # AGAR PEHLE SE CHAL RAHA HAI TOH DUBARA START NA KAREIN
+        if getattr(system, '_activity_detecting', False):
+            return jsonify({"status": "already_running", "message": "Detection is already active"})
+
         def _detect_only():
             if not _cv_available:
                 return
+            
+            # 1. Load faces safely
             known_dir = os.path.join(os.path.dirname(__file__), "face_detection", "known_faces")
             if not os.path.exists(known_dir):
                 known_dir = os.path.join(os.path.dirname(__file__), "known_faces")
@@ -290,61 +396,77 @@ def start_face_detect():
                 for fname in os.listdir(known_dir):
                     if not fname.lower().endswith(('.jpg', '.jpeg', '.png')):
                         continue
-                    img = _face_recognition_lib.load_image_file(os.path.join(known_dir, fname))
-                    encs = _face_recognition_lib.face_encodings(img)
-                    if encs:
-                        known_encodings.append(encs[0])
-                        known_names.append(os.path.splitext(fname)[0].replace('_', ' ').title())
+                    try:
+                        img = _face_recognition_lib.load_image_file(os.path.join(known_dir, fname))
+                        encs = _face_recognition_lib.face_encodings(img)
+                        if encs:
+                            known_encodings.append(encs[0])
+                            known_names.append(os.path.splitext(fname)[0].replace('_', ' ').title())
+                    except Exception as e:
+                        print(f"Error loading {fname}: {e}")
 
+            # 2. Camera setup with error handling
             cap = cv2.VideoCapture(0)
+            if not cap.isOpened():
+                cap = cv2.VideoCapture(1) # Fallback camera
+            
             system.current_person  = None
             system.current_action  = 'detecting'
             system.current_warning = None
 
             try:
+                # YE LOOP CHALTA REHNA CHAHIYE
                 while getattr(system, '_activity_detecting', False):
                     ret, frame = cap.read()
                     if not ret:
                         time.sleep(0.1)
                         continue
+                    
+                    # Optimization
                     small = cv2.resize(frame, (0, 0), fx=0.25, fy=0.25)
                     rgb   = cv2.cvtColor(small, cv2.COLOR_BGR2RGB)
                     locs  = _face_recognition_lib.face_locations(rgb)
                     encs  = _face_recognition_lib.face_encodings(rgb, locs)
 
-                    # Too-close warning
+                    # Too-close check
                     system.current_warning = None
                     for (top, right, bottom, left) in locs:
                         if (bottom - top) > 80:
                             system.current_warning = 'too_close'
                             break
 
-                    # Match face — identify only, no attendance
                     matched = None
                     for enc in encs:
-                        if not known_encodings:
-                            break
+                        if not known_encodings: break
                         dists = _face_recognition_lib.face_distance(known_encodings, enc)
                         best  = int(np.argmin(dists))
-                        if dists[best] < 0.6:
+                        if dists[best] < 0.5: # Threshold improved
                             matched = known_names[best]
                             break
+                    
                     system.current_person = matched
                     system.current_action = 'recognized' if matched else 'detecting'
                     time.sleep(0.05)
+            
+            except Exception as e:
+                print(f"Inside Thread Error: {e}")
+            
             finally:
+                # CAMERA BAND HONE PAR BHI FLAG KO SILENTLY HANDLE KAREIN
                 cap.release()
-                system.current_action  = 'idle'
-                system.current_person  = None
-                system._activity_detecting = False
+                system.current_action = 'idle'
+                # system._activity_detecting = False <-- Ye line mat likhna yahan
 
+        # FLAG SET KARKE THREAD START KAREIN
         system._activity_detecting = True
         t = threading.Thread(target=_detect_only, daemon=True)
         t.start()
-        return jsonify({"status": "success", "message": "Face detection started (no attendance)"})
-    except Exception as e:
-        return jsonify({"status": "error", "message": str(e)}), 500
+        
+        return jsonify({"status": "success", "message": "Face detection started"})
 
+    except Exception as e:
+        print(f"Route Error: {e}")
+        return jsonify({"status": "error", "message": str(e)}), 500
 
 @app.route('/stop-face-detect', methods=['GET'])
 def stop_face_detect():
@@ -420,6 +542,44 @@ def mimi_get():
 
 
 
+# @app.route('/activity-check', methods=['POST'])
+# def activity_check():
+#     """
+#     Check if child said a word correctly using LLM.
+#     Body: { word, child_said, activity_name, student_name }
+#     Returns: { result: { correct, feedback, hint } }
+#     """
+#     try:
+#         data         = request.get_json() or {}
+#         word         = data.get("word", "")
+#         child_said   = data.get("child_said", "")
+#         activity_name = data.get("activity_name", "Word Practice")
+#         student_name = data.get("student_name", "Student")
+
+#         prompt = _build_prompt(word, child_said, activity_name, student_name)
+
+#         result = None
+#         try:
+#             result = _call_openai(prompt)
+#         except Exception as e1:
+#             print(f"[activity-check] OpenAI failed: {e1}")
+#         if result is None:
+#             try:
+#                 result = _call_anthropic(prompt)
+#             except Exception as e2:
+#                 print(f"[activity-check] Anthropic failed: {e2}")
+#         if result is None:
+#             ok = child_said.lower().strip() in word.lower()
+#             result = {
+#                 "correct":  ok,
+#                 "feedback": f"Great job! {word} is correct!" if ok else f"Try again! The word is {word}",
+#                 "hint":     "" if ok else f"Say it slowly: {word}",
+#             }
+#         return jsonify({"result": result})
+#     except Exception as e:
+#         return jsonify({"error": str(e)}), 500
+
+
 @app.route('/activity-check', methods=['POST'])
 def activity_check():
     """
@@ -428,35 +588,50 @@ def activity_check():
     Returns: { result: { correct, feedback, hint } }
     """
     try:
-        data         = request.get_json() or {}
-        word         = data.get("word", "")
-        child_said   = data.get("child_said", "")
+        data          = request.get_json() or {}
+        print(f"[activity-check] DATA RECEIVED: {data}")  # debug
+
+        word          = data.get("word", "")
+        child_said    = data.get("child_said", "")
         activity_name = data.get("activity_name", "Word Practice")
-        student_name = data.get("student_name", "Student")
+        student_name  = data.get("student_name", "Student")
+
+        print(f"[activity-check] word='{word}' | child_said='{child_said}'")  # debug
 
         prompt = _build_prompt(word, child_said, activity_name, student_name)
 
         result = None
         try:
             result = _call_openai(prompt)
+            print(f"[activity-check] OpenAI result: {result}")
         except Exception as e1:
             print(f"[activity-check] OpenAI failed: {e1}")
+
         if result is None:
             try:
                 result = _call_anthropic(prompt)
+                print(f"[activity-check] Anthropic result: {result}")
             except Exception as e2:
                 print(f"[activity-check] Anthropic failed: {e2}")
+
         if result is None:
-            ok = child_said.lower().strip() in word.lower()
+            print("[activity-check] Both LLMs failed — using local fallback")
+            w  = word.lower().strip()
+            c  = child_said.lower().strip().rstrip('.,!? ')
+            ok = (w in c) or (c in w)
             result = {
                 "correct":  ok,
-                "feedback": f"Great job! {word} is correct!" if ok else f"Try again! The word is {word}",
+                "feedback": f"Great job! {word} is correct! 🌟" if ok else f"Try again! The word is {word}",
                 "hint":     "" if ok else f"Say it slowly: {word}",
             }
-        return jsonify({"result": result})
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
 
+        print(f"[activity-check] FINAL RESULT: {result}")
+        return jsonify({"result": result})
+
+    except Exception as e:
+        print(f"[activity-check] FULL ERROR: {e}")
+        traceback.print_exc()
+        return jsonify({"error": str(e)}), 500
 
 @app.route('/generate-activity-questions', methods=['POST'])
 def generate_activity_questions():

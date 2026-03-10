@@ -32,6 +32,7 @@ import csv
 import sys
 import time
 import threading
+import traceback
 import speech_recognition as sr
 
 # ============================================================================
@@ -404,43 +405,111 @@ class FaceRecognitionSystem:
     # ── Wake word ────────────────────────────────────────────────────────────────
  
 
-    def run(self):
-        import cv2
-        cap = cv2.VideoCapture(0)
-        if not cap.isOpened():
-          cap = cv2.VideoCapture(1)
-        if not cap.isOpened():
-          logger.error("No camera found!")
-          return
-        logger.info('Camera started')
-        while True:
-            ret, frame = cap.read()
-            if not ret:
-                break
-            rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-            locations = face_recognition.face_locations(rgb)
-            encodings = face_recognition.face_encodings(rgb, locations)
-            for enc, loc in zip(encodings, locations):
-                distances = face_recognition.face_distance(self.known_encodings, enc)
-                if len(distances) and min(distances) < FACE_DISTANCE_THRESHOLD:
-                    name = self.known_names[int(np.argmin(distances))]
-                    if name not in self.fully_handled_this_session:
-                        self.fully_handled_this_session.add(name)
-                        self.current_person = name
-                        self.current_action = 'talking'
-                        self.speech.speak_and_wait(f'Hi {name}! How are you today?')
-                        mood_text = self.mic.listen(timeout=8)
-                        mood = self.mood_engine.analyze(mood_text)
-                        self.current_mood = mood
-                        self.attendance.mark(name, mood)
-                        self.speech.speak_and_wait(f'Great! Attendance marked. Have a wonderful day {name}!')
-                        self.current_action = 'idle'
-                        cap.release()
-                        cv2.destroyAllWindows()
-                        return
-            cv2.imshow('Alexi', frame)
-            if cv2.waitKey(1) & 0xFF == ord('q'):
-                break
-        cap.release()
-        cv2.destroyAllWindows()
+    # def run(self):
+    #     import cv2
+    #     cap = cv2.VideoCapture(0)
+    #     if not cap.isOpened():
+    #       cap = cv2.VideoCapture(1)
+    #     if not cap.isOpened():
+    #       logger.error("No camera found!")
+    #       return
+    #     logger.info('Camera started')
+    #     while True:
+    #         ret, frame = cap.read()
+    #         if not ret:
+    #             break
+    #         rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+    #         locations = face_recognition.face_locations(rgb)
+    #         encodings = face_recognition.face_encodings(rgb, locations)
+    #         for enc, loc in zip(encodings, locations):
+    #             distances = face_recognition.face_distance(self.known_encodings, enc)
+    #             if len(distances) and min(distances) < FACE_DISTANCE_THRESHOLD:
+    #                 name = self.known_names[int(np.argmin(distances))]
+    #                 if name not in self.fully_handled_this_session:
+    #                     self.fully_handled_this_session.add(name)
+    #                     self.current_person = name
+    #                     self.current_action = 'talking'
+    #                     self.speech.speak_and_wait(f'Hi {name}! How are you today?')
+    #                     mood_text = self.mic.listen(timeout=8)
+    #                     mood = self.mood_engine.analyze(mood_text)
+    #                     self.current_mood = mood
+    #                     self.attendance.mark(name, mood)
+    #                     self.speech.speak_and_wait(f'Great! Attendance marked. Have a wonderful day {name}!')
+    #                     self.current_action = 'idle'
+    #                     cap.release()
+    #                     cv2.destroyAllWindows()
+    #                     return
+    #         cv2.imshow('Alexi', frame)
+    #         if cv2.waitKey(1) & 0xFF == ord('q'):
+    #             break
+    #     cap.release()
+    #     cv2.destroyAllWindows()
 
+
+
+def run(self):
+        import cv2
+        self.running = True
+
+        while self.running:
+            cap = cv2.VideoCapture(0)
+            if not cap.isOpened():
+                cap = cv2.VideoCapture(1)
+            if not cap.isOpened():
+                logger.error("No camera found! Retrying in 3 seconds...")
+                time.sleep(3)
+                continue
+
+            logger.info('Camera started')
+
+            try:
+                while self.running:
+                    ret, frame = cap.read()
+                    if not ret:
+                        logger.warning("Frame read failed, retrying...")
+                        time.sleep(0.1)
+                        continue
+
+                    rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+                    locations = face_recognition.face_locations(rgb)
+                    encodings = face_recognition.face_encodings(rgb, locations)
+
+                    for enc, loc in zip(encodings, locations):
+                        distances = face_recognition.face_distance(self.known_encodings, enc)
+
+                        if len(distances) and min(distances) < FACE_DISTANCE_THRESHOLD:
+                            name = self.known_names[int(np.argmin(distances))]
+
+                            if name not in self.fully_handled_this_session:
+                                self.fully_handled_this_session.add(name)
+                                self.current_person = name
+                                self.current_action = 'talking'
+
+                                self.speech.speak_and_wait(f'Hi {name}! How are you today?')
+                                mood_text = self.mic.listen(timeout=8)
+                                mood = self.mood_engine.analyze(mood_text)
+
+                                self.current_mood = mood
+                                self.attendance.mark(name, mood)
+                                self.speech.speak_and_wait(
+                                    f'Great! Attendance marked. Have a wonderful day {name}!')
+
+                                # Reset — next person ke liye loop continue karega
+                                self.current_action = 'idle'
+                                self.current_person = None
+                                self.current_mood = None
+
+                    if cv2.waitKey(1) & 0xFF == ord('q'):
+                        self.running = False
+                        break
+
+            except Exception as e:
+                logger.error(f"Camera loop error: {e}")
+                traceback.print_exc()
+
+            finally:
+                cap.release()
+                cv2.destroyAllWindows()
+                if self.running:
+                    logger.info("Camera released. Restarting loop in 1 second...")
+                    time.sleep(1)
