@@ -274,6 +274,8 @@ QUESTION_PROMPTS = {
 @app.route('/start-classroom', methods=['GET'])
 def start_classroom():
     try:
+        system.fully_handled_this_session.clear()
+        system.running = False
         def run_face():
             try:
                 system.run()

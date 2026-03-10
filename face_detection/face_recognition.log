@@ -12546,3 +12546,139 @@ Jungle mein hai sabse nyara!
 2026-03-10 17:22:23,074 - INFO - HEARD: 'branch'
 2026-03-10 17:22:23,075 - INFO - SPEAKING: Sorry, I cannot connect right now.
 2026-03-10 17:22:27,569 - INFO - DONE SPEAKING
+2026-03-10 17:45:24,442 - INFO - AttendanceManager ready
+2026-03-10 17:45:24,444 - INFO - SpeechManager ready
+2026-03-10 17:45:27,193 - INFO - Calibrating microphone…
+2026-03-10 17:45:28,268 - INFO - SpeechRecognizer ready
+2026-03-10 17:45:28,270 - INFO - ============================================================
+2026-03-10 17:45:28,271 - INFO - FACE RECOGNITION ATTENDANCE SYSTEM
+2026-03-10 17:45:28,273 - INFO - ============================================================
+2026-03-10 17:45:33,761 - INFO - Loaded: Dron
+2026-03-10 17:45:35,709 - INFO - Loaded: ghanisht
+2026-03-10 17:45:37,542 - INFO - Loaded: Nishit
+2026-03-10 17:45:38,991 - INFO - Loaded: Rahil
+2026-03-10 17:45:40,619 - INFO - Loaded: Shikha
+2026-03-10 17:45:41,673 - INFO - Loaded: Tushar
+2026-03-10 17:45:44,039 - INFO - Loaded: vini
+2026-03-10 17:45:45,629 - INFO - Loaded: vini
+2026-03-10 17:45:45,630 - INFO - Known people (8): Dron, ghanisht, Nishit, Rahil, Shikha, Tushar, vini, vini
+2026-03-10 17:45:45,632 - INFO - SpeechManager ready
+2026-03-10 17:45:45,892 - INFO - Calibrating microphone…
+2026-03-10 17:45:46,921 - INFO - SpeechRecognizer ready
+2026-03-10 17:46:16,212 - INFO - SPEAKING: Yes! I'm here. You can ask me anything.
+2026-03-10 17:46:24,422 - INFO - DONE SPEAKING
+2026-03-10 17:46:24,423 - INFO - LISTENING… (energy threshold: 2642)
+2026-03-10 17:46:27,138 - INFO - Audio captured — sending to Google STT…
+2026-03-10 17:46:28,030 - INFO - HEARD: 'what's the colour of sun'
+2026-03-10 17:46:28,031 - INFO - SPEAKING: Sorry, I cannot connect right now.
+2026-03-10 17:46:33,837 - INFO - DONE SPEAKING
+2026-03-10 17:46:37,848 - INFO - LISTENING… (energy threshold: 2642)
+2026-03-10 17:59:38,032 - INFO - AttendanceManager ready
+2026-03-10 17:59:38,033 - INFO - SpeechManager ready
+2026-03-10 17:59:39,123 - INFO - Calibrating microphone…
+2026-03-10 17:59:40,151 - INFO - SpeechRecognizer ready
+2026-03-10 17:59:40,152 - INFO - ============================================================
+2026-03-10 17:59:40,152 - INFO - FACE RECOGNITION ATTENDANCE SYSTEM
+2026-03-10 17:59:40,152 - INFO - ============================================================
+2026-03-10 17:59:41,667 - INFO - Loaded: Dron
+2026-03-10 17:59:42,810 - INFO - Loaded: ghanisht
+2026-03-10 17:59:44,184 - INFO - Loaded: Nishit
+2026-03-10 17:59:45,556 - INFO - Loaded: Rahil
+2026-03-10 17:59:46,805 - INFO - Loaded: Shikha
+2026-03-10 17:59:47,738 - INFO - Loaded: Tushar
+2026-03-10 17:59:49,639 - INFO - Loaded: vini
+2026-03-10 17:59:51,270 - INFO - Loaded: vini
+2026-03-10 17:59:51,270 - INFO - Known people (8): Dron, ghanisht, Nishit, Rahil, Shikha, Tushar, vini, vini
+2026-03-10 17:59:51,272 - INFO - SpeechManager ready
+2026-03-10 17:59:51,655 - INFO - Calibrating microphone…
+2026-03-10 17:59:52,680 - INFO - SpeechRecognizer ready
+2026-03-10 18:00:00,086 - INFO - Camera started
+2026-03-10 18:00:02,072 - INFO - SPEAKING: Hi Nishit! How are you today?
+2026-03-10 18:00:08,918 - INFO - DONE SPEAKING
+2026-03-10 18:00:08,937 - INFO - LISTENING… (energy threshold: 2635)
+2026-03-10 18:00:12,917 - INFO - Audio captured — sending to Google STT…
+2026-03-10 18:00:14,099 - INFO - HEARD: 'I am good fine good'
+2026-03-10 18:00:14,100 - INFO - Mood → Happy (matched 'good')
+2026-03-10 18:00:14,102 - INFO - ATTENDANCE MARKED: Nishit | 18:00:14 | Happy
+2026-03-10 18:00:14,103 - INFO - SPEAKING: Great! Attendance marked. Have a wonderful day Nishit!
+2026-03-10 18:00:23,719 - INFO - DONE SPEAKING
+2026-03-10 18:04:34,769 - INFO - Camera started
+2026-03-10 18:06:05,752 - INFO - AttendanceManager ready
+2026-03-10 18:06:05,753 - INFO - SpeechManager ready
+2026-03-10 18:06:07,433 - INFO - Calibrating microphone…
+2026-03-10 18:06:08,571 - INFO - SpeechRecognizer ready
+2026-03-10 18:06:08,598 - INFO - ============================================================
+2026-03-10 18:06:08,599 - INFO - FACE RECOGNITION ATTENDANCE SYSTEM
+2026-03-10 18:06:08,612 - INFO - ============================================================
+2026-03-10 18:06:17,515 - INFO - Loaded: Dron
+2026-03-10 18:06:19,742 - INFO - Loaded: ghanisht
+2026-03-10 18:06:21,835 - INFO - Loaded: Nishit
+2026-03-10 18:06:23,950 - INFO - Loaded: Rahil
+2026-03-10 18:06:25,834 - INFO - Loaded: Shikha
+2026-03-10 18:06:27,249 - INFO - Loaded: Tushar
+2026-03-10 18:06:30,649 - INFO - Loaded: vini
+2026-03-10 18:06:33,233 - INFO - Loaded: vini
+2026-03-10 18:06:33,234 - INFO - Known people (8): Dron, ghanisht, Nishit, Rahil, Shikha, Tushar, vini, vini
+2026-03-10 18:06:33,235 - INFO - SpeechManager ready
+2026-03-10 18:06:33,622 - INFO - Calibrating microphone…
+2026-03-10 18:06:34,666 - INFO - SpeechRecognizer ready
+2026-03-10 18:06:46,548 - INFO - Camera started
+2026-03-10 18:08:53,140 - INFO - AttendanceManager ready
+2026-03-10 18:08:53,141 - INFO - SpeechManager ready
+2026-03-10 18:08:54,121 - INFO - Calibrating microphone…
+2026-03-10 18:08:55,146 - INFO - SpeechRecognizer ready
+2026-03-10 18:08:55,147 - INFO - ============================================================
+2026-03-10 18:08:55,147 - INFO - FACE RECOGNITION ATTENDANCE SYSTEM
+2026-03-10 18:08:55,148 - INFO - ============================================================
+2026-03-10 18:08:56,485 - INFO - Loaded: Dron
+2026-03-10 18:08:58,029 - INFO - Loaded: ghanisht
+2026-03-10 18:09:00,901 - INFO - Loaded: Nishit
+2026-03-10 18:09:03,278 - INFO - Loaded: Rahil
+2026-03-10 18:09:05,173 - INFO - Loaded: Shikha
+2026-03-10 18:09:06,153 - INFO - Loaded: Tushar
+2026-03-10 18:09:08,427 - INFO - Loaded: vini
+2026-03-10 18:09:10,011 - INFO - Loaded: vini
+2026-03-10 18:09:10,012 - INFO - Known people (8): Dron, ghanisht, Nishit, Rahil, Shikha, Tushar, vini, vini
+2026-03-10 18:09:10,013 - INFO - SpeechManager ready
+2026-03-10 18:09:10,702 - INFO - Calibrating microphone…
+2026-03-10 18:09:11,735 - INFO - SpeechRecognizer ready
+2026-03-10 18:09:36,081 - INFO - Camera started
+2026-03-10 18:09:37,996 - INFO - SPEAKING: Hi Nishit! How are you today?
+2026-03-10 18:09:44,746 - INFO - DONE SPEAKING
+2026-03-10 18:09:44,748 - INFO - LISTENING… (energy threshold: 2689)
+2026-03-10 18:09:49,710 - INFO - Audio captured — sending to Google STT…
+2026-03-10 18:09:50,795 - INFO - HEARD: 'I am sad bad'
+2026-03-10 18:09:50,796 - INFO - Mood → Sad (matched 'bad')
+2026-03-10 18:09:50,797 - INFO - ATTENDANCE MARKED: Nishit | 18:09:50 | Sad
+2026-03-10 18:09:50,798 - INFO - SPEAKING: Great! Attendance marked. Have a wonderful day Nishit!
+2026-03-10 18:09:59,889 - INFO - DONE SPEAKING
+2026-03-10 18:13:29,575 - INFO - AttendanceManager ready
+2026-03-10 18:13:29,576 - INFO - SpeechManager ready
+2026-03-10 18:13:30,596 - INFO - Calibrating microphone…
+2026-03-10 18:13:31,623 - INFO - SpeechRecognizer ready
+2026-03-10 18:13:31,624 - INFO - ============================================================
+2026-03-10 18:13:31,624 - INFO - FACE RECOGNITION ATTENDANCE SYSTEM
+2026-03-10 18:13:31,624 - INFO - ============================================================
+2026-03-10 18:13:33,030 - INFO - Loaded: Dron
+2026-03-10 18:13:34,111 - INFO - Loaded: ghanisht
+2026-03-10 18:13:35,421 - INFO - Loaded: Nishit
+2026-03-10 18:13:36,723 - INFO - Loaded: Rahil
+2026-03-10 18:13:38,644 - INFO - Loaded: Shikha
+2026-03-10 18:13:39,609 - INFO - Loaded: Tushar
+2026-03-10 18:13:42,255 - INFO - Loaded: vini
+2026-03-10 18:13:44,154 - INFO - Loaded: vini
+2026-03-10 18:13:44,154 - INFO - Known people (8): Dron, ghanisht, Nishit, Rahil, Shikha, Tushar, vini, vini
+2026-03-10 18:13:44,155 - INFO - SpeechManager ready
+2026-03-10 18:13:44,439 - INFO - Calibrating microphone…
+2026-03-10 18:13:45,506 - INFO - SpeechRecognizer ready
+2026-03-10 18:15:20,211 - INFO - Camera started
+2026-03-10 18:15:22,625 - INFO - SPEAKING: Hi Nishit! How are you today?
+2026-03-10 18:15:29,644 - INFO - DONE SPEAKING
+2026-03-10 18:15:29,645 - INFO - LISTENING… (energy threshold: 4099)
+2026-03-10 18:15:30,653 - INFO - SPEAKING: Yes! I'm here. You can ask me anything.
+2026-03-10 18:15:32,561 - INFO - Audio captured — sending to Google STT…
+2026-03-10 18:15:33,431 - INFO - HEARD: 'I am sad bad'
+2026-03-10 18:15:33,432 - INFO - Mood → Sad (matched 'bad')
+2026-03-10 18:15:33,437 - INFO - ATTENDANCE MARKED: Nishit | 18:15:33 | Sad
+2026-03-10 18:15:33,442 - INFO - SPEAKING: Great! Attendance marked. Have a wonderful day Nishit!
+2026-03-10 18:15:43,676 - INFO - DONE SPEAKING
