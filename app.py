@@ -655,6 +655,8 @@ from routes.whatsapp_route import whatsapp_bp
 from routes.parent_routes import parent_bp
 from extensions import users, attendance_collection, bcrypt
 import jwt
+import base64
+import numpy as np
 
 
 try:
@@ -1478,6 +1480,40 @@ def check_attendance():
         return jsonify({"message": "not_marked"})
 
 
+@app.route('/register-face', methods=['POST'])
+def register_face():
+    try:
+        import cv2
+        import face_recognition as fr
+        data = request.get_json() or {}
+        name = (data.get("name") or "").strip()
+        image = data.get("image", "")
+
+        if not name or not image:
+            return jsonify({"status": "error", "message": "Name and Image required"}), 400
+
+        if "," in image: image = image.split(",", 1)[1]
+        img_bytes = base64.b64decode(image)
+        img_array = np.frombuffer(img_bytes, dtype=np.uint8)
+        frame = cv2.imdecode(img_array, cv2.IMREAD_COLOR)
+
+        rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        encodings = fr.face_encodings(rgb, fr.face_locations(rgb))
+        if not encodings:
+            return jsonify({"status": "error", "message": "No face detected"}), 400
+
+        safe_name = re.sub(r'[^a-zA-Z0-9_ ]', '', name).strip().replace(' ', '_')
+        save_path = os.path.join(system.known_faces_dir, f"{safe_name}.jpg")
+        cv2.imwrite(save_path, frame)
+
+        # Hot-reload encodings
+        system.known_encodings.append(encodings[0])
+        system.known_names.append(safe_name)
+        return jsonify({"status": "success", "name": safe_name})
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 500
+
+        
 app.register_blueprint(auth_bp)
 app.register_blueprint(admin_bp)
 app.register_blueprint(whatsapp_bp)

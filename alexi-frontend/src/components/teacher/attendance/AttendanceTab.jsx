@@ -19,6 +19,7 @@ const AttendanceTab = () => {
     { id: 8, name: 'Kabir Mehta', rollNo: '008', status: 'absent', time: null, method: null },
   ]);
 
+
   const stats = {
     total: attendanceData.length,
     present: attendanceData.filter(s => s.status === 'present').length,
@@ -27,6 +28,7 @@ const AttendanceTab = () => {
     autoDetected: attendanceData.filter(s => s.method === 'auto').length,
   };
 
+
   const toggleAttendance = (id) => {
     setAttendanceData(attendanceData.map(student => {
       if (student.id === id) {
@@ -34,6 +36,7 @@ const AttendanceTab = () => {
         if (student.status === 'present') newStatus = 'absent';
         else if (student.status === 'absent') newStatus = 'late';
         else newStatus = 'present';
+
 
         return {
           ...student,
@@ -46,11 +49,13 @@ const AttendanceTab = () => {
     }));
   };
 
+
   const handleAddReview = (student) => {
     setSelectedStudent(student);
     setReviewText('');
     setShowReviewModal(true);
   };
+
 
   const submitReview = () => {
     if (reviewText.trim()) {
@@ -62,6 +67,7 @@ const AttendanceTab = () => {
     }
   };
 
+
   const markAllPresent = () => {
     const now = new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
     setAttendanceData(attendanceData.map(student => ({
@@ -72,11 +78,13 @@ const AttendanceTab = () => {
     })));
   };
 
+
   const exportAttendance = () => {
     const csv = [
       ['Roll No', 'Name', 'Status', 'Time', 'Method'],
       ...attendanceData.map(s => [s.rollNo, s.name, s.status, s.time || '-', s.method || '-'])
     ].map(row => row.join(',')).join('\n');
+
 
     const blob = new Blob([csv], { type: 'text/csv' });
     const url = window.URL.createObjectURL(blob);
@@ -85,6 +93,7 @@ const AttendanceTab = () => {
     a.download = `attendance-${selectedDate}.csv`;
     a.click();
   };
+
 
   return (
     <div className="space-y-6">
@@ -104,6 +113,7 @@ const AttendanceTab = () => {
         </div>
       </div>
 
+
       {/* Date Selector */}
       <Card>
         <div className="flex items-center gap-4">
@@ -119,6 +129,7 @@ const AttendanceTab = () => {
           </div>
         </div>
       </Card>
+
 
       {/* Stats Cards */}
       <div className="grid grid-cols-5 gap-4">
@@ -155,6 +166,7 @@ const AttendanceTab = () => {
           <p className="text-xs text-purple-700 mt-1">Face Recognition</p>
         </Card>
       </div>
+
 
       {/* Attendance Table */}
       <Card>
@@ -235,6 +247,7 @@ const AttendanceTab = () => {
         </div>
       </Card>
 
+
       {/* Info Note */}
       <Card className="bg-blue-50 border-blue-200">
         <div className="flex items-start gap-3">
@@ -242,12 +255,13 @@ const AttendanceTab = () => {
           <div>
             <h3 className="font-semibold text-blue-900 mb-1">How Attendance Works</h3>
             <p className="text-sm text-blue-800">
-              Students are automatically marked present when detected by the face recognition system. 
+              Students are automatically marked present when detected by the face recognition system.
               You can manually override any attendance status by clicking the "Toggle" button.
             </p>
           </div>
         </div>
       </Card>
+
 
       {/* Add Review Modal */}
       <Modal
@@ -288,5 +302,6 @@ const AttendanceTab = () => {
     </div>
   );
 };
+
 
 export default AttendanceTab;
