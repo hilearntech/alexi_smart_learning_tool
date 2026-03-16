@@ -618,7 +618,7 @@ function shuffleArray(arr) {
 // ─────────────────────────────────────────────────────────────────────────────
 // MimiActivityOverlay
 // ─────────────────────────────────────────────────────────────────────────────
-function MimiActivityOverlay({ activity, difficulty, onStudentDone, onClose }) {
+function MimiActivityOverlay({ activity, difficulty, onStudentDone, onClose, isParentMode = false }) {
   const rawStatic = ACTIVITY_WORDS[activity.id]?.[difficulty] || ACTIVITY_WORDS[activity.id]?.easy || ['Hello'];
   const staticWords = activity.id === 12
     ? buildQuiz12(difficulty)
@@ -803,20 +803,44 @@ function MimiActivityOverlay({ activity, difficulty, onStudentDone, onClose }) {
   }, []); // eslint-disable-line
 
   // On mount: open camera (no demo fallback — waits for a real saved face)
+  // useEffect(() => {
+  //   intentionalStopRef.current = false;
+  //   startCameraPoll(true);
+
+  //   return () => {
+  //     clearInterval(pollRef.current);
+  //     // Only stop the camera if this is a real unmount (not StrictMode remount)
+  //     // We use a small delay so StrictMode's immediate remount can restart it
+  //     setTimeout(() => {
+  //       if (!intentionalStopRef.current) return; // component remounted, don't stop
+  //       axios.get(API_ENDPOINTS.STOP_FACE_DETECT).catch(() => { });
+  //     }, 100);
+  //   };
+  // }, []); // eslint-disable-line
+
+
   useEffect(() => {
     intentionalStopRef.current = false;
-    startCameraPoll(true);
+
+    if (isParentMode) {
+      // ✅ Parent mode — camera scan karo lekin SIRF ek baar
+      // Student detect hone ke baad camera band ho jayegi
+      // aur activity shuru ho jayegi — no next student
+      startCameraPoll(true);
+    } else {
+      // Teacher mode — camera scan
+      startCameraPoll(true);
+    }
 
     return () => {
       clearInterval(pollRef.current);
-      // Only stop the camera if this is a real unmount (not StrictMode remount)
-      // We use a small delay so StrictMode's immediate remount can restart it
       setTimeout(() => {
-        if (!intentionalStopRef.current) return; // component remounted, don't stop
+        if (!intentionalStopRef.current) return;
         axios.get(API_ENDPOINTS.STOP_FACE_DETECT).catch(() => { });
       }, 100);
     };
   }, []); // eslint-disable-line
+
 
   // After each student: reset and open camera again for next student
   const resetForNextStudent = useCallback(() => {
@@ -831,10 +855,16 @@ function MimiActivityOverlay({ activity, difficulty, onStudentDone, onClose }) {
     setMimiVideo(mimiIdleVideo);
     answeredRef.current = false;
     setPhase('waiting');
-    startCameraPoll(); // camera opens again, auto-stops when next face detected
-  }, [startCameraPoll]); // eslint-disable-line
+
+    // ✅ Parent mode mein next student camera nahi khulna
+    if (!isParentMode) {
+      startCameraPoll();
+    }
+  }, [startCameraPoll, isParentMode]);
 
   useEffect(() => {
+    // Parent mode mein between_students phase aana hi nahi chahiye
+    if (isParentMode) return;
     if (phase !== 'between_students') return;
     setCountdown(5);
     const tick = setInterval(() => {
@@ -844,7 +874,7 @@ function MimiActivityOverlay({ activity, difficulty, onStudentDone, onClose }) {
       });
     }, 1000);
     return () => clearInterval(tick);
-  }, [phase]); // eslint-disable-line
+  }, [phase, isParentMode]); // eslint-disable-line
 
   useEffect(() => {
     if (phase === 'waiting' || phase === 'between_students') { setMimiVideo(mimiIdleVideo); return; }
@@ -1059,17 +1089,37 @@ function MimiActivityOverlay({ activity, difficulty, onStudentDone, onClose }) {
     const score = Math.round((fc / attempted) * 100);
     const groupSize = Math.ceil(total / 5);
     const earned = fc === 0 ? 0 : fc === total ? 5 : Math.min(5, Math.ceil(fc / groupSize));
+
     setStarsEarned(earned);
     setPhase('done');
+
     const msg = earned === 0
       ? `Good try ${studentName}! Keep practicing! 💪`
       : `Well done ${studentName}! You earned ${earned} star${earned !== 1 ? 's' : ''}! 🎉`;
+
     setMimiSaying(msg);
     if (!skipTransition) speak(msg);
+
     seenRef.current.add(studentName.toLowerCase());
     onStudentDone({ stars: earned, score, correct: fc, total: isEarly ? current : total, studentName });
-    setSessionResults(prev => [...prev, { name: studentName, stars: earned, score, correct: fc, total: isEarly ? current : total }]);
-    if (!isEarly && !skipTransition) setTimeout(() => setPhase('between_students'), 4500);
+    setSessionResults(prev => [...prev, {
+      name: studentName, stars: earned, score,
+      correct: fc, total: isEarly ? current : total
+    }]);
+
+    // ✅ Parent mode mein next student scan nahi karo
+    if (!isEarly && !skipTransition) {
+      if (isParentMode) {
+        // Parent mode — sirf sessionEnded screen dikhao
+        setTimeout(() => {
+          sessionEndedRef.current = true
+          setSessionEnded(true)
+        }, 4500)
+      } else {
+        // Teacher mode — next student ke liye camera scan
+        setTimeout(() => setPhase('between_students'), 4500)
+      }
+    }
   }
 
   function handlePause() {
@@ -1558,7 +1608,7 @@ function MimiActivityOverlay({ activity, difficulty, onStudentDone, onClose }) {
 // ─────────────────────────────────────────────────────────────────────────────
 // ActivitiesTab
 // ─────────────────────────────────────────────────────────────────────────────
-const ActivitiesTab = () => {
+const ActivitiesTab = ({ isParentMode = false }) => {
   const { addActivityResult } = useStars();
 
   const [showConfigModal, setShowConfigModal] = useState(false);
@@ -1655,6 +1705,7 @@ const ActivitiesTab = () => {
           difficulty={runningDifficulty}
           onStudentDone={handleStudentDone}
           onClose={handleClose}
+          isParentMode={isParentMode}
         />
       )}
 

@@ -653,6 +653,7 @@ from routes.auth_routes import auth_bp
 from routes.admin_routes import admin_bp
 from routes.whatsapp_route import whatsapp_bp
 from routes.parent_routes import parent_bp
+from routes.teacher_routes import teacher_bp
 from extensions import users, attendance_collection, bcrypt
 import jwt
 import base64
@@ -1625,10 +1626,123 @@ def mark_attendance():
         print(f"[mark-attendance] ERROR: {e}")
         return jsonify({"message": "error", "reason": str(e)}), 500        
 
+
+# ── Mimi Chat save karo ───────────────────────────────────────
+@app.route('/api/mimi/save-chat', methods=['POST'])
+def save_mimi_chat():
+    try:
+        data         = request.get_json() or {}
+        student_name = data.get("student_name", "Unknown")
+        student_id   = data.get("student_id",   "")
+        session_id   = data.get("session_id",   "")
+        messages     = data.get("messages",     [])  # ← poori chat array
+
+        db = MongoClient("mongodb://localhost:27017/")["AlexiDB"]
+
+        # Student ka real _id lo
+        try:
+            oid = ObjectId(student_id) if student_id else None
+        except Exception:
+            oid = None
+
+        if not oid and student_name != "Unknown":
+            student = db["students"].find_one(
+                {"name": {"$regex": f"^{student_name}$", "$options": "i"}}
+            )
+            if student:
+                oid          = student["_id"]
+                student_name = student.get("name", student_name)
+
+        # Agar session already exists — update karo
+        existing = db["mimi_chats"].find_one({"session_id": session_id})
+        if existing:
+            db["mimi_chats"].update_one(
+                {"session_id": session_id},
+                {"$set": {
+                    "messages":   messages,
+                    "updated_at": datetime.now().isoformat(),
+                    "total_msgs": len(messages),
+                }}
+            )
+        else:
+            # Naya session document banao
+            db["mimi_chats"].insert_one({
+                "student_id":   oid,
+                "student_name": student_name,
+                "session_id":   session_id,
+                "messages":     messages,  # ← array of {question, answer, image_url, time}
+                "date":         datetime.now().strftime("%Y-%m-%d"),
+                "started_at":   datetime.now().isoformat(),
+                "updated_at":   datetime.now().isoformat(),
+                "total_msgs":   len(messages),
+            })
+
+        return jsonify({"status": "success"})
+
+    except Exception as e:
+        print(f"[save-mimi-chat] ERROR: {e}")
+        return jsonify({"status": "error", "message": str(e)}), 500
+
+# ── Mimi Chat history fetch karo ─────────────────────────────
+@app.route('/api/mimi/chat-history', methods=['GET'])
+def get_mimi_chat_history():
+    try:
+        student_name = request.args.get('student_name', '')
+        session_id   = request.args.get('session_id',   '')
+        limit        = int(request.args.get('limit', 50))
+
+        db    = MongoClient("mongodb://localhost:27017/")["AlexiDB"]
+        query = {}
+        if student_name:
+            query["student_name"] = {"$regex": f"^{student_name}$", "$options": "i"}
+        if session_id:
+            query["session_id"] = session_id
+
+        chats = list(db["mimi_chats"].find(query)
+                     .sort("timestamp", -1).limit(limit))
+
+        formatted = []
+        for c in chats:
+            formatted.append({
+                "id":           str(c["_id"]),
+                "student_name": c.get("student_name", ""),
+                "question":     c.get("question",     ""),
+                "answer":       c.get("answer",       ""),
+                "image_url":    c.get("image_url",    ""),
+                "session_id":   c.get("session_id",   ""),
+                "date":         c.get("date",         ""),
+                "timestamp":    c.get("timestamp",    ""),
+            })
+
+        return jsonify({"status": "success", "chats": formatted})
+
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 500
+
+
+# ── Mimi session stop karo ────────────────────────────────────
+@app.route('/api/mimi/stop-session', methods=['POST'])
+def stop_mimi_session():
+    try:
+        if mimi_system:
+            mimi_system._stop = True
+            # Queue clear karo taaki TTS bhi band ho
+            if hasattr(mimi_system, 'speech') and mimi_system.speech:
+                mimi_system.speech.clear_queue()
+            # Current action reset karo
+            mimi_system.current_action = 'idle'
+            mimi_system.current_text   = None
+            print("[Mimi] ✅ Session stopped by API")
+        return jsonify({"status": "success", "message": "Mimi session stopped"})
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 500
+
+        
 app.register_blueprint(auth_bp)
 app.register_blueprint(admin_bp)
 app.register_blueprint(whatsapp_bp)
 app.register_blueprint(parent_bp)
+app.register_blueprint(teacher_bp)
 
 
 if __name__ == "__main__":

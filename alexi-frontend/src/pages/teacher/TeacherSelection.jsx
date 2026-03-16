@@ -28,7 +28,7 @@ const TeacherSelection = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-pink-50 flex items-center justify-center p-6">
       <div className="max-w-4xl w-full">
-        <motion.h1 
+        <motion.h1
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-4xl font-bold text-center text-gray-800 mb-12"
@@ -55,6 +55,17 @@ const TeacherSelection = () => {
               <p className="text-white/80 text-lg">{opt.desc}</p>
             </motion.div>
           ))}
+        </div>
+        {/* Back to Portal */}
+        <div className="flex justify-center mt-10">
+          <motion.button
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4 }}
+            onClick={() => navigate('/teacher/home')}
+            className="text-gray-400 hover:text-gray-600 text-sm font-semibold transition-colors">
+            ← Go to Teacher Portal
+          </motion.button>
         </div>
       </div>
     </div>

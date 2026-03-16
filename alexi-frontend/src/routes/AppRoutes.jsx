@@ -14,6 +14,8 @@ import TeacherSelection from '../pages/teacher/TeacherSelection';
 
 // Parent Pages
 import ParentPortal from '../pages/parent/ParentPortal';
+import ParentSelection from '../pages/parent/ParentSelection';
+import ParentActivities  from '../pages/parent/ParentActivities';
 
 // Admin Pages
 import AdminPanel from '../pages/admin/AdminPanel';
@@ -42,6 +44,8 @@ const AppRoutes = () => {
       
       {/* Parent Portal */}
       <Route path="/parent/*" element={<ParentPortal />} />
+      <Route path="/parent-selection" element={<ParentSelection />} />
+      <Route path="/parent/activities" element={<ParentActivities />} />
       
       {/* Admin Panel */}
       <Route path="/admin/*" element={<AdminPanel />} />

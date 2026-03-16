@@ -459,10 +459,19 @@ class MimiLLMSession:
         self.current_action = 'listening'
 
         while True:
+
+            if self._stop:
+                self.current_action = 'idle'
+                self.current_text   = None
+                print("[Mimi] Session stopped by user.")
+                return
             # listen for a user query
             self.current_action = 'listening'
             user_text = self.mic.listen(timeout=8)
             logger.info('User said: %s', user_text)
+            if self._stop:
+                self.current_action = 'idle'
+                return
             if not user_text:
                 # prompt once
                 self.current_action = 'speaking'

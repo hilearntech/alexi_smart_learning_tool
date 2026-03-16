@@ -168,25 +168,26 @@
 // export default ProgressTab;
 
 // src/components/parent/progress/ProgressTab.jsx
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import axios from 'axios';
 import { Card } from '../../../components/shared';
 import { CheckCircle, Lock } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { useStars } from '../../../context/StarContext';
-
-const STUDENT_ID = 'student-1';
 
 const LEVELS = [
-  { name: 'Little Star',  min: 0,   max: 49,   emoji: '⭐' },
-  { name: 'Bright Star',  min: 50,  max: 99,   emoji: '🌟' },
-  { name: 'Super Star',   min: 100, max: 199,  emoji: '💫' },
-  { name: 'Rising Star',  min: 200, max: 349,  emoji: '🚀' },
-  { name: 'Champion',     min: 350, max: 499,  emoji: '🏆' },
-  { name: 'Legend',       min: 500, max: Infinity, emoji: '👑' },
+  { name: 'Little Star',  min: 0,   max: 49,        emoji: '⭐' },
+  { name: 'Bright Star',  min: 50,  max: 99,        emoji: '🌟' },
+  { name: 'Super Star',   min: 100, max: 199,       emoji: '💫' },
+  { name: 'Rising Star',  min: 200, max: 349,       emoji: '🚀' },
+  { name: 'Champion',     min: 350, max: 499,       emoji: '🏆' },
+  { name: 'Legend',       min: 500, max: Infinity,  emoji: '👑' },
 ];
 
 function getLevel(stars)     { return LEVELS.find(l => stars >= l.min && stars <= l.max) || LEVELS[0]; }
-function getNextLevel(stars) { const i = LEVELS.findIndex(l => stars >= l.min && stars <= l.max); return LEVELS[i + 1] || null; }
+function getNextLevel(stars) {
+  const i = LEVELS.findIndex(l => stars >= l.min && stars <= l.max);
+  return LEVELS[i + 1] || null;
+}
 
 const SKILLS = [
   { name: 'Alphabets',     unlocksAt: 0,   color: 'green'  },
@@ -197,11 +198,48 @@ const SKILLS = [
   { name: 'Phonics',       unlocksAt: 100, color: 'pink'   },
 ];
 
-const ProgressTab = () => {
-  const { getTotalStars, getStudentResults } = useStars();
+const barColor = {
+  green: 'bg-green-500', blue: 'bg-blue-500',
+  purple: 'bg-purple-500', orange: 'bg-orange-500', pink: 'bg-pink-500'
+};
 
-  const totalStars = getTotalStars(STUDENT_ID);
-  const results    = getStudentResults(STUDENT_ID);
+const ProgressTab = ({ selectedChild }) => {
+
+  // ── State ───────────────────────────────────────────────────
+  const [starsData, setStarsData] = useState({
+    total_stars: 0,
+    results: [],
+  });
+  const [loading, setLoading] = useState(false);
+
+  // ── Fetch jab bhi selectedChild badle ──────────────────────
+  useEffect(() => {
+    if (!selectedChild?.id) return;
+    fetchProgressData(selectedChild.id);
+  }, [selectedChild?.id]);
+
+  const fetchProgressData = async (studentId) => {
+    try {
+      setLoading(true);
+      const res = await axios.get(
+        `http://127.0.0.1:5000/api/parent/child-stars?student_id=${studentId}`
+      );
+      if (res.data?.status === 'success') {
+        setStarsData({
+          total_stars: res.data.total_stars,
+          results:     res.data.results,
+        });
+      }
+    } catch (err) {
+      console.error('Progress fetch error:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // ── Calculations ────────────────────────────────────────────
+  const totalStars = starsData.total_stars;
+  const results    = starsData.results;
   const level      = getLevel(totalStars);
   const nextLevel  = getNextLevel(totalStars);
   const progress   = nextLevel
@@ -214,7 +252,8 @@ const ProgressTab = () => {
   const weeklyData = Array.from({ length: 7 }, (_, i) => {
     const d = new Date(today);
     d.setDate(today.getDate() - (6 - i));
-    const count = results.filter(r => new Date(r.timestamp).toDateString() === d.toDateString()).length;
+    const dateStr = d.toISOString().split('T')[0]; // "2026-03-14"
+    const count = results.filter(r => r.date === dateStr).length;
     return { day: i === 6 ? 'Today' : days[d.getDay()], activities: count };
   });
   const maxAct = Math.max(...weeklyData.map(d => d.activities), 1);
@@ -227,13 +266,34 @@ const ProgressTab = () => {
       : Math.min(99, Math.round((totalStars / (s.unlocksAt || 1)) * 100)),
   }));
 
-  const barColor = { green:'bg-green-500', blue:'bg-blue-500', purple:'bg-purple-500', orange:'bg-orange-500', pink:'bg-pink-500' };
+  // ── No child selected ───────────────────────────────────────
+  if (!selectedChild) return (
+    <div className="flex items-center justify-center py-20">
+      <div className="text-center">
+        <div className="text-5xl mb-3">📈</div>
+        <p className="text-text/60 font-semibold">No child selected</p>
+        <p className="text-sm text-text/40 mt-1">Please select a child from the top menu</p>
+      </div>
+    </div>
+  );
+
+  // ── Loading ─────────────────────────────────────────────────
+  if (loading) return (
+    <div className="flex items-center justify-center py-20">
+      <div className="text-center">
+        <div className="text-5xl mb-3 animate-spin inline-block">⏳</div>
+        <p className="text-text/60">Loading progress...</p>
+      </div>
+    </div>
+  );
 
   return (
     <div className="space-y-6">
 
       <div>
-        <h1 className="text-4xl font-bold text-text mb-2">Learning Progress 📈</h1>
+        <h1 className="text-4xl font-bold text-text mb-2">
+          {selectedChild.name}'s Progress 📈
+        </h1>
         <p className="text-text/60">Track skills and milestones</p>
       </div>
 
@@ -266,9 +326,10 @@ const ProgressTab = () => {
         <p className="text-right text-white/80 text-sm mt-1">{progress}%</p>
       </Card>
 
-      {/* Total Stars big counter */}
+      {/* Total Stars */}
       <Card className="text-center py-6">
-        <motion.div key={totalStars} initial={{ scale: 0.8 }} animate={{ scale: 1 }} transition={{ type: 'spring' }}>
+        <motion.div key={totalStars} initial={{ scale: 0.8 }} animate={{ scale: 1 }}
+          transition={{ type: 'spring' }}>
           <div className="text-6xl mb-2">⭐</div>
           <p className="text-6xl font-bold text-yellow-500">{totalStars}</p>
           <p className="text-text/60 text-lg mt-1">Total Stars Earned</p>
@@ -281,13 +342,12 @@ const ProgressTab = () => {
         <h2 className="text-2xl font-bold text-text mb-4">Skills Progress</h2>
         <div className="space-y-4">
           {skills.map((skill, i) => (
-            <motion.div
-              key={skill.name}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
+            <motion.div key={skill.name}
+              initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}
               transition={{ delay: i * 0.07 }}
-              className={`p-4 rounded-2xl border-2 ${skill.unlocked ? 'border-gray-200 bg-white' : 'border-gray-100 bg-gray-50 opacity-60'}`}
-            >
+              className={`p-4 rounded-2xl border-2 ${
+                skill.unlocked ? 'border-gray-200 bg-white' : 'border-gray-100 bg-gray-50 opacity-60'
+              }`}>
               <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center gap-3">
                   {skill.unlocked
@@ -296,18 +356,24 @@ const ProgressTab = () => {
                   <div>
                     <h3 className="font-semibold text-text">{skill.name}</h3>
                     <p className="text-xs text-text/50">
-                      {skill.unlocked ? 'Unlocked ✅' : `Needs ${skill.unlocksAt} ⭐ (${Math.max(0, skill.unlocksAt - totalStars)} more)`}
+                      {skill.unlocked
+                        ? 'Unlocked ✅'
+                        : `Needs ${skill.unlocksAt} ⭐ (${Math.max(0, skill.unlocksAt - totalStars)} more)`}
                     </p>
                   </div>
                 </div>
-                <span className="text-sm font-bold">{skill.unlocked ? '100%' : `${skill.progress}%`}</span>
+                <span className="text-sm font-bold">
+                  {skill.unlocked ? '100%' : `${skill.progress}%`}
+                </span>
               </div>
               <div className="w-full bg-gray-200 rounded-full h-2">
                 <motion.div
                   initial={{ width: 0 }}
                   animate={{ width: `${skill.progress}%` }}
                   transition={{ duration: 0.6, delay: i * 0.07 }}
-                  className={`h-full rounded-full ${skill.unlocked ? barColor[skill.color] : 'bg-gray-400'}`}
+                  className={`h-full rounded-full ${
+                    skill.unlocked ? barColor[skill.color] : 'bg-gray-400'
+                  }`}
                 />
               </div>
             </motion.div>

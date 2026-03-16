@@ -35,6 +35,9 @@ export const API_ENDPOINTS = {
   STOP_FACE_DETECT:     `${API_BASE_URL}/stop-face-detect`,
   REGISTER_FACE:       `${API_BASE_URL}/register-face`,        // ← NEW: save new student face
   GET_STUDENT_ID:       `${API_BASE_URL}/get-student-id-by-name`,  // ← YE ADD KARO
+  MIMI_SAVE_CHAT:    `${API_BASE_URL}/api/mimi/save-chat`,
+  MIMI_CHAT_HISTORY: `${API_BASE_URL}/api/mimi/chat-history`,
+  MIMI_STOP_SESSION: `${API_BASE_URL}/api/mimi/stop-session`,
 };
 
 export default { API_BASE_URL, API_ENDPOINTS };

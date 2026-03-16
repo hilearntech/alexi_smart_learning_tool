@@ -392,8 +392,8 @@ const Login = () => {
 
       // Redirect based on role
       if (data.role === "admin") navigate("/admin/dashboard");
-      else if (data.role === "teacher") navigate("/teacher/home");
-      else if (data.role === "parent") navigate("/parent/home");
+      else if (data.role === "teacher") navigate("/teacher/selection");
+      else if (data.role === "parent") navigate("/parent-selection");
 
     } catch (err) {
       setErrors({ email: err.message });
