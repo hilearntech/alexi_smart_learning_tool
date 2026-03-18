@@ -1623,17 +1623,9 @@ def mark_attendance():
 
     except Exception as e:
         print(f"[mark-attendance] ERROR: {e}")
-        return jsonify({"message": "error", "reason": str(e)}), 500        
-
-app.register_blueprint(auth_bp)
-app.register_blueprint(admin_bp)
-app.register_blueprint(whatsapp_bp)
-app.register_blueprint(parent_bp)
+        return jsonify({"message": "error", "reason": str(e)}), 500      
 
 
-if __name__ == "__main__":
-    # debug=False rakhein threading ke waqt, warna camera do baar khul sakta hai
-    app.run(debug=False, port=5000, host='0.0.0.0')
 
 @app.route('/speak', methods=['POST'])
 def speak_text():
@@ -1681,3 +1673,14 @@ def process_frame():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+  
+
+app.register_blueprint(auth_bp)
+app.register_blueprint(admin_bp)
+app.register_blueprint(whatsapp_bp)
+app.register_blueprint(parent_bp)
+
+
+if __name__ == "__main__":
+    # debug=False rakhein threading ke waqt, warna camera do baar khul sakta hai
+    app.run(debug=False, port=5000, host='0.0.0.0')

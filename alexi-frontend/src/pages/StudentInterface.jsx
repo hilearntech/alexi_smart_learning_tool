@@ -5,25 +5,27 @@ import { API_ENDPOINTS } from '../config';
 
 import bgImage from '../assets/images/mimi/bg.jpg';
 
-import mimiIdleVideo    from '../assets/images/mimi/mimiidell_nobg.webm';
-import mimiWaveVideo    from '../assets/images/mimi/mimiwavehand_nobg.webm';
+import mimiIdleVideo from '../assets/images/mimi/mimiidell_nobg.webm';
+import mimiWaveVideo from '../assets/images/mimi/mimiwavehand_nobg.webm';
 import mimiNeutralVideo from '../assets/images/mimi/mimiidell_nobg.webm';
-import mimiSadVideo     from '../assets/images/mimi/A Big Smile for a Happy Day.mp4';
-import mimiHappyVideo   from '../assets/images/mimi/A Fantastic Day of Fun and Laughter.mp4';
+import mimiSadVideo from '../assets/images/mimi/A Big Smile for a Happy Day.mp4';
+import mimiHappyVideo from '../assets/images/mimi/A Fantastic Day of Fun and Laughter.mp4';
 
 const StudentInterface = () => {
   // ── Core state ──────────────────────────────────────────────────────────────
-  const [systemStatus, setSystemStatus]   = useState('idle');
+  const [systemStatus, setSystemStatus] = useState('idle');
   // idle | watching | recognized | talking | completed
-  const [personName, setPersonName]       = useState('');
-  const [mood, setMood]                   = useState('');
+  const [personName, setPersonName] = useState('');
+  const [mood, setMood] = useState('');
   const [statusMessage, setStatusMessage] = useState('');
-  const [showWarning, setShowWarning]     = useState(false);
+  const [showWarning, setShowWarning] = useState(false);
   const [warningMessage, setWarningMessage] = useState('');
+  const cameraStreamRef = useRef(null)
+  const cameraVideoRef = useRef(null)
 
   // Keep refs to avoid stale closure issues inside setInterval
   const systemStatusRef = useRef(systemStatus);
-  const moodRef         = useRef(mood);
+  const moodRef = useRef(mood);
   useEffect(() => { systemStatusRef.current = systemStatus; }, [systemStatus]);
   useEffect(() => { moodRef.current = mood; }, [mood]);
 
@@ -114,20 +116,65 @@ const StudentInterface = () => {
 
   // ── Start session ────────────────────────────────────────────────────────────
   const startSession = async () => {
-    setSystemStatus('watching');
-    setStatusMessage('Mimi is watching… 👀');
-    setPersonName('');
-    setMood('');
+    setSystemStatus('watching')
+    setStatusMessage('Camera khul rahi hai… 📷')
+    setPersonName('')
+    setMood('')
 
+    // Browser camera kholo
+    let stream
     try {
-      await axios.get(API_ENDPOINTS.START_CLASSROOM);
-      console.log('Session started');
-    } catch (err) {
-      console.error('Failed to start session:', err);
-      setStatusMessage('⚠️ Backend not responding. Check Flask server.');
-      setSystemStatus('idle');
+      stream = await navigator.mediaDevices.getUserMedia({ video: true })
+      cameraStreamRef.current = stream
+    } catch (e) {
+      console.error('Camera error:', e)
+      setStatusMessage('⚠️ Camera permission do!')
+      setSystemStatus('idle')
+      return
     }
-  };
+
+    const video = document.createElement('video')
+    video.srcObject = stream
+    video.play()
+    cameraVideoRef.current = video
+
+    const canvas = document.createElement('canvas')
+    canvas.width = 320
+    canvas.height = 240
+
+    setStatusMessage('Mimi is watching… 👀')
+
+    // Frames bhejo backend ko
+    const frameInterval = setInterval(async () => {
+      try {
+        const ctx = canvas.getContext('2d')
+        ctx.drawImage(video, 0, 0, 320, 240)
+        const frameData = canvas.toDataURL('image/jpeg', 0.6)
+
+        const res = await axios.post(API_ENDPOINTS.PROCESS_FRAME, { frame: frameData })
+        const data = res.data
+
+        if (data.person) {
+          clearInterval(frameInterval)
+          // Camera band karo
+          stream.getTracks().forEach(t => t.stop())
+
+          setPersonName(data.person)
+          setSystemStatus('recognized')
+          setStatusMessage('')
+
+          // Ab backend se status polling karo
+          try {
+            await axios.get(API_ENDPOINTS.START_CLASSROOM)
+          } catch (err) {
+            console.error('Classroom start error:', err)
+          }
+        }
+      } catch (e) {
+        console.error('Frame error:', e)
+      }
+    }, 500)
+  }
 
   // ── Reset ────────────────────────────────────────────────────────────────────
   const resetState = () => {
@@ -146,9 +193,9 @@ const StudentInterface = () => {
   const getMimiVideo = () => {
     if (systemStatus === 'completed' && mood) {
       switch (mood.toLowerCase()) {
-        case 'happy':   return mimiHappyVideo;
-        case 'sad':     return mimiSadVideo;
-        default:        return mimiNeutralVideo;
+        case 'happy': return mimiHappyVideo;
+        case 'sad': return mimiSadVideo;
+        default: return mimiNeutralVideo;
       }
     }
 
@@ -162,30 +209,30 @@ const StudentInterface = () => {
   // ── Helpers ──────────────────────────────────────────────────────────────────
   const getMoodEmoji = (m) => {
     switch (m?.toLowerCase()) {
-      case 'happy':   return '😊';
-      case 'sad':     return '😢';
+      case 'happy': return '😊';
+      case 'sad': return '😢';
       case 'neutral': return '😐';
-      default:        return '';
+      default: return '';
     }
   };
 
   const getStatusColor = () => {
     switch (systemStatus) {
-      case 'watching':   return 'text-blue-600';
+      case 'watching': return 'text-blue-600';
       case 'recognized': return 'text-green-600';
-      case 'talking':    return 'text-purple-600';
-      case 'completed':  return 'text-green-600';
-      default:           return 'text-gray-600';
+      case 'talking': return 'text-purple-600';
+      case 'completed': return 'text-green-600';
+      default: return 'text-gray-600';
     }
   };
 
   const dotColor = () => {
     switch (systemStatus) {
-      case 'watching':   return 'bg-blue-500';
+      case 'watching': return 'bg-blue-500';
       case 'recognized': return 'bg-green-500';
-      case 'talking':    return 'bg-purple-500';
-      case 'completed':  return 'bg-green-500';
-      default:           return 'bg-gray-500';
+      case 'talking': return 'bg-purple-500';
+      case 'completed': return 'bg-green-500';
+      default: return 'bg-gray-500';
     }
   };
 

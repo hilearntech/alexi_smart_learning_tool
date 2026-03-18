@@ -33,6 +33,7 @@ export const API_ENDPOINTS = {
   GENERATE_QUESTIONS:   `${API_BASE_URL}/generate-activity-questions`,  // ← NEW: LLM questions for activities 9-12
   START_FACE_DETECT:    `${API_BASE_URL}/start-face-detect`,              // ← face detect only, no attendance
   STOP_FACE_DETECT:     `${API_BASE_URL}/stop-face-detect`,
+  PROCESS_FRAME:        `${API_BASE_URL}/process-frame`,
   REGISTER_FACE:       `${API_BASE_URL}/register-face`,        // ← NEW: save new student face
   GET_STUDENT_ID:       `${API_BASE_URL}/get-student-id-by-name`,  // ← YE ADD KARO
   MIMI_SAVE_CHAT:    `${API_BASE_URL}/api/mimi/save-chat`,

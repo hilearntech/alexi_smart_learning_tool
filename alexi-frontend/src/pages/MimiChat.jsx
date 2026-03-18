@@ -205,32 +205,32 @@ import axios from 'axios'
 import { motion, AnimatePresence } from 'framer-motion'
 import { API_ENDPOINTS } from '../config'
 
-import bgImage          from '../assets/images/mimi/bg.jpg'
-import mimiIdleVideo    from '../assets/images/mimi/mimiidell_nobg.webm'
-import mimiWaveVideo    from '../assets/images/mimi/mimiwavehand_nobg.webm'
+import bgImage from '../assets/images/mimi/bg.jpg'
+import mimiIdleVideo from '../assets/images/mimi/mimiidell_nobg.webm'
+import mimiWaveVideo from '../assets/images/mimi/mimiwavehand_nobg.webm'
 // ✅ Reading book video — jo tumne bheja hai
 import mimiReadingVideo from '../assets/images/mimi/mimiidell_nobg.webm'
 
 const MimiChat = () => {
 
-  const [sessionState,  setSessionState]  = useState('idle')
-  const [studentName,   setStudentName]   = useState('')
-  const [sessionId,     setSessionId]     = useState('')
-  const [mimiText,      setMimiText]      = useState('')
-  const [imageUrl,      setImageUrl]      = useState(null)
-  const [ytVideo,       setYtVideo]       = useState(null)
-  const [playing,       setPlaying]       = useState(false)
+  const [sessionState, setSessionState] = useState('idle')
+  const [studentName, setStudentName] = useState('')
+  const [sessionId, setSessionId] = useState('')
+  const [mimiText, setMimiText] = useState('')
+  const [imageUrl, setImageUrl] = useState(null)
+  const [ytVideo, setYtVideo] = useState(null)
+  const [playing, setPlaying] = useState(false)
   const [displayedText, setDisplayedText] = useState('')
-  const [isTyping,      setIsTyping]      = useState(false)
-  const [isSpeaking,    setIsSpeaking]    = useState(false) // ← Mimi bol rahi hai?
-  const [chatHistory,   setChatHistory]   = useState([])
-  const [lastQuestion,  setLastQuestion]  = useState('') // ← current question track
+  const [isTyping, setIsTyping] = useState(false)
+  const [isSpeaking, setIsSpeaking] = useState(false) // ← Mimi bol rahi hai?
+  const [chatHistory, setChatHistory] = useState([])
+  const [lastQuestion, setLastQuestion] = useState('') // ← current question track
 
-  const pollingRef      = useRef(null)
-  const facePollingRef  = useRef(null)
-  const lastAnswerRef   = useRef('')
-  const lastActionRef   = useRef('')
-  const chatHistoryRef  = useRef([])
+  const pollingRef = useRef(null)
+  const facePollingRef = useRef(null)
+  const lastAnswerRef = useRef('')
+  const lastActionRef = useRef('')
+  const chatHistoryRef = useRef([])
 
   useEffect(() => {
     chatHistoryRef.current = chatHistory
@@ -248,29 +248,55 @@ const MimiChat = () => {
     setYtVideo(null)
     setChatHistory([])
     chatHistoryRef.current = []
-    lastAnswerRef.current  = ''
-    lastActionRef.current  = ''
+    lastAnswerRef.current = ''
+    lastActionRef.current = ''
     setLastQuestion('')
 
-    try { await axios.get(API_ENDPOINTS.START_FACE_DETECT) }
-    catch (e) { console.error('Face detect start error:', e) }
+    // Browser camera kholo
+    let stream
+    try {
+      stream = await navigator.mediaDevices.getUserMedia({ video: true })
+    } catch (e) {
+      console.error('Camera access denied:', e)
+      alert('Camera permission do! Browser mein Allow karo.')
+      setSessionState('idle')
+      return
+    }
+
+    // Hidden video element banao frames ke liye
+    const video = document.createElement('video')
+    video.srcObject = stream
+    video.play()
+
+    const canvas = document.createElement('canvas')
+    canvas.width = 320
+    canvas.height = 240
 
     if (facePollingRef.current) clearInterval(facePollingRef.current)
+
     facePollingRef.current = setInterval(async () => {
       try {
-        const res  = await axios.get(API_ENDPOINTS.GET_STATUS)
+        const ctx = canvas.getContext('2d')
+        ctx.drawImage(video, 0, 0, 320, 240)
+        const frameData = canvas.toDataURL('image/jpeg', 0.6)
+
+        const res = await axios.post(API_ENDPOINTS.PROCESS_FRAME, { frame: frameData })
         const data = res.data
+
         if (data.person) {
-          const name = data.person.replace(/_/g, ' ').trim()
           clearInterval(facePollingRef.current)
           facePollingRef.current = null
-          await axios.get(API_ENDPOINTS.STOP_FACE_DETECT)
+          // Camera band karo
+          stream.getTracks().forEach(t => t.stop())
+          video.srcObject = null
+
+          const name = data.person.replace(/_/g, ' ').trim()
           setStudentName(name)
           startMimiSession(name)
         }
-      } catch (e) { console.error('Face poll error:', e) }
+      } catch (e) { console.error('Frame send error:', e) }
     }, 500)
-  }, []) // eslint-disable-line
+  }, []) // eslint-disable-line// eslint-disable-line
 
   // ── Mimi session ─────────────────────────────────────────────
   const startMimiSession = useCallback(async (name) => {
@@ -289,7 +315,7 @@ const MimiChat = () => {
     pollingRef.current = setInterval(async () => {
       try {
         const res = await axios.get(API_ENDPOINTS.GET_MIMI_STATUS)
-        const d   = res.data
+        const d = res.data
 
         // Speaking state track karo — reading book video ke liye
         const action = d.action || 'idle'
@@ -309,14 +335,14 @@ const MimiChat = () => {
         lastAnswerRef.current = d.text
         setMimiText(d.text)
         setImageUrl(d.image_url || null)
-        setYtVideo(d.yt_video   || null)
+        setYtVideo(d.yt_video || null)
         setPlaying(false)
         setIsSpeaking(true)
 
         const newMsg = {
-          answer:    d.text,
+          answer: d.text,
           image_url: d.image_url || '',
-          time:      new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+          time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
         }
         const updated = [...chatHistoryRef.current, newMsg]
         setChatHistory(updated)
@@ -335,8 +361,8 @@ const MimiChat = () => {
     try {
       await axios.post(API_ENDPOINTS.MIMI_SAVE_CHAT, {
         student_name: name,
-        session_id:   sid,
-        messages:     messages,
+        session_id: sid,
+        messages: messages,
       })
     } catch (e) { console.error('Chat save error:', e) }
   }
@@ -346,7 +372,7 @@ const MimiChat = () => {
     // Pehle intervals band karo
     clearInterval(pollingRef.current)
     clearInterval(facePollingRef.current)
-    pollingRef.current     = null
+    pollingRef.current = null
     facePollingRef.current = null
 
     try {
@@ -390,7 +416,7 @@ const MimiChat = () => {
   // ── Mimi ka sahi video choose karo ───────────────────────────
   const getMimiVideo = () => {
     if (sessionState !== 'running') return mimiIdleVideo
-    if (isSpeaking)                 return mimiReadingVideo  // ← bol rahi hai = reading book
+    if (isSpeaking) return mimiReadingVideo  // ← bol rahi hai = reading book
     return mimiWaveVideo                                     // ← sun rahi hai = wave
   }
 
@@ -419,16 +445,15 @@ const MimiChat = () => {
             ⏹ Stop Session
           </motion.button>
         )}
-        <div className={`px-4 py-2 rounded-full text-sm font-bold ${
-          sessionState === 'running'   ? 'bg-green-100 text-green-700'   :
-          sessionState === 'detecting' ? 'bg-yellow-100 text-yellow-700' :
-          sessionState === 'stopped'   ? 'bg-gray-100 text-gray-600'     :
-          'bg-gray-100 text-gray-500'
-        }`}>
-          {sessionState === 'idle'      && '⚪ Ready'}
+        <div className={`px-4 py-2 rounded-full text-sm font-bold ${sessionState === 'running' ? 'bg-green-100 text-green-700' :
+            sessionState === 'detecting' ? 'bg-yellow-100 text-yellow-700' :
+              sessionState === 'stopped' ? 'bg-gray-100 text-gray-600' :
+                'bg-gray-100 text-gray-500'
+          }`}>
+          {sessionState === 'idle' && '⚪ Ready'}
           {sessionState === 'detecting' && '📷 Scanning...'}
-          {sessionState === 'running'   && '🟢 Active'}
-          {sessionState === 'stopped'   && '🔴 Stopped'}
+          {sessionState === 'running' && '🟢 Active'}
+          {sessionState === 'stopped' && '🔴 Stopped'}
         </div>
       </div>
 
@@ -472,14 +497,14 @@ const MimiChat = () => {
               </p>
               <p className="text-xs text-gray-400 mb-6">Python server is still running ✅</p>
               <button onClick={() => {
-                  setSessionState('idle')
-                  setStudentName('')
-                  setChatHistory([])
-                  setMimiText('')
-                  setImageUrl(null)
-                  setYtVideo(null)
-                  setIsSpeaking(false)
-                }}
+                setSessionState('idle')
+                setStudentName('')
+                setChatHistory([])
+                setMimiText('')
+                setImageUrl(null)
+                setYtVideo(null)
+                setIsSpeaking(false)
+              }}
                 className="px-8 py-3 bg-purple-600 text-white font-black rounded-2xl shadow-lg hover:bg-purple-700">
                 🔄 Start New Session
               </button>
@@ -711,7 +736,7 @@ export default MimiChat
 
 //       {/* Mimi Character */}
 //       <motion.div
-//         className="absolute bottom-0 z-50 
+//         className="absolute bottom-0 z-50
 //         w-[220px] h-[220px]
 //         sm:w-[300px] sm:h-[300px]
 //         md:w-[380px] md:h-[380px]
