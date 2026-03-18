@@ -13565,3 +13565,21 @@ Jungle mein hai sabse nyara!
 2026-03-16 13:31:29,495 - INFO - SpeechManager ready
 2026-03-16 13:31:29,610 - INFO - Calibrating microphone…
 2026-03-16 13:31:30,655 - INFO - SpeechRecognizer ready
+2026-03-18 15:03:37,059 - INFO - SpeechManager ready
+2026-03-18 15:03:38,687 - INFO - Calibrating microphone…
+2026-03-18 15:03:39,810 - INFO - SpeechRecognizer ready
+2026-03-18 15:03:39,810 - INFO - ============================================================
+2026-03-18 15:03:39,811 - INFO - FACE RECOGNITION ATTENDANCE SYSTEM
+2026-03-18 15:03:39,811 - INFO - ============================================================
+2026-03-18 15:03:41,057 - INFO - Loaded: Dron
+2026-03-18 15:03:41,910 - INFO - Loaded: ghanisht
+2026-03-18 15:03:42,890 - INFO - Loaded: Nishit
+2026-03-18 15:03:43,849 - INFO - Loaded: Rahil
+2026-03-18 15:03:44,884 - INFO - Loaded: Shikha
+2026-03-18 15:03:45,587 - INFO - Loaded: Tushar
+2026-03-18 15:03:47,130 - INFO - Loaded: vini
+2026-03-18 15:03:48,132 - INFO - Loaded: vini
+2026-03-18 15:03:48,133 - INFO - Known people (8): Dron, ghanisht, Nishit, Rahil, Shikha, Tushar, vini, vini
+2026-03-18 15:03:48,134 - INFO - SpeechManager ready
+2026-03-18 15:03:48,264 - INFO - Calibrating microphone…
+2026-03-18 15:03:49,312 - INFO - SpeechRecognizer ready
