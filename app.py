@@ -1662,15 +1662,18 @@ def process_frame():
         np_arr = np.frombuffer(img_bytes, np.uint8)
         frame = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
         rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        locations = face_recognition.face_locations(rgb)
-        encodings = face_recognition.face_encodings(rgb, locations)
+        locations = _face_recognition_lib.face_locations(rgb)
+        encodings = _face_recognition_lib.face_encodings(rgb, locations)
         for enc in encodings:
-            distances = face_recognition.face_distance(system.known_encodings, enc)
+            distances = _face_recognition_lib.face_distance(system.known_encodings, enc)
             if len(distances) and min(distances) < 0.45:
                 name = system.known_names[int(np.argmin(distances))]
                 return jsonify({'person': name, 'status': 'recognised'})
         return jsonify({'person': None, 'status': 'no_face'})
     except Exception as e:
+        import traceback
+        traceback.print_exc()
+        print(f"PROCESS-FRAME ERROR: {e}")
         return jsonify({'error': str(e)}), 500
 
   
@@ -1680,52 +1683,6 @@ app.register_blueprint(admin_bp)
 app.register_blueprint(whatsapp_bp)
 app.register_blueprint(parent_bp)
 
-
-@app.route('/speak', methods=['POST'])
-def speak_text():
-    import asyncio
-    import edge_tts
-    import tempfile
-    import base64
-    data = request.get_json()
-    text = data.get('text', '')
-    async def generate(text, path):
-        communicate = edge_tts.Communicate(text, voice="en-IN-NeerjaNeural", rate="-10%", pitch="+15Hz")
-        await communicate.save(path)
-    with tempfile.NamedTemporaryFile(delete=False, suffix='.mp3') as f:
-        tmp_path = f.name
-    loop = asyncio.new_event_loop()
-    asyncio.set_event_loop(loop)
-    loop.run_until_complete(generate(text, tmp_path))
-    loop.close()
-    with open(tmp_path, 'rb') as f:
-        audio_data = base64.b64encode(f.read()).decode()
-    os.remove(tmp_path)
-    return jsonify({'audio': audio_data})
-
-@app.route('/process-frame', methods=['POST'])
-def process_frame():
-    import base64
-    import numpy as np
-    import cv2
-    try:
-        data = request.get_json()
-        img_data = data.get('frame', '')
-        img_data = img_data.split(',')[1] if ',' in img_data else img_data
-        img_bytes = base64.b64decode(img_data)
-        np_arr = np.frombuffer(img_bytes, np.uint8)
-        frame = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
-        rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        locations = face_recognition.face_locations(rgb)
-        encodings = face_recognition.face_encodings(rgb, locations)
-        for enc in encodings:
-            distances = face_recognition.face_distance(system.known_encodings, enc)
-            if len(distances) and min(distances) < 0.45:
-                name = system.known_names[int(np.argmin(distances))]
-                return jsonify({'person': name, 'status': 'recognised'})
-        return jsonify({'person': None, 'status': 'no_face'})
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
 
 
 

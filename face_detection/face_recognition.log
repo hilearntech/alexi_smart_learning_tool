@@ -13583,3 +13583,98 @@ Jungle mein hai sabse nyara!
 2026-03-18 15:03:48,134 - INFO - SpeechManager ready
 2026-03-18 15:03:48,264 - INFO - Calibrating microphone…
 2026-03-18 15:03:49,312 - INFO - SpeechRecognizer ready
+2026-03-18 16:04:37,868 - INFO - SpeechManager ready
+2026-03-18 16:04:38,637 - INFO - Calibrating microphone…
+2026-03-18 16:04:39,702 - INFO - SpeechRecognizer ready
+2026-03-18 16:04:39,702 - INFO - ============================================================
+2026-03-18 16:04:39,703 - INFO - FACE RECOGNITION ATTENDANCE SYSTEM
+2026-03-18 16:04:39,703 - INFO - ============================================================
+2026-03-18 16:04:41,150 - INFO - Loaded: Dron
+2026-03-18 16:04:42,136 - INFO - Loaded: ghanisht
+2026-03-18 16:04:43,372 - INFO - Loaded: Nishit
+2026-03-18 16:04:44,623 - INFO - Loaded: Rahil
+2026-03-18 16:04:45,701 - INFO - Loaded: Shikha
+2026-03-18 16:04:46,552 - INFO - Loaded: Tushar
+2026-03-18 16:04:48,740 - INFO - Loaded: vini
+2026-03-18 16:04:51,010 - INFO - Loaded: vini
+2026-03-18 16:04:51,010 - INFO - Known people (8): Dron, ghanisht, Nishit, Rahil, Shikha, Tushar, vini, vini
+2026-03-18 16:04:51,013 - INFO - SpeechManager ready
+2026-03-18 16:04:51,237 - INFO - Calibrating microphone…
+2026-03-18 16:04:52,293 - INFO - SpeechRecognizer ready
+2026-03-18 16:09:04,265 - INFO - SpeechManager ready
+2026-03-18 16:09:04,588 - INFO - Calibrating microphone…
+2026-03-18 16:09:05,682 - INFO - SpeechRecognizer ready
+2026-03-18 16:09:05,683 - INFO - ============================================================
+2026-03-18 16:09:05,684 - INFO - FACE RECOGNITION ATTENDANCE SYSTEM
+2026-03-18 16:09:05,684 - INFO - ============================================================
+2026-03-18 16:09:06,861 - INFO - Loaded: Dron
+2026-03-18 16:09:07,800 - INFO - Loaded: ghanisht
+2026-03-18 16:09:09,001 - INFO - Loaded: Nishit
+2026-03-18 16:09:10,254 - INFO - Loaded: Rahil
+2026-03-18 16:09:11,310 - INFO - Loaded: Shikha
+2026-03-18 16:09:12,078 - INFO - Loaded: Tushar
+2026-03-18 16:09:13,676 - INFO - Loaded: vini
+2026-03-18 16:09:14,871 - INFO - Loaded: vini
+2026-03-18 16:09:14,872 - INFO - Known people (8): Dron, ghanisht, Nishit, Rahil, Shikha, Tushar, vini, vini
+2026-03-18 16:09:14,873 - INFO - SpeechManager ready
+2026-03-18 16:09:15,044 - INFO - Calibrating microphone…
+2026-03-18 16:09:16,108 - INFO - SpeechRecognizer ready
+2026-03-18 16:17:52,774 - INFO - SpeechManager ready
+2026-03-18 16:17:53,519 - INFO - Calibrating microphone…
+2026-03-18 16:17:54,586 - INFO - SpeechRecognizer ready
+2026-03-18 16:17:54,587 - INFO - ============================================================
+2026-03-18 16:17:54,588 - INFO - FACE RECOGNITION ATTENDANCE SYSTEM
+2026-03-18 16:17:54,588 - INFO - ============================================================
+2026-03-18 16:17:55,677 - INFO - Loaded: Dron
+2026-03-18 16:17:56,570 - INFO - Loaded: ghanisht
+2026-03-18 16:17:57,641 - INFO - Loaded: Nishit
+2026-03-18 16:17:58,727 - INFO - Loaded: Rahil
+2026-03-18 16:17:59,684 - INFO - Loaded: Shikha
+2026-03-18 16:18:00,418 - INFO - Loaded: Tushar
+2026-03-18 16:18:01,887 - INFO - Loaded: vini
+2026-03-18 16:18:02,967 - INFO - Loaded: vini
+2026-03-18 16:18:02,969 - INFO - Known people (8): Dron, ghanisht, Nishit, Rahil, Shikha, Tushar, vini, vini
+2026-03-18 16:18:02,970 - INFO - SpeechManager ready
+2026-03-18 16:18:03,152 - INFO - Calibrating microphone…
+2026-03-18 16:18:04,215 - INFO - SpeechRecognizer ready
+2026-03-18 16:22:32,584 - INFO - SpeechManager ready
+2026-03-18 16:22:33,369 - INFO - Calibrating microphone…
+2026-03-18 16:22:34,443 - INFO - SpeechRecognizer ready
+2026-03-18 16:22:34,443 - INFO - ============================================================
+2026-03-18 16:22:34,444 - INFO - FACE RECOGNITION ATTENDANCE SYSTEM
+2026-03-18 16:22:34,445 - INFO - ============================================================
+2026-03-18 16:22:35,523 - INFO - Loaded: Dron
+2026-03-18 16:22:36,344 - INFO - Loaded: ghanisht
+2026-03-18 16:22:37,386 - INFO - Loaded: Nishit
+2026-03-18 16:22:38,375 - INFO - Loaded: Rahil
+2026-03-18 16:22:39,278 - INFO - Loaded: Shikha
+2026-03-18 16:22:39,953 - INFO - Loaded: Tushar
+2026-03-18 16:22:41,359 - INFO - Loaded: vini
+2026-03-18 16:22:42,388 - INFO - Loaded: vini
+2026-03-18 16:22:42,388 - INFO - Known people (8): Dron, ghanisht, Nishit, Rahil, Shikha, Tushar, vini, vini
+2026-03-18 16:22:42,390 - INFO - SpeechManager ready
+2026-03-18 16:22:42,557 - INFO - Calibrating microphone…
+2026-03-18 16:22:43,622 - INFO - SpeechRecognizer ready
+2026-03-18 16:23:58,566 - INFO - SpeechManager ready
+2026-03-18 16:23:59,265 - INFO - Calibrating microphone…
+2026-03-18 16:24:00,323 - INFO - SpeechRecognizer ready
+2026-03-18 16:24:00,324 - INFO - ============================================================
+2026-03-18 16:24:00,324 - INFO - FACE RECOGNITION ATTENDANCE SYSTEM
+2026-03-18 16:24:00,324 - INFO - ============================================================
+2026-03-18 16:24:01,420 - INFO - Loaded: Dron
+2026-03-18 16:24:02,341 - INFO - Loaded: ghanisht
+2026-03-18 16:24:03,408 - INFO - Loaded: Nishit
+2026-03-18 16:24:04,456 - INFO - Loaded: Rahil
+2026-03-18 16:24:05,430 - INFO - Loaded: Shikha
+2026-03-18 16:24:06,149 - INFO - Loaded: Tushar
+2026-03-18 16:24:07,629 - INFO - Loaded: vini
+2026-03-18 16:24:08,681 - INFO - Loaded: vini
+2026-03-18 16:24:08,681 - INFO - Known people (8): Dron, ghanisht, Nishit, Rahil, Shikha, Tushar, vini, vini
+2026-03-18 16:24:08,683 - INFO - SpeechManager ready
+2026-03-18 16:24:08,841 - INFO - Calibrating microphone…
+2026-03-18 16:24:09,901 - INFO - SpeechRecognizer ready
+2026-03-18 16:26:39,801 - INFO - SPEAKING: Yes! I'm here. You can ask me anything.
+2026-03-18 16:26:47,865 - INFO - DONE SPEAKING
+2026-03-18 16:26:47,867 - INFO - LISTENING… (energy threshold: 400)
+2026-03-18 16:26:51,388 - INFO - Audio captured — sending to Google STT…
+2026-03-18 16:26:52,281 - INFO - HEARD: 'what's the colour option'
